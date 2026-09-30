@@ -8,34 +8,37 @@ public class PackingGrid : MonoBehaviour
     private readonly DraggableItem[,] occupiedCells =
         new DraggableItem[GridSize, GridSize];
 
-    public bool TryPlace(
+    private Vector2Int GetOrigin(
         DraggableItem item,
-        Vector3 dropPosition,
-        out Vector3 snappedPosition)
+        Vector3 position)
     {
-        snappedPosition = dropPosition;
-
         float left = transform.position.x - GridSize * CellSize / 2f;
         float bottom = transform.position.y - GridSize * CellSize / 2f;
 
-        int column = Mathf.RoundToInt(
-            (dropPosition.x - left) / CellSize - item.Width / 2f
+        return new Vector2Int(
+            Mathf.RoundToInt(
+                (position.x - left) / CellSize - item.Width / 2f
+            ),
+            Mathf.RoundToInt(
+                (position.y - bottom) / CellSize - item.Height / 2f
+            )
         );
+    }
 
-        int row = Mathf.RoundToInt(
-            (dropPosition.y - bottom) / CellSize - item.Height / 2f
-        );
+    public bool CanPlace(DraggableItem item, Vector3 position)
+    {
+        Vector2Int origin = GetOrigin(item, position);
 
-        if (column < 0 || row < 0 ||
-            column + item.Width > GridSize ||
-            row + item.Height > GridSize)
+        if (origin.x < 0 || origin.y < 0 ||
+            origin.x + item.Width > GridSize ||
+            origin.y + item.Height > GridSize)
         {
             return false;
         }
 
-        for (int x = column; x < column + item.Width; x++)
+        for (int x = origin.x; x < origin.x + item.Width; x++)
         {
-            for (int y = row; y < row + item.Height; y++)
+            for (int y = origin.y; y < origin.y + item.Height; y++)
             {
                 DraggableItem occupant = occupiedCells[x, y];
 
@@ -44,19 +47,37 @@ public class PackingGrid : MonoBehaviour
             }
         }
 
+        return true;
+    }
+
+    public bool TryPlace(
+        DraggableItem item,
+        Vector3 dropPosition,
+        out Vector3 snappedPosition)
+    {
+        snappedPosition = dropPosition;
+
+        if (!CanPlace(item, dropPosition))
+            return false;
+
+        Vector2Int origin = GetOrigin(item, dropPosition);
+
         RemoveItem(item);
 
-        for (int x = column; x < column + item.Width; x++)
+        for (int x = origin.x; x < origin.x + item.Width; x++)
         {
-            for (int y = row; y < row + item.Height; y++)
+            for (int y = origin.y; y < origin.y + item.Height; y++)
             {
                 occupiedCells[x, y] = item;
             }
         }
 
+        float left = transform.position.x - GridSize * CellSize / 2f;
+        float bottom = transform.position.y - GridSize * CellSize / 2f;
+
         snappedPosition = new Vector3(
-            left + (column + item.Width / 2f) * CellSize,
-            bottom + (row + item.Height / 2f) * CellSize,
+            left + (origin.x + item.Width / 2f) * CellSize,
+            bottom + (origin.y + item.Height / 2f) * CellSize,
             0f
         );
 
@@ -92,7 +113,9 @@ public class PackingGrid : MonoBehaviour
         return false;
     }
 
-    public bool AreNeighbors(DraggableItem first, DraggableItem second)
+    public bool AreNeighbors(
+        DraggableItem first,
+        DraggableItem second)
     {
         if (first == null || second == null || first == second)
             return false;

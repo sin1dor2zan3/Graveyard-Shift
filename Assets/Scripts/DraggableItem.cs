@@ -9,6 +9,15 @@ public class DraggableItem : MonoBehaviour
     [SerializeField, Min(1)] private int width = 1;
     [SerializeField, Min(1)] private int height = 1;
 
+    [Header("Placement Preview")]
+    [SerializeField]
+    private Color validColor =
+        new Color(0.45f, 0.9f, 0.65f, 1f);
+
+    [SerializeField]
+    private Color invalidColor =
+        new Color(1f, 0.45f, 0.45f, 1f);
+
     public int Width => width;
     public int Height => height;
 
@@ -28,6 +37,7 @@ public class DraggableItem : MonoBehaviour
 
     private int startingWidth;
     private int startingHeight;
+    private Color originalColor;
 
     private void Awake()
     {
@@ -37,11 +47,15 @@ public class DraggableItem : MonoBehaviour
 
         startingWidth = width;
         startingHeight = height;
+
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
     }
 
     private void OnEnable()
     {
         SetSize(startingWidth, startingHeight);
+        RestoreColor();
     }
 
     private void Update()
@@ -77,6 +91,8 @@ public class DraggableItem : MonoBehaviour
             }
 
             transform.position = mousePosition + grabOffset;
+
+            UpdatePreview();
 
             if (!Mouse.current.leftButton.isPressed)
             {
@@ -121,7 +137,19 @@ public class DraggableItem : MonoBehaviour
     {
         width = newWidth;
         height = newHeight;
+
         transform.localScale = new Vector3(width, height, 1f);
+    }
+
+    private void UpdatePreview()
+    {
+        if (spriteRenderer == null)
+            return;
+
+        bool fits = packingGrid != null &&
+            packingGrid.CanPlace(this, transform.position);
+
+        spriteRenderer.color = fits ? validColor : invalidColor;
     }
 
     private void FinishDrag()
@@ -148,19 +176,23 @@ public class DraggableItem : MonoBehaviour
         transform.position = positionBeforeDrag;
     }
 
+    private void RestoreColor()
+    {
+        if (spriteRenderer != null)
+            spriteRenderer.color = originalColor;
+    }
+
     private void EndDrag()
     {
         isDragging = false;
 
         if (heldItem == this)
-        {
             heldItem = null;
-        }
 
         if (spriteRenderer != null)
-        {
             spriteRenderer.sortingOrder = originalSortingOrder;
-        }
+
+        RestoreColor();
     }
 
     private void OnDisable()
@@ -171,9 +203,9 @@ public class DraggableItem : MonoBehaviour
             EndDrag();
         }
 
+        RestoreColor();
+
         if (packingGrid != null)
-        {
             packingGrid.RemoveItem(this);
-        }
     }
 }
