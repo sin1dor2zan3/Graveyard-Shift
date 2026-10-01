@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class DraggableItem : MonoBehaviour
 {
     [SerializeField] private PackingGrid packingGrid;
-
     [SerializeField, Min(1)] private int width = 1;
     [SerializeField, Min(1)] private int height = 1;
 
@@ -20,6 +21,7 @@ public class DraggableItem : MonoBehaviour
 
     public int Width => width;
     public int Height => height;
+    public static DraggableItem SelectedItem { get; private set; }
 
     private static DraggableItem heldItem;
 
@@ -28,13 +30,13 @@ public class DraggableItem : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private bool isDragging;
+    private bool usingTouch;
     private Vector3 grabOffset;
     private Vector3 positionBeforeDrag;
 
     private int widthBeforeDrag;
     private int heightBeforeDrag;
     private int originalSortingOrder;
-
     private int startingWidth;
     private int startingHeight;
     private Color originalColor;
@@ -60,12 +62,89 @@ public class DraggableItem : MonoBehaviour
 
     private void Update()
     {
-        if (Mouse.current == null || mainCamera == null)
+        if (mainCamera == null)
             return;
 
-        Vector2 screenPosition = Mouse.current.position.ReadValue();
+        if (!isDragging)
+        {
+            if (Touchscreen.current != null &&
+                Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+            {
+                TryBeginDrag(
+                    Touchscreen.current.primaryTouch.position.ReadValue(),
+                    true
+                );
+            }
+            else if (Mouse.current != null &&
+                     Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                TryBeginDrag(Mouse.current.position.ReadValue(), false);
+            }
+        }
 
-        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(
+        if (!isDragging)
+            return;
+
+        Vector2 screenPosition;
+        bool pressed;
+
+        if (usingTouch)
+        {
+            if (Touchscreen.current == null)
+            {
+                CancelDrag();
+                return;
+            }
+
+            var touch = Touchscreen.current.primaryTouch;
+            screenPosition = touch.position.ReadValue();
+            pressed = touch.press.isPressed;
+
+            if (touch.phase.ReadValue() ==
+                UnityEngine.InputSystem.TouchPhase.Canceled)
+            {
+                CancelDrag();
+                return;
+            }
+        }
+        else
+        {
+            if (Mouse.current == null)
+            {
+                CancelDrag();
+                return;
+            }
+
+            screenPosition = Mouse.current.position.ReadValue();
+            pressed = Mouse.current.leftButton.isPressed;
+        }
+
+        if (!usingTouch &&
+            Keyboard.current != null &&
+            Keyboard.current.rKey.wasPressedThisFrame &&
+            width != height)
+        {
+            SetSize(height, width);
+            grabOffset = new Vector3(-grabOffset.y, grabOffset.x, 0f);
+        }
+
+        transform.position = ScreenToWorld(screenPosition) + grabOffset;
+
+        if (spriteRenderer != null)
+        {
+            bool fits = packingGrid != null &&
+                packingGrid.CanPlace(this, transform.position);
+
+            spriteRenderer.color = fits ? validColor : invalidColor;
+        }
+
+        if (!pressed)
+            FinishDrag();
+    }
+
+    private Vector3 ScreenToWorld(Vector2 screenPosition)
+    {
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(
             new Vector3(
                 screenPosition.x,
                 screenPosition.y,
@@ -73,44 +152,43 @@ public class DraggableItem : MonoBehaviour
             )
         );
 
-        mousePosition.z = 0f;
-
-        if (Mouse.current.leftButton.wasPressedThisFrame &&
-            heldItem == null &&
-            itemCollider.OverlapPoint(mousePosition))
-        {
-            BeginDrag(mousePosition);
-        }
-
-        if (isDragging)
-        {
-            if (Keyboard.current != null &&
-                Keyboard.current.rKey.wasPressedThisFrame)
-            {
-                RotateItem();
-            }
-
-            transform.position = mousePosition + grabOffset;
-
-            UpdatePreview();
-
-            if (!Mouse.current.leftButton.isPressed)
-            {
-                FinishDrag();
-            }
-        }
+        worldPosition.z = 0f;
+        return worldPosition;
     }
 
-    private void BeginDrag(Vector3 mousePosition)
+    private bool IsOverUI(Vector2 screenPosition)
     {
+        if (EventSystem.current == null)
+            return false;
+
+        var pointer = new PointerEventData(EventSystem.current);
+        pointer.position = screenPosition;
+
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, results);
+
+        return results.Count > 0;
+    }
+
+    private void TryBeginDrag(Vector2 screenPosition, bool touchInput)
+    {
+        if (heldItem != null || IsOverUI(screenPosition))
+            return;
+
+        Vector3 worldPosition = ScreenToWorld(screenPosition);
+
+        if (!itemCollider.OverlapPoint(worldPosition))
+            return;
+
         heldItem = this;
+        SelectedItem = this;
         isDragging = true;
+        usingTouch = touchInput;
 
         positionBeforeDrag = transform.position;
         widthBeforeDrag = width;
         heightBeforeDrag = height;
-
-        grabOffset = transform.position - mousePosition;
+        grabOffset = transform.position - worldPosition;
 
         if (spriteRenderer != null)
         {
@@ -119,37 +197,41 @@ public class DraggableItem : MonoBehaviour
         }
     }
 
-    private void RotateItem()
+    public void RotateSelected()
     {
-        if (width == height)
+        if (!isActiveAndEnabled || heldItem != null || width == height)
             return;
 
-        SetSize(height, width);
+        int oldWidth = width;
+        int oldHeight = height;
 
-        grabOffset = new Vector3(
-            -grabOffset.y,
-            grabOffset.x,
-            0f
-        );
+        bool wasPacked = packingGrid != null &&
+            packingGrid.IsPacked(this);
+
+        SetSize(oldHeight, oldWidth);
+
+        if (!wasPacked)
+            return;
+
+        if (packingGrid.TryPlace(
+            this,
+            transform.position,
+            out Vector3 snappedPosition))
+        {
+            transform.position = snappedPosition;
+        }
+        else
+        {
+            // Keep the previous orientation if rotation won't fit.
+            SetSize(oldWidth, oldHeight);
+        }
     }
 
     private void SetSize(int newWidth, int newHeight)
     {
         width = newWidth;
         height = newHeight;
-
         transform.localScale = new Vector3(width, height, 1f);
-    }
-
-    private void UpdatePreview()
-    {
-        if (spriteRenderer == null)
-            return;
-
-        bool fits = packingGrid != null &&
-            packingGrid.CanPlace(this, transform.position);
-
-        spriteRenderer.color = fits ? validColor : invalidColor;
     }
 
     private void FinishDrag()
@@ -195,13 +277,25 @@ public class DraggableItem : MonoBehaviour
         RestoreColor();
     }
 
+    private void CancelDrag()
+    {
+        RestorePreviousPlacement();
+        EndDrag();
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus && isDragging)
+            CancelDrag();
+    }
+
     private void OnDisable()
     {
         if (isDragging)
-        {
-            RestorePreviousPlacement();
-            EndDrag();
-        }
+            CancelDrag();
+
+        if (SelectedItem == this)
+            SelectedItem = null;
 
         RestoreColor();
 
