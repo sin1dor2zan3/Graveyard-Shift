@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -15,7 +16,7 @@ public class ParcelDelivery : MonoBehaviour
     [SerializeField] private Button shipButton;
     [SerializeField] private float feedbackDuration = 4f;
 
-    private bool delivered;
+    private bool preparingShipment;
     private Coroutine clearFeedbackRoutine;
 
     private Vector3 ghostStartPosition;
@@ -55,14 +56,8 @@ public class ParcelDelivery : MonoBehaviour
 
     public void ShipParcel()
     {
-        if (delivered || !ReferencesAssigned())
+        if (preparingShipment || !ReferencesAssigned())
             return;
-
-        if (UnityEngine.InputSystem.Mouse.current != null &&
-            UnityEngine.InputSystem.Mouse.current.leftButton.isPressed)
-        {
-            return;
-        }
 
         if (!packingGrid.IsPacked(ghostCharm) ||
             !packingGrid.IsPacked(moonSeal) ||
@@ -80,23 +75,44 @@ public class ParcelDelivery : MonoBehaviour
             return;
         }
 
-        delivered = true;
+        OrderSession session = OrderSession.Instance;
 
-        ShowFeedback(
-            "Delivered! \"You kept them together. Thank you.\"",
-            true
-        );
+        if (session == null || !session.HasActiveOrder)
+        {
+            ShowFeedback("Please start from the main menu to accept an order.");
+            return;
+        }
 
+        if (session.BoxPrice > session.Budget)
+        {
+            ShowFeedback("This box exceeds the customer's budget.");
+            return;
+        }
+
+        if (!Application.CanStreamedLevelBeLoaded("ShippingStation"))
+        {
+            ShowFeedback("ShippingStation is missing from the build scene list.");
+
+            Debug.LogError(
+                "Add ShippingStation to the active build profile's scene list."
+            );
+
+            return;
+        }
+
+        // Packing has passed. Shipping preparation comes next.
+        preparingShipment = true;
         shipButton.interactable = false;
 
-        ghostCharm.enabled = false;
-        moonSeal.enabled = false;
-        teddyBear.enabled = false;
+        StopFeedbackTimer();
+        session.ApprovePacking();
+
+        SceneManager.LoadScene("ShippingStation");
     }
 
     public void ResetParcel()
     {
-        if (!ReferencesAssigned())
+        if (preparingShipment || !ReferencesAssigned())
             return;
 
         StopFeedbackTimer();
@@ -106,31 +122,28 @@ public class ParcelDelivery : MonoBehaviour
         ResetItem(moonSeal, moonStartPosition);
         ResetItem(teddyBear, bearStartPosition);
 
-        delivered = false;
+        if (OrderSession.Instance != null)
+            OrderSession.Instance.ClearPackingApproval();
+
         shipButton.interactable = true;
     }
 
     private void ResetItem(DraggableItem item, Vector3 startPosition)
     {
         item.enabled = false;
-
         packingGrid.RemoveItem(item);
 
         item.transform.position = startPosition;
         item.enabled = true;
     }
 
-    private void ShowFeedback(string message, bool keepVisible = false)
+    private void ShowFeedback(string message)
     {
         StopFeedbackTimer();
-
         feedbackText.text = message;
 
-        if (!keepVisible)
-        {
-            clearFeedbackRoutine =
-                StartCoroutine(ClearFeedbackAfterDelay());
-        }
+        clearFeedbackRoutine =
+            StartCoroutine(ClearFeedbackAfterDelay());
     }
 
     private void StopFeedbackTimer()

@@ -17,50 +17,52 @@ public class BoxSelection : MonoBehaviour
         if (!ReferencesAssigned())
             return;
 
-        selectedSize = 5;
-        BoxName = "Large";
-        BoxPrice = 7;
+        OrderSession session = OrderSession.GetOrCreate();
 
-        packingGrid.SetBoxSize(selectedSize);
-        UpdateCostText();
+        if (!session.HasActiveOrder)
+            session.StartFirstOrder();
+
+        // A newly loaded packing scene has an empty grid.
+        session.ClearPackingApproval();
+
+        ApplySessionBox(session);
     }
 
     public void SelectSmall()
     {
-        SelectBox(3, "Small", 3);
+        SelectBox(3);
     }
 
     public void SelectMedium()
     {
-        SelectBox(4, "Medium", 5);
+        SelectBox(4);
     }
 
     public void SelectLarge()
     {
-        SelectBox(5, "Large", 7);
+        SelectBox(5);
     }
 
-    private void SelectBox(int size, string boxName, int price)
+    private void SelectBox(int size)
     {
         if (!ReferencesAssigned() || selectedSize == size)
             return;
 
         parcelDelivery.ResetParcel();
 
-        selectedSize = size;
-        BoxName = boxName;
-        BoxPrice = price;
+        OrderSession session = OrderSession.GetOrCreate();
+        session.SelectBox(size);
 
-        packingGrid.SetBoxSize(size);
-        UpdateCostText();
+        ApplySessionBox(session);
     }
 
-    private void UpdateCostText()
+    private void ApplySessionBox(OrderSession session)
     {
-        OrderSession session = OrderSession.GetOrCreate();
+        selectedSize = session.BoxSize;
+        BoxName = session.BoxName;
+        BoxPrice = session.BoxPrice;
 
-        if (!session.HasActiveOrder)
-            session.StartFirstOrder();
+        packingGrid.SetBoxSize(selectedSize);
 
         int remaining = session.Budget - BoxPrice;
 
