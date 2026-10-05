@@ -157,7 +157,7 @@ public class ParcelDelivery : MonoBehaviour
 
     private IEnumerator ClearFeedbackAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(feedbackDuration);
+        yield return new WaitForSeconds(feedbackDuration);
 
         feedbackText.text = "";
         clearFeedbackRoutine = null;

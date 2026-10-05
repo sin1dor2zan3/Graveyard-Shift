@@ -55,6 +55,9 @@ public class ParcelTaping : MonoBehaviour
 
     private void Update()
     {
+        if (PauseMenu.IsPaused)
+            return;
+
         if (!ready)
             return;
 

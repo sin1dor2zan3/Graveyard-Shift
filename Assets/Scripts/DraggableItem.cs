@@ -62,6 +62,9 @@ public class DraggableItem : MonoBehaviour
 
     private void Update()
     {
+        if (PauseMenu.IsPaused)
+            return;
+
         if (mainCamera == null)
             return;
 

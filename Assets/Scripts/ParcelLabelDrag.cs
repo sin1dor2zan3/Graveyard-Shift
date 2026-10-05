@@ -28,6 +28,9 @@ public class ParcelLabelDrag : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (PauseMenu.IsPaused)
+            return;
+
         if (eventData.button != PointerEventData.InputButton.Left)
             return;
 
@@ -62,6 +65,9 @@ public class ParcelLabelDrag : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (PauseMenu.IsPaused)
+            return;
+
         if (!dragging || eventData.pointerId != activePointerId)
             return;
 
@@ -88,6 +94,12 @@ public class ParcelLabelDrag : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (PauseMenu.IsPaused)
+        {
+            CancelDrag();
+            return;
+        }
+
         if (!dragging || eventData.pointerId != activePointerId)
             return;
 
