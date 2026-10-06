@@ -17,6 +17,6 @@ public class OrderDisplay : MonoBehaviour
             requestText.text = session.Request;
 
         if (budgetText != null)
-            budgetText.text = $"Budget: {session.Budget} glimmer";
+            budgetText.text = $"Budget: {session.Budget}";
     }
 }

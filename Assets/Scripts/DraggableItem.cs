@@ -10,6 +10,11 @@ public class DraggableItem : MonoBehaviour
     [SerializeField, Min(1)] private int width = 1;
     [SerializeField, Min(1)] private int height = 1;
 
+    [Header("Artwork")]
+    [Tooltip("Assign a SpriteRenderer on a direct child named Artwork.")]
+    [SerializeField] private SpriteRenderer artwork;
+    [SerializeField, Range(0.1f, 1f)] private float artworkFill = 0.92f;
+
     [Header("Placement Preview")]
     [SerializeField]
     private Color validColor =
@@ -34,8 +39,8 @@ public class DraggableItem : MonoBehaviour
     private Vector3 grabOffset;
     private Vector3 positionBeforeDrag;
 
-    private int widthBeforeDrag;
-    private int heightBeforeDrag;
+    private int turnsBeforeDrag;
+    private int quarterTurns;
     private int originalSortingOrder;
     private int startingWidth;
     private int startingHeight;
@@ -45,7 +50,19 @@ public class DraggableItem : MonoBehaviour
     {
         mainCamera = Camera.main;
         itemCollider = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer placeholder = GetComponent<SpriteRenderer>();
+        bool validArtwork = artwork != null && artwork.sprite != null &&
+            artwork.transform.parent == transform;
+
+        if (!validArtwork && artwork != null)
+        {
+            Debug.LogWarning("Artwork needs a sprite and must be a direct child of the item.", this);
+            artwork = null;
+        }
+
+        spriteRenderer = validArtwork ? artwork : placeholder;
+        if (validArtwork && placeholder != null)
+            placeholder.enabled = false;
 
         startingWidth = width;
         startingHeight = height;
@@ -56,12 +73,20 @@ public class DraggableItem : MonoBehaviour
 
     private void OnEnable()
     {
-        SetSize(startingWidth, startingHeight);
+        SetOrientation(0);
         RestoreColor();
     }
 
     private void Update()
     {
+        if (OrderPopupController.IsOpen)
+        {
+            if (isDragging)
+                CancelDrag();
+
+            return;
+        }
+
         if (PauseMenu.IsPaused)
             return;
 
@@ -127,7 +152,7 @@ public class DraggableItem : MonoBehaviour
             Keyboard.current.rKey.wasPressedThisFrame &&
             width != height)
         {
-            SetSize(height, width);
+            SetOrientation(quarterTurns + 1);
             grabOffset = new Vector3(-grabOffset.y, grabOffset.x, 0f);
         }
 
@@ -189,8 +214,7 @@ public class DraggableItem : MonoBehaviour
         usingTouch = touchInput;
 
         positionBeforeDrag = transform.position;
-        widthBeforeDrag = width;
-        heightBeforeDrag = height;
+        turnsBeforeDrag = quarterTurns;
         grabOffset = transform.position - worldPosition;
 
         if (spriteRenderer != null)
@@ -202,16 +226,18 @@ public class DraggableItem : MonoBehaviour
 
     public void RotateSelected()
     {
-        if (!isActiveAndEnabled || heldItem != null || width == height)
+        if (OrderPopupController.IsOpen)
             return;
 
-        int oldWidth = width;
-        int oldHeight = height;
+        if (PauseMenu.IsPaused || !isActiveAndEnabled || heldItem != null || width == height)
+            return;
+
+        int oldTurns = quarterTurns;
 
         bool wasPacked = packingGrid != null &&
             packingGrid.IsPacked(this);
 
-        SetSize(oldHeight, oldWidth);
+        SetOrientation(quarterTurns + 1);
 
         if (!wasPacked)
             return;
@@ -225,16 +251,45 @@ public class DraggableItem : MonoBehaviour
         }
         else
         {
-            // Keep the previous orientation if rotation won't fit.
-            SetSize(oldWidth, oldHeight);
+            SetOrientation(oldTurns);
         }
     }
 
-    private void SetSize(int newWidth, int newHeight)
+    private void SetOrientation(int turns)
     {
-        width = newWidth;
-        height = newHeight;
-        transform.localScale = new Vector3(width, height, 1f);
+        quarterTurns = (turns % 4 + 4) % 4;
+        bool sideways = quarterTurns % 2 == 1;
+        width = sideways ? startingHeight : startingWidth;
+        height = sideways ? startingWidth : startingHeight;
+
+        transform.localRotation = Quaternion.identity;
+        itemCollider.offset = Vector2.zero;
+
+        if (artwork == null)
+        {
+            transform.localScale = new Vector3(width, height, 1f);
+            itemCollider.size = Vector2.one;
+            return;
+        }
+
+        transform.localScale = Vector3.one;
+        itemCollider.size = new Vector2(width, height);
+
+        Bounds bounds = artwork.sprite.bounds;
+        if (bounds.size.x <= 0f || bounds.size.y <= 0f)
+            return;
+
+        float fit = Mathf.Min(
+            startingWidth / bounds.size.x,
+            startingHeight / bounds.size.y
+        ) * artworkFill;
+
+        Quaternion rotation = Quaternion.Euler(0f, 0f, quarterTurns * 90f);
+        artwork.transform.localRotation = rotation;
+        artwork.transform.localScale = new Vector3(fit, fit, 1f);
+        Vector3 center = bounds.center;
+        center.z = 0f;
+        artwork.transform.localPosition = -(rotation * (center * fit));
     }
 
     private void FinishDrag()
@@ -257,7 +312,7 @@ public class DraggableItem : MonoBehaviour
 
     private void RestorePreviousPlacement()
     {
-        SetSize(widthBeforeDrag, heightBeforeDrag);
+        SetOrientation(turnsBeforeDrag);
         transform.position = positionBeforeDrag;
     }
 

@@ -88,6 +88,9 @@ public class PackingGrid : MonoBehaviour
 
     public bool CanPlace(DraggableItem item, Vector3 position)
     {
+        if (!isActiveAndEnabled || item == null)
+            return false;
+
         Vector2Int origin = GetOrigin(item, position);
 
         if (origin.x < 0 || origin.y < 0 ||
@@ -156,7 +159,7 @@ public class PackingGrid : MonoBehaviour
 
     public bool IsPacked(DraggableItem item)
     {
-        if (item == null)
+        if (!isActiveAndEnabled || item == null)
             return false;
 
         for (int x = 0; x < gridSize; x++)

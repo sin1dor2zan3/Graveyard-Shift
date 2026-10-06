@@ -15,6 +15,7 @@ public class OrderSession : MonoBehaviour
     public int BoxSize { get; private set; }
     public int BoxPrice { get; private set; }
     public int BoxWeightGrams { get; private set; }
+    public bool HasSelectedBox => BoxSize >= 3 && BoxSize <= 5;
     public bool PackingApproved { get; private set; }
 
     public bool IsWeighed { get; private set; }
@@ -34,6 +35,7 @@ public class OrderSession : MonoBehaviour
 
     public bool CanSend =>
         HasActiveOrder &&
+        HasSelectedBox &&
         PackingApproved &&
         IsWeighed &&
         IsSealed &&
@@ -73,13 +75,21 @@ public class OrderSession : MonoBehaviour
         Recipient = "An Old Friend";
         Address = "13 Moonbeam Lane";
         Budget = 12;
-
         Request =
-            "Please pack the teddy bear, ghost charm, and keepsake letter. " +
-            "Keep the charm beside the bear. " +
-            "Neither likes traveling alone.";
+        "Please pack Theodore Graham, his ghost charm, and the keepsake letter. " +
+        "Keep the charm beside Theodore. " +
+        "Neither likes traveling alone.";
 
-        SelectBox(5);
+        ClearBoxSelection();
+    }
+
+    public void ClearBoxSelection()
+    {
+        BoxName = "";
+        BoxSize = 0;
+        BoxPrice = 0;
+        BoxWeightGrams = 0;
+        ClearPackingApproval();
     }
 
     public void SelectBox(int size)
@@ -114,7 +124,7 @@ public class OrderSession : MonoBehaviour
 
     public void ApprovePacking()
     {
-        if (HasActiveOrder && !ShipmentSent)
+        if (HasActiveOrder && HasSelectedBox && !ShipmentSent)
             PackingApproved = true;
     }
 
