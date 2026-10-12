@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseOverlay;
     [SerializeField] private GameObject pauseCard;
     [SerializeField] private GameObject controlsCard;
+    [SerializeField] private GameObject helpCard;
     [SerializeField] private GameObject quitConfirmCard;
 
     private float previousTimeScale = 1f;
@@ -38,6 +39,7 @@ public class PauseMenu : MonoBehaviour
             }
             else if (
                 (controlsCard != null && controlsCard.activeSelf) ||
+                (helpCard != null && helpCard.activeSelf) ||
                 (quitConfirmCard != null && quitConfirmCard.activeSelf))
             {
                 ShowPauseCard();
@@ -81,6 +83,14 @@ public class PauseMenu : MonoBehaviour
 
         HideCards();
         controlsCard.SetActive(true);
+    }
+    public void ShowHelp()
+    {
+        if (!IsPaused || helpCard == null)
+            return;
+
+        HideCards();
+        helpCard.SetActive(true);
     }
 
     public void ShowPauseCard()
@@ -136,6 +146,9 @@ public class PauseMenu : MonoBehaviour
 
         if (controlsCard != null)
             controlsCard.SetActive(false);
+
+        if (helpCard != null)
+            helpCard.SetActive(false);
 
         if (quitConfirmCard != null)
             quitConfirmCard.SetActive(false);

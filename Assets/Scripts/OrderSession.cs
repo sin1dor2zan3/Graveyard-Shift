@@ -30,8 +30,22 @@ public class OrderSession : MonoBehaviour
     public bool ShipmentSent { get; private set; }
     public bool ReceiptGiven { get; private set; }
 
-    public int TotalPrice => BoxPrice + PostagePrice;
-    public int RemainingBudget => Budget - TotalPrice;
+    public int CushioningPrice =>
+        PackingApproved && HasSelectedBox ? BoxSize - 2 : 0;
+
+    public int EstimatedCushioningPrice =>
+        HasSelectedBox ? BoxSize - 2 : 0;
+
+    public int EstimatedPostagePrice =>
+        HasSelectedBox
+            ? Mathf.CeilToInt((550 + BoxWeightGrams) / 1000f) * 4
+            : 0;
+
+    public int EstimatedTotalPrice =>
+        BoxPrice + EstimatedCushioningPrice + EstimatedPostagePrice;
+
+    public int TotalPrice =>
+        BoxPrice + CushioningPrice + PostagePrice; public int RemainingBudget => Budget - TotalPrice;
 
     public bool CanSend =>
         HasActiveOrder &&
@@ -76,9 +90,9 @@ public class OrderSession : MonoBehaviour
         Address = "13 Moonbeam Lane";
         Budget = 12;
         Request =
-        "Please pack Theodore Graham, his ghost charm, and the keepsake letter. " +
-        "Keep the charm beside Theodore. " +
-        "Neither likes traveling alone.";
+            "Please pack Theodore Graham, his ghost charm, and the keepsake letter. " +
+            "Keep the charm beside Theodore. " +
+            "Neither likes traveling alone.";
 
         ClearBoxSelection();
     }

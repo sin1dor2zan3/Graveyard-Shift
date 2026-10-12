@@ -26,7 +26,6 @@ public class ParcelDelivery : MonoBehaviour
         if (!ReferencesAssigned())
             return;
 
-        // Cache these before either component's Start runs.
         ghostStartPosition = ghostCharm.transform.position;
         moonStartPosition = moonSeal.transform.position;
         bearStartPosition = teddyBear.transform.position;
@@ -72,10 +71,25 @@ public class ParcelDelivery : MonoBehaviour
             ShowFeedback("The ghost feels lonely! Its edge must touch Theodore.");
             return;
         }
+        PackingPeanuts peanuts = packingGrid.GetComponent<PackingPeanuts>();
 
-        if (session.BoxPrice > session.Budget)
+        if (peanuts == null)
         {
-            ShowFeedback("This box exceeds the customer's budget.");
+            ShowFeedback("The packing peanut tool is missing.");
+            return;
+        }
+
+        int spacesLeft = peanuts.UnprotectedCellCount;
+
+        if (spacesLeft > 0)
+        {
+            ShowFeedback(
+                $"Fill {spacesLeft} empty space(s) with packing peanuts first.");
+            return;
+        }
+        if (session.EstimatedTotalPrice > session.Budget)
+        {
+            ShowFeedback("Box, peanuts, and postage exceed the budget.Choose a smaller box.");
             return;
         }
 
@@ -99,8 +113,15 @@ public class ParcelDelivery : MonoBehaviour
             preparingShipment || !ReferencesAssigned())
             return;
 
-        StopFeedbackTimer();
-        feedbackText.text = "";
+        PackingPeanuts peanuts = packingGrid.GetComponent<PackingPeanuts>();
+
+        if (peanuts != null)
+            peanuts.ClearPeanuts();
+
+        PeanutScoop scoop = FindFirstObjectByType<PeanutScoop>();
+
+        if (scoop != null)
+            scoop.Empty();
         ResetItem(ghostCharm, ghostStartPosition);
         ResetItem(moonSeal, moonStartPosition);
         ResetItem(teddyBear, bearStartPosition);

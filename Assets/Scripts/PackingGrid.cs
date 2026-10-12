@@ -28,6 +28,7 @@ public class PackingGrid : MonoBehaviour
 
         GameObject lines = new GameObject("GridLines");
         lines.transform.SetParent(transform, false);
+        lines.SetActive(showGridLines);
 
         SpriteRenderer boxRenderer = GetComponent<SpriteRenderer>();
 
@@ -70,7 +71,13 @@ public class PackingGrid : MonoBehaviour
         renderer.sprite = boxRenderer.sprite;
         renderer.color = new Color(0.42f, 0.29f, 0.17f, 1f);
         renderer.sortingLayerID = boxRenderer.sortingLayerID;
-        renderer.sortingOrder = boxRenderer.sortingOrder + 1;
+        renderer.sortingLayerID = boxArtwork != null
+            ? boxArtwork.sortingLayerID
+            : boxRenderer.sortingLayerID;
+
+        renderer.sortingOrder = boxArtwork != null
+            ? boxArtwork.sortingOrder + 1
+            : boxRenderer.sortingOrder + 1;
     }
 
     private Vector2Int GetOrigin(
@@ -207,5 +214,68 @@ public class PackingGrid : MonoBehaviour
             return false;
 
         return occupiedCells[x, y] == item;
+    }
+
+    public int GridSize => gridSize;
+
+    public bool TryGetEmptyCell(Vector3 worldPosition, out Vector2Int cell)
+    {
+        float left = transform.position.x - gridSize / 2f;
+        float bottom = transform.position.y - gridSize / 2f;
+
+        cell = new Vector2Int(
+            Mathf.FloorToInt(worldPosition.x - left),
+            Mathf.FloorToInt(worldPosition.y - bottom)
+        );
+
+        if (!isActiveAndEnabled ||
+            cell.x < 0 || cell.x >= gridSize ||
+            cell.y < 0 || cell.y >= gridSize)
+        {
+            return false;
+        }
+
+        return occupiedCells[cell.x, cell.y] == null;
+    }
+
+    public Vector3 GetCellCenter(Vector2Int cell)
+    {
+        return new Vector3(
+            transform.position.x - gridSize / 2f + cell.x + 0.5f,
+            transform.position.y - gridSize / 2f + cell.y + 0.5f,
+            0f
+        );
+    }
+
+    public bool IsCellOccupied(Vector2Int cell)
+    {
+        if (cell.x < 0 || cell.x >= gridSize ||
+            cell.y < 0 || cell.y >= gridSize)
+        {
+            return true;
+        }
+
+        return occupiedCells[cell.x, cell.y] != null;
+    }
+    [SerializeField] private SpriteRenderer boxArtwork;
+
+    private bool showGridLines;
+
+    private void Awake()
+    {
+        showGridLines = PlayerPrefs.GetInt("ShowPackingGrid", 0) == 1;
+    }
+
+    public void ToggleGridLines()
+    {
+        showGridLines = !showGridLines;
+
+        PlayerPrefs.SetInt("ShowPackingGrid", showGridLines ? 1 : 0);
+        PlayerPrefs.Save();
+
+        Transform lines = transform.Find("GridLines");
+
+        if (lines != null)
+            lines.gameObject.SetActive(showGridLines);
     }
 }

@@ -59,10 +59,13 @@ public class BoxSelection : MonoBehaviour
         packingGrid.gameObject.SetActive(true);
         parcelDelivery.SetBoxAvailable(true);
 
-        int remaining = session.Budget - BoxPrice;
+        int remaining = session.Budget - session.EstimatedTotalPrice;
+
         boxCostText.text =
-            $"{BoxName} box: {BoxPrice} glimmer\n" +
-            $"After box cost: {remaining} glimmer left";
+            $"Box {BoxPrice} + peanuts {session.EstimatedCushioningPrice}" +
+            $" + postage {session.EstimatedPostagePrice} glimmer\n" +
+            $"Total: {session.EstimatedTotalPrice} / {session.Budget}" +
+            (remaining < 0 ? " — OVER BUDGET" : $" — {remaining} left");
     }
 
     private bool ReferencesAssigned()

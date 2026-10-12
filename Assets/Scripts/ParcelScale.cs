@@ -66,6 +66,7 @@ public class ParcelScale : MonoBehaviour
 
         costText.text =
             $"Box: {session.BoxPrice} glimmer\n" +
+            $"Peanuts: {session.CushioningPrice} glimmer\n" +
             $"Postage: {session.PostagePrice} glimmer\n" +
             $"Total: {session.TotalPrice} glimmer\n" +
             budgetMessage;
