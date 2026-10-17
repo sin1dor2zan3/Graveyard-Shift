@@ -15,6 +15,16 @@ public class PackingGrid : MonoBehaviour
 
         RebuildGridLines();
     }
+    public DraggableItem GetItemAt(Vector2Int cell)
+    {
+        if (cell.x < 0 || cell.x >= gridSize ||
+            cell.y < 0 || cell.y >= gridSize)
+        {
+            return null;
+        }
+
+        return occupiedCells[cell.x, cell.y];
+    }
 
     private void RebuildGridLines()
     {

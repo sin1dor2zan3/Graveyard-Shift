@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1335269be10430cb2285870eccaac2, type: 3}
+  m_Name: Theodore
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemName: Theodore Graham
+  intactSprite: {fileID: -7211092252831451009, guid: 32f1e7720c8ec4aa7a6c7f2572fb6d28, type: 3}
+  damagedSprite: {fileID: 0}
+  width: 2
+  height: 2
+  weightGrams: 400
+  isFragile: 0

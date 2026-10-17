@@ -25,6 +25,21 @@ public class ParcelTaping : MonoBehaviour
     private bool dragging;
     private bool usingTouch;
     private bool ready;
+    [SerializeField] private Collider2D tapeGunCollider;
+    [SerializeField] private Transform tapeTip;
+
+    private Vector3 gunHome;
+    private Vector3 gunGrabOffset;
+    private bool applyingTape;
+
+    private void ReturnGun()
+    {
+        dragging = false;
+        applyingTape = false;
+
+        if (tapeGunCollider != null)
+            tapeGunCollider.transform.position = gunHome;
+    }
 
     private void Start()
     {
@@ -33,6 +48,8 @@ public class ParcelTaping : MonoBehaviour
         if (mainCamera == null ||
             tapeStrip == null ||
             startMarker == null ||
+            tapeGunCollider == null ||
+            tapeTip == null ||
             instructionText == null)
         {
             Debug.LogError(
@@ -44,57 +61,64 @@ public class ParcelTaping : MonoBehaviour
         }
 
         fullScale = tapeStrip.transform.localScale;
-        fullCenter = tapeStrip.transform.position;
 
-        leftEdge = fullCenter.x - fullScale.x / 2f;
-        rightEdge = fullCenter.x + fullScale.x / 2f;
+        Bounds tapeBounds = tapeStrip.bounds;
+        fullCenter = tapeBounds.center;
 
+        leftEdge = tapeBounds.min.x;
+        rightEdge = tapeBounds.max.x;
+
+        if (rightEdge - leftEdge <= 0.001f)
+        {
+            Debug.LogError("Tape sprite must have a visible width.");
+            enabled = false;
+            return;
+        }
+        gunHome = tapeGunCollider.transform.position;
         ready = true;
         UpdateVisuals();
     }
 
     private void Update()
     {
-        if (PauseMenu.IsPaused)
-            return;
-
         if (!ready)
             return;
+
+        if (PauseMenu.IsPaused)
+        {
+            ReturnGun();
+            return;
+        }
 
         OrderSession session = OrderSession.Instance;
 
         if (session == null || !session.HasActiveOrder ||
             !session.PackingApproved || !session.IsWeighed)
         {
-            dragging = false;
+            ReturnGun();
             startMarker.gameObject.SetActive(false);
-            instructionText.text = "Weigh the parcel before sealing it.";
+            instructionText.text = "Weigh the parcel before sealing.";
             return;
         }
 
         if (session.IsSealed)
         {
-            progress = 1f;
-            dragging = false;
-            UpdateVisuals();
-            instructionText.text = "Sealed! Your parcel is ready for a label.";
+            ReturnGun();
+            instructionText.text = "Sealed! Print and attach the label.";
             return;
         }
-
-        startMarker.gameObject.SetActive(true);
 
         if (!dragging)
         {
             instructionText.text =
-                "Drag from the mint dot along the seam to the right.";
+                "Pick up the tape gun. Bring its tip to the left end of the seam.";
 
             if (Touchscreen.current != null &&
                 Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
             {
                 TryBegin(
                     Touchscreen.current.primaryTouch.position.ReadValue(),
-                    true
-                );
+                    true);
             }
             else if (Mouse.current != null &&
                      Mouse.current.leftButton.wasPressedThisFrame)
@@ -106,14 +130,14 @@ public class ParcelTaping : MonoBehaviour
         if (!dragging)
             return;
 
-        Vector2 screenPosition;
-        bool pressed;
+        Vector2 pointer;
+        bool held;
 
         if (usingTouch)
         {
             if (Touchscreen.current == null)
             {
-                dragging = false;
+                ReturnGun();
                 return;
             }
 
@@ -122,58 +146,70 @@ public class ParcelTaping : MonoBehaviour
             if (touch.phase.ReadValue() ==
                 UnityEngine.InputSystem.TouchPhase.Canceled)
             {
-                dragging = false;
+                ReturnGun();
                 return;
             }
 
-            screenPosition = touch.position.ReadValue();
-            pressed = touch.press.isPressed;
+            pointer = touch.position.ReadValue();
+            held = touch.press.isPressed;
         }
         else
         {
             if (Mouse.current == null)
             {
-                dragging = false;
+                ReturnGun();
                 return;
             }
 
-            screenPosition = Mouse.current.position.ReadValue();
-            pressed = Mouse.current.leftButton.isPressed;
+            pointer = Mouse.current.position.ReadValue();
+            held = Mouse.current.leftButton.isPressed;
         }
 
-        Vector3 position = ScreenToWorld(screenPosition);
+        tapeGunCollider.transform.position =
+            ScreenToWorld(pointer) + gunGrabOffset;
 
-        if (Mathf.Abs(position.y - fullCenter.y) > seamTolerance)
+        if (!held)
         {
-            dragging = false;
-            instructionText.text =
-                "Follow the seam. Start again from the mint dot.";
+            ReturnGun();
             return;
         }
 
+        Vector3 tip = tapeTip.position;
         float currentEdge = Mathf.Lerp(leftEdge, rightEdge, progress);
 
-        float movement = position.x - previousPointerX;
-        previousPointerX = position.x;
+        if (!applyingTape)
+        {
+            Vector2 target = new Vector2(currentEdge, fullCenter.y);
 
-        float nextEdge = currentEdge + Mathf.Max(0f, movement);
-        progress = Mathf.Clamp01(
-            (nextEdge - leftEdge) / (rightEdge - leftEdge)
-        );
+            if (Vector2.Distance(tip, target) <= grabRadius)
+                applyingTape = true;
+            else
+            {
+                instructionText.text =
+                    "Bring the gun tip to the end of the tape seam.";
+                return;
+            }
+        }
+
+        if (Mathf.Abs(tip.y - fullCenter.y) > seamTolerance)
+        {
+            applyingTape = false;
+            instructionText.text = "Return the gun tip to the tape end.";
+            return;
+        }
+
+        progress = Mathf.Max(
+            progress,
+            Mathf.Clamp01((tip.x - leftEdge) / (rightEdge - leftEdge)));
 
         UpdateVisuals();
-        instructionText.text = "Keep dragging along the seam.";
+        instructionText.text = "Drag the gun right along the seam.";
 
-        if (progress >= 1f)
+        if (progress >= 1f && session.SealParcel())
         {
-            session.SealParcel();
-            dragging = false;
+            ReturnGun();
             startMarker.gameObject.SetActive(false);
-            instructionText.text = "Sealed! Your parcel is ready for a label.";
-        }
-        else if (!pressed)
-        {
-            dragging = false;
+            instructionText.text = "Sealed! Print and attach the label.";
         }
     }
 
@@ -186,12 +222,15 @@ public class ParcelTaping : MonoBehaviour
 
         Vector3 position = ScreenToWorld(screenPosition);
 
-        if (Vector2.Distance(position, startMarker.position) > grabRadius)
+        if (!tapeGunCollider.OverlapPoint(position))
             return;
 
         usingTouch = touchInput;
         dragging = true;
-        previousPointerX = position.x;
+        applyingTape = false;
+
+        gunGrabOffset =
+            tapeGunCollider.transform.position - position;
     }
 
     private Vector3 ScreenToWorld(Vector2 screenPosition)
@@ -224,21 +263,26 @@ public class ParcelTaping : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        float visibleWidth = fullScale.x * progress;
+        float visibleWidth = (rightEdge - leftEdge) * progress;
 
         tapeStrip.enabled = progress > 0f;
 
         tapeStrip.transform.localScale = new Vector3(
-            visibleWidth,
+            fullScale.x * progress,
             fullScale.y,
             fullScale.z
         );
 
-        tapeStrip.transform.position = new Vector3(
+        Vector3 visibleCenter = new Vector3(
             leftEdge + visibleWidth / 2f,
             fullCenter.y,
             fullCenter.z
         );
+
+        Vector3 pivotOffset = tapeStrip.transform.TransformVector(
+            tapeStrip.sprite.bounds.center);
+
+        tapeStrip.transform.position = visibleCenter - pivotOffset;
 
         startMarker.position = new Vector3(
             Mathf.Lerp(leftEdge, rightEdge, progress),
@@ -248,15 +292,14 @@ public class ParcelTaping : MonoBehaviour
 
         startMarker.gameObject.SetActive(progress < 1f);
     }
-
     private void OnApplicationFocus(bool hasFocus)
     {
         if (!hasFocus)
-            dragging = false;
+            ReturnGun();
     }
 
     private void OnDisable()
     {
-        dragging = false;
+        ReturnGun();
     }
 }

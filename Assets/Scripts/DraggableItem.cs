@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(BoxCollider2D))]
 public class DraggableItem : MonoBehaviour
 {
+
+    [SerializeField] private ItemDefinition definition;
+
+    public ItemDefinition Definition => definition;
     [SerializeField] private PackingGrid packingGrid;
     [SerializeField, Min(1)] private int width = 1;
     [SerializeField, Min(1)] private int height = 1;
@@ -46,8 +50,20 @@ public class DraggableItem : MonoBehaviour
     private int startingHeight;
     private Color originalColor;
 
+    public void AssignGrid(PackingGrid grid)
+    {
+        packingGrid = grid;
+    }
     private void Awake()
     {
+        if (definition != null)
+        {
+            width = Mathf.Max(1, definition.width);
+            height = Mathf.Max(1, definition.height);
+
+            if (artwork != null)
+                artwork.sprite = definition.intactSprite;
+        }
         mainCamera = Camera.main;
         itemCollider = GetComponent<BoxCollider2D>();
         SpriteRenderer placeholder = GetComponent<SpriteRenderer>();

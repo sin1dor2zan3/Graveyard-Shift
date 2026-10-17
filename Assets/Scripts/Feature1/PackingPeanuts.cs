@@ -18,11 +18,19 @@ public class PackingPeanuts : MonoBehaviour
         new List<Vector2Int>();
 
     private static readonly Vector2[] positions =
-    {
-        new Vector2(-0.22f, -0.18f),
-        new Vector2( 0.22f, -0.18f),
-        new Vector2( 0f,     0.22f)
-    };
+{
+    new Vector2(-0.28f, -0.28f),
+    new Vector2( 0f,    -0.28f),
+    new Vector2( 0.28f, -0.28f),
+
+    new Vector2(-0.28f,  0f),
+    new Vector2( 0f,     0f),
+    new Vector2( 0.28f,  0f),
+
+    new Vector2(-0.28f,  0.28f),
+    new Vector2( 0f,     0.28f),
+    new Vector2( 0.28f,  0.28f)
+};
 
     private void Awake()
     {
@@ -85,7 +93,7 @@ public class PackingPeanuts : MonoBehaviour
             peanut.transform.localRotation =
                 Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
 
-            float size = Random.Range(0.32f, 0.40f);
+            float size = Random.Range(0.38f, 0.46f);
             Vector3 boundsSize = sprite.bounds.size;
             float scale = size /
                 Mathf.Max(boundsSize.x, boundsSize.y);
@@ -180,9 +188,9 @@ public class PackingPeanuts : MonoBehaviour
 
         bool deposited = false;
 
-        for (int x = 0; x < grid.GridSize; x++)
+        for (int x = target.x - 1; x <= target.x + 1; x++)
         {
-            for (int y = 0; y < grid.GridSize; y++)
+            for (int y = target.y - 1; y <= target.y + 1; y++)
             {
                 Vector2Int cell = new Vector2Int(x, y);
 
@@ -192,5 +200,52 @@ public class PackingPeanuts : MonoBehaviour
         }
 
         return deposited;
+    }
+    public bool IsProtected(DraggableItem item)
+    {
+        if (item == null || !grid.IsPacked(item))
+            return false;
+
+        Vector2Int[] directions =
+        {
+        Vector2Int.left,
+        Vector2Int.right,
+        Vector2Int.up,
+        Vector2Int.down
+    };
+
+        for (int x = 0; x < grid.GridSize; x++)
+        {
+            for (int y = 0; y < grid.GridSize; y++)
+            {
+                Vector2Int cell = new Vector2Int(x, y);
+
+                if (grid.GetItemAt(cell) != item)
+                    continue;
+
+                foreach (Vector2Int direction in directions)
+                {
+                    Vector2Int neighbor = cell + direction;
+
+                    // Interior cells of the same gift need no padding.
+                    if (grid.GetItemAt(neighbor) == item)
+                        continue;
+
+                    // Walls and other gifts cannot replace cushioning.
+                    if (!HasCushioning(neighbor))
+                        return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public bool HasCushioning(Vector2Int cell)
+    {
+        return cell.x >= 0 && cell.x < grid.GridSize &&
+            cell.y >= 0 && cell.y < grid.GridSize &&
+            !grid.IsCellOccupied(cell) &&
+            clusters.ContainsKey(cell);
     }
 }

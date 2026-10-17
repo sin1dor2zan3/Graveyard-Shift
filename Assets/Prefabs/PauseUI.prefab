@@ -1013,29 +1013,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'PACK
-
-    Drag gifts into the box.
-
-    Select the letter, then tap Rotate
-    Letter.
-
-    On a computer, you can also hold R while dragging.
-
-
-    PREPARE
-
-    Weigh
-    the parcel. Drag along the seam to tape it.
-
-    Choose the correct label and
-    drag it onto the box.
-
-
-    FINISH
-
-    Send the parcel and give the customer
-    their receipt.'
+  m_text: "PACK THE ORDER\nCheck the customer\u2019s request. Drag gifts into the
+    parcel and use Rotate to turn them.\n\nPROTECT FRAGILE GIFTS\nLeave one cell
+    of space along every edge of fragile gifts. Fill those spaces with peanuts. Box
+    walls and other gifts do not count as protection. Diagonal corners do not need
+    padding.\n\nUSE THE SCOOP\nDrag the scoop into the bin to fill it. Drop it over
+    an empty parcel cell to cushion a nearby 3 \xD7 3 area.\n\nCHECK YOUR WORK\nThe
+    protection icon shows whether a fragile gift is safe. Toggle Grid shows placement
+    guides.\n\nCOMPLETE YOUR SHIFT\nMissing gifts, unmet requests, damaged gifts,
+    and overspending cause failed orders. Complete three deliveries to see your shift
+    results."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 753167df8f899415ea2fc4a1224c0c36, type: 2}
   m_sharedMaterial: {fileID: -2469084456055300753, guid: 753167df8f899415ea2fc4a1224c0c36, type: 2}
@@ -1062,8 +1049,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

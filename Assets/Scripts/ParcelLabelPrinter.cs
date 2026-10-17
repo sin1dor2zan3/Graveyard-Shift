@@ -76,8 +76,6 @@ public class ParcelLabelPrinter : MonoBehaviour
             return;
         }
 
-        // The correct label uses the actual order information.
-        // The other two addresses are distractors for this first order.
         recipients = new string[]
         {
             session.Recipient,
@@ -87,9 +85,9 @@ public class ParcelLabelPrinter : MonoBehaviour
 
         addresses = new string[]
         {
-            "31 Moonbeam Lane",
+            "Unit 2, " + session.Address,
             session.Address,
-            "13 Moonflower Lane"
+            "Unit 3, " + session.Address
         };
 
         optionAText.text = FormatLabel(0);
@@ -157,8 +155,7 @@ public class ParcelLabelPrinter : MonoBehaviour
 
         printedLabelText.text =
             $"TO: {session.Recipient}\n" +
-            $"{session.Address}\n" +
-            "STANDARD SPECTRAL";
+            $"{session.Address}";
 
         labelChoicePanel.SetActive(false);
         printedLabel.SetActive(true);

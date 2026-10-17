@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class OrderSession : MonoBehaviour
 {
     public static OrderSession Instance { get; private set; }
+    public OrderDefinition CurrentOrder { get; private set; }
 
     public bool HasActiveOrder { get; private set; }
     public string CustomerName { get; private set; }
@@ -38,7 +40,8 @@ public class OrderSession : MonoBehaviour
 
     public int EstimatedPostagePrice =>
         HasSelectedBox
-            ? Mathf.CeilToInt((550 + BoxWeightGrams) / 1000f) * 4
+            ? Mathf.CeilToInt(
+                (ContentsWeightGrams + BoxWeightGrams) / 1000f) * 4
             : 0;
 
     public int EstimatedTotalPrice =>
@@ -56,9 +59,45 @@ public class OrderSession : MonoBehaviour
         LabelAttached &&
         LabelRecipient == Recipient &&
         LabelAddress == Address &&
-        RemainingBudget >= 0 &&
         !ShipmentSent;
 
+    public int PackedContentsWeight { get; private set; }
+    public string PackingIssues { get; private set; } = "";
+
+    public List<ItemDefinition> DamagedItems { get; } =
+        new List<ItemDefinition>();
+
+    public bool OrderSucceeded =>
+        ShipmentSent &&
+        string.IsNullOrEmpty(PackingIssues) &&
+        RemainingBudget >= 0;
+
+    public string ResultDescription
+    {
+        get
+        {
+            string result = PackingIssues;
+
+            if (RemainingBudget < 0)
+                result += $"Over budget by {-RemainingBudget} glimmer.\n";
+
+            return string.IsNullOrEmpty(result)
+                ? "All gifts delivered safely and within budget."
+                : result.Trim();
+        }
+    }
+
+    public void RecordPacking(
+        int packedWeight,
+        string issues,
+        List<ItemDefinition> damagedItems)
+    {
+        PackedContentsWeight = packedWeight;
+        PackingIssues = issues;
+        DamagedItems.Clear();
+        DamagedItems.AddRange(damagedItems);
+        ApprovePacking();
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -81,7 +120,59 @@ public class OrderSession : MonoBehaviour
 
         return Instance;
     }
+    public int ContentsWeightGrams
+    {
+        get
+        {
+            if (CurrentOrder == null || CurrentOrder.items == null)
+                return 0;
 
+            int total = 0;
+
+            foreach (ItemDefinition item in CurrentOrder.items)
+            {
+                if (item != null)
+                    total += item.weightGrams;
+            }
+
+            return total;
+        }
+    }
+    public bool StartOrder(OrderDefinition order)
+    {
+        if (order == null ||
+            order.items == null ||
+            order.items.Length == 0)
+        {
+            Debug.LogError("Order needs an assigned definition and items.");
+            return false;
+        }
+
+        foreach (ItemDefinition item in order.items)
+        {
+            if (item == null)
+            {
+                Debug.LogError("An order contains an empty item slot.");
+                return false;
+            }
+        }
+
+        ClearBoxSelection();
+
+        CurrentOrder = order;
+        HasActiveOrder = true;
+
+        CustomerName = order.customerName;
+        Request = order.request;
+        Recipient = order.recipient;
+        Address = order.address;
+        Budget = order.budget;
+        PackedContentsWeight = 0;
+        PackingIssues = "";
+        DamagedItems.Clear();
+
+        return true;
+    }
     public void StartFirstOrder()
     {
         HasActiveOrder = true;
@@ -163,8 +254,7 @@ public class OrderSession : MonoBehaviour
         if (!HasActiveOrder || !PackingApproved || ShipmentSent)
             return false;
 
-        // First-order contents: bear 400 g, charm 100 g, letter 50 g.
-        TotalWeightGrams = 400 + 100 + 50 + BoxWeightGrams;
+        TotalWeightGrams = PackedContentsWeight + BoxWeightGrams;
         PostagePrice = Mathf.CeilToInt(TotalWeightGrams / 1000f) * 4;
 
         IsWeighed = true;
@@ -234,6 +324,7 @@ public class OrderSession : MonoBehaviour
         BoxWeightGrams = 0;
 
         ClearPackingApproval();
+        CurrentOrder = null;
     }
 
     private void OnDestroy()

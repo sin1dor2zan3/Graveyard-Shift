@@ -3,13 +3,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class ParcelDelivery : MonoBehaviour
 {
     [SerializeField] private PackingGrid packingGrid;
-    [SerializeField] private DraggableItem ghostCharm;
-    [SerializeField] private DraggableItem moonSeal;
-    [SerializeField] private DraggableItem teddyBear;
+    [SerializeField] private OrderItemSpawner itemSpawner;
     [SerializeField] private TMP_Text feedbackText;
     [SerializeField] private Button shipButton;
     [SerializeField] private float feedbackDuration = 4f;
@@ -17,18 +16,12 @@ public class ParcelDelivery : MonoBehaviour
     public bool IsPreparingShipment => preparingShipment;
     private bool preparingShipment;
     private Coroutine clearFeedbackRoutine;
-    private Vector3 ghostStartPosition;
-    private Vector3 moonStartPosition;
-    private Vector3 bearStartPosition;
 
     private void Awake()
     {
         if (!ReferencesAssigned())
             return;
 
-        ghostStartPosition = ghostCharm.transform.position;
-        moonStartPosition = moonSeal.transform.position;
-        bearStartPosition = teddyBear.transform.position;
         feedbackText.text = "";
         shipButton.interactable = false;
     }
@@ -46,32 +39,29 @@ public class ParcelDelivery : MonoBehaviour
             return;
 
         OrderSession session = OrderSession.Instance;
-        if (session == null || !session.HasActiveOrder)
+
+        if (session == null || session.CurrentOrder == null)
         {
-            ShowFeedback("Please start from the main menu to accept an order.");
+            ShowFeedback("Start a shift from the main menu.");
             return;
         }
 
         if (!session.HasSelectedBox || !packingGrid.isActiveAndEnabled)
         {
-            ShowFeedback("Choose a box to begin.");
+            ShowFeedback("Choose a box first.");
             return;
         }
 
-        if (!packingGrid.IsPacked(ghostCharm) ||
-            !packingGrid.IsPacked(moonSeal) ||
-            !packingGrid.IsPacked(teddyBear))
+        OrderDefinition order = session.CurrentOrder;
+
+        if (itemSpawner.SpawnedItems.Count != order.items.Length)
         {
-            ShowFeedback("Please pack all three gifts first.");
+            ShowFeedback("The order's gifts have not loaded correctly.");
             return;
         }
 
-        if (!packingGrid.AreNeighbors(ghostCharm, teddyBear))
-        {
-            ShowFeedback("The ghost feels lonely! Its edge must touch Theodore.");
-            return;
-        }
-        PackingPeanuts peanuts = packingGrid.GetComponent<PackingPeanuts>();
+        PackingPeanuts peanuts =
+            packingGrid.GetComponent<PackingPeanuts>();
 
         if (peanuts == null)
         {
@@ -79,31 +69,64 @@ public class ParcelDelivery : MonoBehaviour
             return;
         }
 
-        int spacesLeft = peanuts.UnprotectedCellCount;
-
-        if (spacesLeft > 0)
-        {
-            ShowFeedback(
-                $"Fill {spacesLeft} empty space(s) with packing peanuts first.");
-            return;
-        }
-        if (session.EstimatedTotalPrice > session.Budget)
-        {
-            ShowFeedback("Box, peanuts, and postage exceed the budget.Choose a smaller box.");
-            return;
-        }
-
         if (!Application.CanStreamedLevelBeLoaded("ShippingStation"))
         {
-            ShowFeedback("ShippingStation is missing from the build scene list.");
-            Debug.LogError("Add ShippingStation to the active build profile's scene list.");
+            ShowFeedback("ShippingStation is missing from the build.");
             return;
         }
+
+        int packedWeight = 0;
+        string issues = "";
+        List<ItemDefinition> damaged = new List<ItemDefinition>();
+
+        foreach (DraggableItem item in itemSpawner.SpawnedItems)
+        {
+            if (item == null || item.Definition == null)
+            {
+                ShowFeedback("A gift reference is missing.");
+                return;
+            }
+
+            ItemDefinition definition = item.Definition;
+
+            if (!packingGrid.IsPacked(item))
+            {
+                issues += $"Missing: {definition.itemName}.\n";
+                continue;
+            }
+
+            packedWeight += definition.weightGrams;
+
+            if (definition.isFragile && !peanuts.IsProtected(item))
+            {
+                damaged.Add(definition);
+                issues += $"Damaged: {definition.itemName} — missing protection.\n";
+            }
+        }
+
+        if (order.mustTouchFirst != null &&
+            order.mustTouchSecond != null)
+        {
+            DraggableItem first = itemSpawner.SpawnedItems.Find(
+                item => item.Definition == order.mustTouchFirst);
+
+            DraggableItem second = itemSpawner.SpawnedItems.Find(
+                item => item.Definition == order.mustTouchSecond);
+
+            if (!packingGrid.AreNeighbors(first, second))
+            {
+                issues +=
+                    $"{order.mustTouchFirst.itemName} was not beside " +
+                    $"{order.mustTouchSecond.itemName}.\n";
+            }
+        }
+
+        session.RecordPacking(packedWeight, issues, damaged);
 
         preparingShipment = true;
         shipButton.interactable = false;
         StopFeedbackTimer();
-        session.ApprovePacking();
+
         SceneManager.LoadScene("ShippingStation");
     }
 
@@ -122,9 +145,9 @@ public class ParcelDelivery : MonoBehaviour
 
         if (scoop != null)
             scoop.Empty();
-        ResetItem(ghostCharm, ghostStartPosition);
-        ResetItem(moonSeal, moonStartPosition);
-        ResetItem(teddyBear, bearStartPosition);
+        StopFeedbackTimer();
+        feedbackText.text = "";
+        itemSpawner.ResetItems();
 
         OrderSession session = OrderSession.Instance;
         if (session != null)
@@ -134,22 +157,17 @@ public class ParcelDelivery : MonoBehaviour
             packingGrid.isActiveAndEnabled);
     }
 
-    private void ResetItem(DraggableItem item, Vector3 startPosition)
-    {
-        item.enabled = false;
-        packingGrid.RemoveItem(item);
-        item.transform.position = startPosition;
-        item.enabled = true;
-    }
-
     private bool ReferencesAssigned()
     {
-        if (packingGrid == null || ghostCharm == null || moonSeal == null ||
-            teddyBear == null || feedbackText == null || shipButton == null)
+        if (packingGrid == null || itemSpawner == null ||
+            feedbackText == null || shipButton == null)
         {
-            Debug.LogError("ParcelDelivery: assign every Inspector field.", this);
+            Debug.LogError(
+                "ParcelDelivery: assign grid, spawner, feedback, and button.",
+                this);
             return false;
         }
+
         return true;
     }
 

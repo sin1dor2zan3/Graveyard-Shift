@@ -5,6 +5,7 @@ public class OrderPopupController : MonoBehaviour
 {
     [SerializeField] private GameObject orderPopup;
     [SerializeField] private TMP_Text orderBudgetText;
+    [SerializeField] private TMP_Text orderRequestText;
 
     public static bool IsOpen { get; private set; }
 
@@ -31,7 +32,8 @@ public class OrderPopupController : MonoBehaviour
             orderBudgetText.text =
             $"Budget: {session.Budget}";
         }
-
+        if (orderRequestText != null)
+            orderRequestText.text = session.Request;
         IsOpen = true;
         orderPopup.SetActive(true);
     }
