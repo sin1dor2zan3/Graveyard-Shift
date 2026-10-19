@@ -20,15 +20,14 @@ public class RotateItemButton : MonoBehaviour
 
         bool canRotate = selected != null &&
             selected.isActiveAndEnabled &&
-            selected.Width != selected.Height;
-
+            selected.CanRotate;
         rotateButton.interactable = canRotate;
 
         if (buttonLabel != null)
         {
             buttonLabel.text = canRotate
-                ? "Rotate Letter"
-                : "Select Letter";
+                ? "Rotate Item"
+                : "Select Item";
         }
     }
 

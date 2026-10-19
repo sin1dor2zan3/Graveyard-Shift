@@ -75,9 +75,6 @@ public class CustomerCounterController : MonoBehaviour
         if (acceptButton != null)
             acceptButton.SetActive(false);
 
-        if (giveReceiptButton != null)
-            giveReceiptButton.SetActive(false);
-
         if (finishShiftButton != null)
             finishShiftButton.SetActive(false);
     }
@@ -208,6 +205,7 @@ public class CustomerCounterController : MonoBehaviour
             session.StartFirstOrder();
         RefreshAccessories();
         RefreshGiftPreviews();
+        budgetText.alignment = TextAlignmentOptions.Left;
         budgetText.text = $"Budget: {session.Budget} glimmer";
 
         if (session.ShipmentSent)
@@ -258,7 +256,6 @@ public class CustomerCounterController : MonoBehaviour
         displayItems.SetActive(!sent);
 
         acceptButton.SetActive(!sent);
-        giveReceiptButton.SetActive(sent && !receiptGiven);
         finishShiftButton.SetActive(sent && receiptGiven);
         receiptPanel.SetActive(sent && !receiptGiven);
 
@@ -356,7 +353,6 @@ public class CustomerCounterController : MonoBehaviour
         displayItems.SetActive(false);
         receiptPanel.SetActive(false);
         acceptButton.SetActive(false);
-        giveReceiptButton.SetActive(false);
 
         if (resultIcon != null)
             resultIcon.gameObject.SetActive(false);
@@ -400,7 +396,6 @@ public class CustomerCounterController : MonoBehaviour
             receiptPanel == null ||
             displayItems == null ||
             acceptButton == null ||
-            giveReceiptButton == null ||
             finishShiftButton == null)
         {
             Debug.LogError(

@@ -121,6 +121,8 @@ public class PackingGrid : MonoBehaviour
         {
             for (int y = origin.y; y < origin.y + item.Height; y++)
             {
+                if (!item.OccupiesCell(x - origin.x, y - origin.y))
+                    continue;
                 DraggableItem occupant = occupiedCells[x, y];
 
                 if (occupant != null && occupant != item)
@@ -147,7 +149,10 @@ public class PackingGrid : MonoBehaviour
         for (int x = origin.x; x < origin.x + item.Width; x++)
         {
             for (int y = origin.y; y < origin.y + item.Height; y++)
-                occupiedCells[x, y] = item;
+            {
+                if (item.OccupiesCell(x - origin.x, y - origin.y))
+                    occupiedCells[x, y] = item;
+            }
         }
 
         float left = transform.position.x - gridSize / 2f;

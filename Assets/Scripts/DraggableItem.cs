@@ -30,6 +30,44 @@ public class DraggableItem : MonoBehaviour
 
     public int Width => width;
     public int Height => height;
+    public bool CanRotate =>
+    width != height ||
+    (definition != null && definition.isLShaped);
+
+    public bool OccupiesCell(int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= width || y >= height)
+            return false;
+
+        if (definition == null || !definition.isLShaped)
+            return true;
+
+        // Map rotated coordinates back to the original footprint.
+        int originalX;
+        int originalY;
+
+        switch (quarterTurns)
+        {
+            case 1:
+                originalX = y;
+                originalY = startingHeight - 1 - x;
+                break;
+            case 2:
+                originalX = startingWidth - 1 - x;
+                originalY = startingHeight - 1 - y;
+                break;
+            case 3:
+                originalX = startingWidth - 1 - y;
+                originalY = x;
+                break;
+            default:
+                originalX = x;
+                originalY = y;
+                break;
+        }
+
+        return originalX == 0 || originalY == 0;
+    }
     public static DraggableItem SelectedItem { get; private set; }
 
     private static DraggableItem heldItem;
@@ -166,7 +204,7 @@ public class DraggableItem : MonoBehaviour
         if (!usingTouch &&
             Keyboard.current != null &&
             Keyboard.current.rKey.wasPressedThisFrame &&
-            width != height)
+            CanRotate)
         {
             SetOrientation(quarterTurns + 1);
             grabOffset = new Vector3(-grabOffset.y, grabOffset.x, 0f);
@@ -224,6 +262,18 @@ public class DraggableItem : MonoBehaviour
         if (!itemCollider.OverlapPoint(worldPosition))
             return;
 
+        // Ignore the empty part of an L-shaped footprint.
+        if (definition != null && definition.isLShaped)
+        {
+            Vector3 relative = worldPosition - transform.position;
+
+            int cellX = Mathf.FloorToInt(relative.x + width / 2f);
+            int cellY = Mathf.FloorToInt(relative.y + height / 2f);
+
+            if (!OccupiesCell(cellX, cellY))
+                return;
+        }
+
         heldItem = this;
         SelectedItem = this;
         isDragging = true;
@@ -245,7 +295,7 @@ public class DraggableItem : MonoBehaviour
         if (OrderPopupController.IsOpen)
             return;
 
-        if (PauseMenu.IsPaused || !isActiveAndEnabled || heldItem != null || width == height)
+        if (PauseMenu.IsPaused || !isActiveAndEnabled || heldItem != null || !CanRotate)
             return;
 
         int oldTurns = quarterTurns;

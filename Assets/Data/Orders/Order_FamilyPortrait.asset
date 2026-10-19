@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Order_FamilyPortrait
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Sentimental Spirit
-  request: "This photograph means everything to me. Please cushion all four sides
-    of the frame, and include my letter.\t"
+  request: My sister took this photograph of me. She always preferred being behind
+    the camera. I kept a flower from that day, too. Please send both with my letter,
+    and cushion all four sides of the frame.
   recipient: The Bair Family
   address: 331 Willow Drive
   budget: 15
   items:
   - {fileID: 11400000, guid: 9eac3d3282f604997a7e2b63bc40953a, type: 2}
   - {fileID: 11400000, guid: a0e751fd9f87a408888d0e8e89f61c54, type: 2}
+  - {fileID: 11400000, guid: 73301d066acc643da9143065a8398bcf, type: 2}
   mustTouchFirst: {fileID: 0}
   mustTouchSecond: {fileID: 0}
