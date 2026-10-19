@@ -309,6 +309,7 @@ public class CustomerCounterController : MonoBehaviour
         }
         if (ShiftController.Instance != null)
             ShiftController.Instance.RecordCurrentResult();
+        GameSFX.Instance?.Result(session.OrderSucceeded);
         RefreshCounter();
     }
 

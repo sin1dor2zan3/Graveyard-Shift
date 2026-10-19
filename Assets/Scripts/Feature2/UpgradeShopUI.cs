@@ -21,6 +21,7 @@ public class UpgradeShopUI : MonoBehaviour
 
     public void OpenShop()
     {
+        GameSFX.Instance?.Click();
         if (shopPanel == null)
         {
             Debug.LogError("UpgradeShopUI: assign Shop Panel.");
@@ -33,19 +34,25 @@ public class UpgradeShopUI : MonoBehaviour
 
     public void BuyScoop()
     {
-        PlayerProgress.BuyLargerScoop();
+        if (PlayerProgress.BuyLargerScoop())
+            GameSFX.Instance?.Purchase();
+
         Refresh();
     }
 
     public void BuyBoxes()
     {
-        PlayerProgress.BuyCheaperBoxes();
+        if (PlayerProgress.BuyCheaperBoxes())
+            GameSFX.Instance?.Purchase();
+
         Refresh();
     }
 
     public void BuyCushioning()
     {
-        PlayerProgress.BuyCheaperCushioning();
+        if (PlayerProgress.BuyCheaperCushioning())
+            GameSFX.Instance?.Purchase();
+
         Refresh();
     }
 
@@ -108,6 +115,9 @@ public class UpgradeShopUI : MonoBehaviour
         }
 
         if (shift.BeginShift())
+        {
+            GameSFX.Instance?.Click();
             SceneManager.LoadScene("CustomerCounter");
+        }
     }
 }
