@@ -8,6 +8,8 @@ public class PeanutScoop : MonoBehaviour
 {
     [SerializeField] private Sprite emptySprite;
     [SerializeField] private Sprite fullSprite;
+    [SerializeField] private Sprite largeEmptySprite;
+    [SerializeField] private Sprite largeFullSprite;
     [SerializeField] private Collider2D peanutBin;
     [SerializeField] private PackingPeanuts packingPeanuts;
 
@@ -164,7 +166,31 @@ public class PeanutScoop : MonoBehaviour
     private void SetFull(bool full)
     {
         IsFull = full;
-        artwork.sprite = full ? fullSprite : emptySprite;
+
+        Sprite selectedSprite;
+
+        if (PlayerProgress.HasLargerScoop)
+        {
+            selectedSprite = full
+                ? largeFullSprite
+                : largeEmptySprite;
+        }
+        else
+        {
+            selectedSprite = full ? fullSprite : emptySprite;
+        }
+
+        // Fall back to the original artwork if large art is unassigned.
+        if (selectedSprite == null)
+            selectedSprite = full ? fullSprite : emptySprite;
+
+        artwork.sprite = selectedSprite;
+
+        if (selectedSprite != null)
+        {
+            scoopCollider.size = selectedSprite.bounds.size;
+            scoopCollider.offset = selectedSprite.bounds.center;
+        }
     }
 
     private void ReturnToRest()

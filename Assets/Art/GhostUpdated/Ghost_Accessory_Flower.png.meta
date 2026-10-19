@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 9ed4fc31572da4831b501b64bf8b7f17
+guid: 7320390ab4d2246be8df3aaa591419aa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5702563486111001655
-    second: AngryFace_Updated_0
-  - first:
-      213: 4941303680626299740
-    second: AngryFace_Updated_1
-  - first:
-      213: -6130306730252260809
-    second: AngryFace_Updated_2
+      213: 8763591766313125825
+    second: Ghost_Accessory_Flower_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -145,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AngryFace_Updated_0
+      name: Ghost_Accessory_Flower_0
       rect:
         serializedVersion: 2
-        x: 874
-        y: 749
-        width: 77
-        height: 80
+        x: 736
+        y: 790
+        width: 172
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,52 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 73c62c2f643932f40800000000000000
-      internalID: 5702563486111001655
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryFace_Updated_1
-      rect:
-        serializedVersion: 2
-        x: 1027
-        y: 810
-        width: 76
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c539f037489039440800000000000000
-      internalID: 4941303680626299740
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AngryFace_Updated_2
-      rect:
-        serializedVersion: 2
-        x: 997
-        y: 752
-        width: 47
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 73aa0233286cceaa0800000000000000
-      internalID: -6130306730252260809
+      spriteID: 1c7c1aba7488e9970800000000000000
+      internalID: 8763591766313125825
       vertices: []
       indices: 
       edges: []
@@ -214,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -224,9 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AngryFace_Updated_0: 5702563486111001655
-      AngryFace_Updated_1: 4941303680626299740
-      AngryFace_Updated_2: -6130306730252260809
+      Ghost_Accessory_Flower_0: 8763591766313125825
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

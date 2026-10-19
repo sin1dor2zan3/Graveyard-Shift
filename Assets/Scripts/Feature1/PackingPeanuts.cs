@@ -186,12 +186,22 @@ public class PackingPeanuts : MonoBehaviour
             return false;
         }
 
+        int radius = PlayerProgress.HasLargerScoop ? 2 : 1;
         bool deposited = false;
 
-        for (int x = target.x - 1; x <= target.x + 1; x++)
+        for (int x = target.x - radius;
+             x <= target.x + radius; x++)
         {
-            for (int y = target.y - 1; y <= target.y + 1; y++)
+            for (int y = target.y - radius;
+                 y <= target.y + radius; y++)
             {
+                // Skip cells outside the box.
+                if (x < 0 || x >= grid.GridSize ||
+                    y < 0 || y >= grid.GridSize)
+                {
+                    continue;
+                }
+
                 Vector2Int cell = new Vector2Int(x, y);
 
                 if (TryDepositCell(grid.GetCellCenter(cell)))

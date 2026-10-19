@@ -6,7 +6,6 @@ public class ShiftController : MonoBehaviour
 
     private OrderDefinition[] shiftOrders;
 
-
     [SerializeField] private OrderDefinition[] orders;
 
     public int CurrentOrderNumber => currentIndex + 1;
@@ -17,6 +16,9 @@ public class ShiftController : MonoBehaviour
     public int SuccessfulOrders { get; private set; }
     public int FailedOrders { get; private set; }
     public int TotalSpent { get; private set; }
+    public int ShiftEarnings { get; private set; }
+    public int NightNumber { get; private set; }
+    private bool shiftCompleted;
 
     private readonly HashSet<int> recordedOrders = new HashSet<int>();
 
@@ -31,11 +33,23 @@ public class ShiftController : MonoBehaviour
         }
 
         if (session.OrderSucceeded)
+        {
             SuccessfulOrders++;
+            ShiftEarnings += PlayerProgress.SuccessfulOrderPay;
+            PlayerProgress.AddEarnings(PlayerProgress.SuccessfulOrderPay);
+        }
         else
+        {
             FailedOrders++;
+        }
 
         TotalSpent += session.TotalPrice;
+
+        if (!HasNextOrder && !shiftCompleted)
+        {
+            shiftCompleted = true;
+            PlayerProgress.CompleteShift();
+        }
     }
 
     private void Awake()
@@ -110,9 +124,12 @@ public class ShiftController : MonoBehaviour
 
         if (!OrderSession.GetOrCreate().StartOrder(shiftOrders[0]))
             return false;
+        NightNumber = PlayerProgress.CurrentNight;
         SuccessfulOrders = 0;
         FailedOrders = 0;
         TotalSpent = 0;
+        ShiftEarnings = 0;
+        shiftCompleted = false;
         recordedOrders.Clear();
         currentIndex = 0;
         return true;

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 31c378e625a1d451da0309b991f1e48b
+guid: d6e7e6c7e23ac4a879531c6335dc21b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6035551063815991927
-    second: Ghost_Accessory_Scarf_0
+      213: 6004231230028897613
+    second: BiggerScoop_Empty_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ghost_Accessory_Scarf_0
+      name: BiggerScoop_Empty_0
       rect:
         serializedVersion: 2
-        x: 662
-        y: 377
-        width: 599
-        height: 449
+        x: 245
+        y: 112
+        width: 509
+        height: 327
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 98d4481094a6d3ca0800000000000000
-      internalID: -6035551063815991927
+      spriteID: d4ddd2fed70535350800000000000000
+      internalID: 6004231230028897613
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ghost_Accessory_Scarf_0: -6035551063815991927
+      BiggerScoop_Empty_0: 6004231230028897613
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

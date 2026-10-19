@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class CustomerCounterController : MonoBehaviour
 {
+    [SerializeField] private UpgradeShopUI upgradeShop;
+
     [Header("Order Results")]
     [SerializeField] private Image resultIcon;
     [SerializeField] private Sprite successIcon;
@@ -44,6 +46,13 @@ public class CustomerCounterController : MonoBehaviour
     [SerializeField] private SpriteRenderer ghostFace;
     [SerializeField] private Sprite neutralFace;
     [SerializeField] private Sprite happyFace;
+    [SerializeField] private Sprite angryFace;
+    [SerializeField] private Sprite nervousFace;
+
+    [Header("Customer Accessories")]
+    [SerializeField] private GameObject scarfAccessory;
+    [SerializeField] private GameObject flowerAccessory;
+    [SerializeField] private GameObject glassesAccessory;
 
     private OrderSession session;
     private Coroutine introduction;
@@ -85,7 +94,10 @@ public class CustomerCounterController : MonoBehaviour
         budgetText.text =
             $"Order total: {session.TotalPrice} / {session.Budget} glimmer";
 
-        SetExpression(success ? happyFace : sadFace);
+        SetExpression(
+            success ? happyFace :
+            damaged ? sadFace :
+            angryFace);
 
         if (resultIcon != null)
         {
@@ -131,6 +143,19 @@ public class CustomerCounterController : MonoBehaviour
                     Vector3.one * (previewSize / longestSide);
             }
         }
+    }
+    private void RefreshAccessories()
+    {
+        string customer = session.CustomerName;
+
+        if (scarfAccessory != null)
+            scarfAccessory.SetActive(customer == "A Quiet Ghost");
+
+        if (flowerAccessory != null)
+            flowerAccessory.SetActive(customer == "A Sentimental Spirit");
+
+        if (glassesAccessory != null)
+            glassesAccessory.SetActive(customer == "A Forgetful Ghost");
     }
     private void RefreshGiftPreviews()
     {
@@ -181,6 +206,7 @@ public class CustomerCounterController : MonoBehaviour
         // Allow direct testing of this scene.
         if (!session.HasActiveOrder)
             session.StartFirstOrder();
+        RefreshAccessories();
         RefreshGiftPreviews();
         budgetText.text = $"Budget: {session.Budget} glimmer";
 
@@ -262,7 +288,7 @@ public class CustomerCounterController : MonoBehaviour
             dialogueText.text =
                 "Has the parcel been sent? May I have my receipt?";
 
-            SetExpression(neutralFace);
+            SetExpression(nervousFace);
         }
         else
         {
@@ -304,11 +330,13 @@ public class CustomerCounterController : MonoBehaviour
 
         if (showingShiftSummary)
         {
-            if (!Application.CanStreamedLevelBeLoaded("MainMenu"))
+            if (upgradeShop == null)
+            {
+                Debug.LogError("Assign Upgrade Shop on CustomerCounterController.");
                 return;
+            }
 
-            session.ClearOrder();
-            SceneManager.LoadScene("MainMenu");
+            upgradeShop.OpenShop();
             return;
         }
 
@@ -342,7 +370,9 @@ public class CustomerCounterController : MonoBehaviour
             $" / {shift.OrderCount}\n" +
             $"Successful: {shift.SuccessfulOrders}\n" +
             $"Failed: {shift.FailedOrders}\n" +
-            $"Total spent: {shift.TotalSpent} glimmer";
+            $"Customer postage spending: {shift.TotalSpent} glimmer\n" +
+            $"Your earnings: {shift.ShiftEarnings} glimmer\n" +
+            $"Your wallet: {PlayerProgress.Wallet} glimmer";
 
         budgetText.text = "";
 
@@ -350,7 +380,7 @@ public class CustomerCounterController : MonoBehaviour
             finishShiftButton.GetComponentInChildren<TMP_Text>(true);
 
         if (buttonText != null)
-            buttonText.text = "Main Menu";
+            buttonText.text = "Upgrade Shop";
 
         SetExpression(shift.FailedOrders == 0 ? happyFace : sadFace);
     }

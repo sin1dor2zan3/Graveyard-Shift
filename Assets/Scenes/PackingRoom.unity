@@ -2362,7 +2362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 691fd66b64b354f06852858702fbe2d0, type: 3}
+  m_Sprite: {fileID: 6979496757019558024, guid: 0251c70c4c1df4f0f963fd4aac5b477c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2589,6 +2589,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PeanutScoop
   emptySprite: {fileID: 222718766206252596, guid: 6078e387f66a84e3db5e5ded840e2d0e, type: 3}
   fullSprite: {fileID: -1917178072760275875, guid: da7b2c97516524c15aa3481c49f99c91, type: 3}
+  largeEmptySprite: {fileID: 6004231230028897613, guid: d6e7e6c7e23ac4a879531c6335dc21b9, type: 3}
+  largeFullSprite: {fileID: 2258160453257235306, guid: 4e44cd4942c134050a0c1ca2f500f460, type: 3}
   peanutBin: {fileID: 1549909908}
   packingPeanuts: {fileID: 1009093087}
 --- !u!61 &879009698

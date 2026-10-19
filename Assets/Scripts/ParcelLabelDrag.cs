@@ -136,7 +136,9 @@ public class ParcelLabelDrag : MonoBehaviour,
         if (overParcel &&
             session != null &&
             labelPrinter.HasPrintedLabel &&
-            session.AttachLabel(session.Recipient, session.Address))
+            session.AttachLabel(
+                labelPrinter.PrintedRecipient,
+                labelPrinter.PrintedAddress))
         {
             attached = true;
             labelRect.position = attachTarget.position;

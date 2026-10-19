@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: bf52b551a634f48c2bc2b606414856d3
+guid: 4e44cd4942c134050a0c1ca2f500f460
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3574797223792299685
-    second: SadFace_Update_0
-  - first:
-      213: -1467610221426253520
-    second: SadFace_Update_1
-  - first:
-      213: 2599294012028774315
-    second: SadFace_Update_2
-  - first:
-      213: 8727646139097218476
-    second: SadFace_Update_3
-  - first:
-      213: 5724339069814742600
-    second: SadFace_Update_4
+      213: 2258160453257235306
+    second: BiggerScoop_Full_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SadFace_Update_0
+      name: BiggerScoop_Full_0
       rect:
         serializedVersion: 2
-        x: 1025
-        y: 886
-        width: 41
-        height: 15
+        x: 245
+        y: 112
+        width: 509
+        height: 327
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,96 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b51bec37dd4c36ec0800000000000000
-      internalID: -3574797223792299685
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SadFace_Update_1
-      rect:
-        serializedVersion: 2
-        x: 886
-        y: 816
-        width: 41
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 031e723874002abe0800000000000000
-      internalID: -1467610221426253520
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SadFace_Update_2
-      rect:
-        serializedVersion: 2
-        x: 891
-        y: 705
-        width: 60
-        height: 116
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ba766cdd12c821420800000000000000
-      internalID: 2599294012028774315
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SadFace_Update_3
-      rect:
-        serializedVersion: 2
-        x: 1049
-        y: 801
-        width: 56
-        height: 77
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cadf2362ce3de1970800000000000000
-      internalID: 8727646139097218476
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SadFace_Update_4
-      rect:
-        serializedVersion: 2
-        x: 1011
-        y: 741
-        width: 40
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 84e923e1e00f07f40800000000000000
-      internalID: 5724339069814742600
+      spriteID: a6b8b3ec7f8965f10800000000000000
+      internalID: 2258160453257235306
       vertices: []
       indices: 
       edges: []
@@ -274,11 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SadFace_Update_0: -3574797223792299685
-      SadFace_Update_1: -1467610221426253520
-      SadFace_Update_2: 2599294012028774315
-      SadFace_Update_3: 8727646139097218476
-      SadFace_Update_4: 5724339069814742600
+      BiggerScoop_Full_0: 2258160453257235306
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

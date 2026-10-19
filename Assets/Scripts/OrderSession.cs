@@ -33,10 +33,14 @@ public class OrderSession : MonoBehaviour
     public bool ReceiptGiven { get; private set; }
 
     public int CushioningPrice =>
-        PackingApproved && HasSelectedBox ? BoxSize - 2 : 0;
+    PackingApproved && HasSelectedBox
+        ? PlayerProgress.GetCushioningPrice(BoxSize - 2)
+        : 0;
 
     public int EstimatedCushioningPrice =>
-        HasSelectedBox ? BoxSize - 2 : 0;
+        HasSelectedBox
+            ? PlayerProgress.GetCushioningPrice(BoxSize - 2)
+            : 0;
 
     public int EstimatedPostagePrice =>
         HasSelectedBox
@@ -57,8 +61,6 @@ public class OrderSession : MonoBehaviour
         IsWeighed &&
         IsSealed &&
         LabelAttached &&
-        LabelRecipient == Recipient &&
-        LabelAddress == Address &&
         !ShipmentSent;
 
     public int PackedContentsWeight { get; private set; }
@@ -68,15 +70,24 @@ public class OrderSession : MonoBehaviour
         new List<ItemDefinition>();
 
     public bool OrderSucceeded =>
-        ShipmentSent &&
-        string.IsNullOrEmpty(PackingIssues) &&
-        RemainingBudget >= 0;
+    ShipmentSent &&
+    LabelAttached &&
+    LabelRecipient == Recipient &&
+    LabelAddress == Address &&
+    string.IsNullOrEmpty(PackingIssues) &&
+    RemainingBudget >= 0;
 
     public string ResultDescription
     {
         get
         {
             string result = PackingIssues;
+
+            if (LabelAttached && LabelRecipient != Recipient)
+                result += "Incorrect recipient name on shipping label.\n";
+
+            if (LabelAttached && LabelAddress != Address)
+                result += "Incorrect delivery address on shipping label.\n";
 
             if (RemainingBudget < 0)
                 result += $"Over budget by {-RemainingBudget} glimmer.\n";
@@ -223,7 +234,7 @@ public class OrderSession : MonoBehaviour
                 Debug.LogError("Unsupported box size: " + size);
                 return;
         }
-
+        BoxPrice = PlayerProgress.GetBoxPrice(BoxPrice);
         ClearPackingApproval();
     }
 
@@ -282,8 +293,10 @@ public class OrderSession : MonoBehaviour
             return false;
         }
 
-        if (recipient != Recipient || address != Address)
+        if (string.IsNullOrWhiteSpace(recipient) || string.IsNullOrWhiteSpace(address))
+        {
             return false;
+        }
 
         LabelRecipient = recipient;
         LabelAddress = address;

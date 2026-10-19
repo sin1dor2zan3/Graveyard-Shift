@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: c559e05db24a94a15a2e5b0abaea6d6b
+guid: bf52b551a634f48c2bc2b606414856d3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1257552753889640615
-    second: HappyFace_Updated_0
+      213: -3574797223792299685
+    second: SadFace_Update_0
   - first:
-      213: -2328192108746489624
-    second: HappyFace_Updated_1
+      213: -1467610221426253520
+    second: SadFace_Update_1
   - first:
-      213: 6822309641418307082
-    second: HappyFace_Updated_2
+      213: 2599294012028774315
+    second: SadFace_Update_2
   - first:
-      213: -3657753569713307551
-    second: HappyFace_Updated_3
+      213: 8727646139097218476
+    second: SadFace_Update_3
   - first:
-      213: 7433947387992157815
-    second: HappyFace_Updated_4
+      213: 5724339069814742600
+    second: SadFace_Update_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -58,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -151,13 +151,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HappyFace_Updated_0
+      name: SadFace_Update_0
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 900
-        width: 38
-        height: 19
+        x: 1025
+        y: 886
+        width: 41
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7a008ed1199b37110800000000000000
-      internalID: 1257552753889640615
+      spriteID: b51bec37dd4c36ec0800000000000000
+      internalID: -3574797223792299685
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HappyFace_Updated_1
+      name: SadFace_Update_1
       rect:
         serializedVersion: 2
-        x: 883
-        y: 804
-        width: 38
-        height: 47
+        x: 886
+        y: 816
+        width: 41
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,20 +188,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8e04c45cc9990bfd0800000000000000
-      internalID: -2328192108746489624
+      spriteID: 031e723874002abe0800000000000000
+      internalID: -1467610221426253520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HappyFace_Updated_2
+      name: SadFace_Update_2
       rect:
         serializedVersion: 2
-        x: 896
-        y: 743
-        width: 68
-        height: 64
+        x: 891
+        y: 705
+        width: 60
+        height: 116
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,20 +210,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a06f5740976bdae50800000000000000
-      internalID: 6822309641418307082
+      spriteID: ba766cdd12c821420800000000000000
+      internalID: 2599294012028774315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HappyFace_Updated_3
+      name: SadFace_Update_3
       rect:
         serializedVersion: 2
-        x: 1048
-        y: 806
-        width: 52
-        height: 76
+        x: 1049
+        y: 801
+        width: 56
+        height: 77
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,20 +232,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1604259028c0d3dc0800000000000000
-      internalID: -3657753569713307551
+      spriteID: cadf2362ce3de1970800000000000000
+      internalID: 8727646139097218476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HappyFace_Updated_4
+      name: SadFace_Update_4
       rect:
         serializedVersion: 2
-        x: 992
-        y: 739
-        width: 57
-        height: 57
+        x: 1011
+        y: 741
+        width: 40
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,8 +254,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 77e273c33cfaa2760800000000000000
-      internalID: 7433947387992157815
+      spriteID: 84e923e1e00f07f40800000000000000
+      internalID: 5724339069814742600
       vertices: []
       indices: 
       edges: []
@@ -264,7 +264,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -274,11 +274,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HappyFace_Updated_0: 1257552753889640615
-      HappyFace_Updated_1: -2328192108746489624
-      HappyFace_Updated_2: 6822309641418307082
-      HappyFace_Updated_3: -3657753569713307551
-      HappyFace_Updated_4: 7433947387992157815
+      SadFace_Update_0: -3574797223792299685
+      SadFace_Update_1: -1467610221426253520
+      SadFace_Update_2: 2599294012028774315
+      SadFace_Update_3: 8727646139097218476
+      SadFace_Update_4: 5724339069814742600
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

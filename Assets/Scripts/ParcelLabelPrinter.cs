@@ -18,6 +18,8 @@ public class ParcelLabelPrinter : MonoBehaviour
     [SerializeField] private TMP_Text printedLabelText;
 
     public bool HasPrintedLabel { get; private set; }
+    public string PrintedRecipient { get; private set; }
+    public string PrintedAddress { get; private set; }
 
     private string[] recipients;
     private string[] addresses;
@@ -33,6 +35,8 @@ public class ParcelLabelPrinter : MonoBehaviour
         labelChoicePanel.SetActive(false);
         printedLabel.SetActive(false);
         HasPrintedLabel = false;
+        PrintedRecipient = "";
+        PrintedAddress = "";
 
         RefreshButton();
     }
@@ -50,116 +54,172 @@ public class ParcelLabelPrinter : MonoBehaviour
             session.HasActiveOrder &&
             session.PackingApproved &&
             session.IsWeighed &&
-            session.IsSealed;
+            session.IsSealed &&
+            !session.ShipmentSent;
 
         openLabelsButton.interactable = ready && !HasPrintedLabel;
 
-        if (HasPrintedLabel)
-            openLabelsButtonText.text = "Label Printed";
-        else if (!ready)
-            openLabelsButtonText.text = "Seal Box First";
-        else
-            openLabelsButtonText.text = "Print Label";
+        openLabelsButtonText.text = HasPrintedLabel
+            ? "Label Printed"
+            : ready ? "Print Label" : "Seal Box First";
     }
 
     public void OpenLabels()
     {
         OrderSession session = OrderSession.Instance;
 
-        if (session == null ||
+        if (PauseMenu.IsPaused ||
+            session == null ||
             !session.HasActiveOrder ||
             !session.PackingApproved ||
             !session.IsWeighed ||
             !session.IsSealed ||
+            session.ShipmentSent ||
             HasPrintedLabel)
         {
             return;
         }
 
-        recipients = new string[]
-        {
-            session.Recipient,
-            session.Recipient,
-            session.Recipient
-        };
-
-        addresses = new string[]
-        {
-            "Unit 2, " + session.Address,
-            session.Address,
-            "Unit 3, " + session.Address
-        };
+        // Generate once per scene/order, so reopening preserves positions.
+        if (recipients == null)
+            CreateChoices(session);
 
         optionAText.text = FormatLabel(0);
         optionBText.text = FormatLabel(1);
         optionCText.text = FormatLabel(2);
 
-        ShowDestination(session);
+        destinationText.text =
+            $"Customer requested:\n{session.Recipient}\n{session.Address}";
+
         labelChoicePanel.SetActive(true);
     }
 
-    public void ChooseA()
+    private void CreateChoices(OrderSession session)
     {
-        ChooseLabel(0);
+        recipients = new[]
+        {
+            session.Recipient,
+            MakeNameTypo(session.Recipient),
+            session.Recipient
+        };
+
+        addresses = new[]
+        {
+            session.Address,
+            session.Address,
+            MakeWrongRoad(session.Address)
+        };
+
+        // Shuffle recipient/address pairs together.
+        for (int i = recipients.Length - 1; i > 0; i--)
+        {
+            int other = Random.Range(0, i + 1);
+
+            string recipient = recipients[i];
+            recipients[i] = recipients[other];
+            recipients[other] = recipient;
+
+            string address = addresses[i];
+            addresses[i] = addresses[other];
+            addresses[other] = address;
+        }
     }
 
-    public void ChooseB()
+    private string MakeNameTypo(string name)
     {
-        ChooseLabel(1);
+        if (string.IsNullOrEmpty(name))
+            return "Unknown Recipient";
+
+        // Duplicate the final letter: Eleanor becomes Eleanorr.
+        for (int i = name.Length - 1; i >= 0; i--)
+        {
+            if (char.IsLetter(name[i]))
+                return name.Insert(i + 1, name[i].ToString());
+        }
+
+        return name + "e";
     }
 
-    public void ChooseC()
+    private string MakeWrongRoad(string address)
     {
-        ChooseLabel(2);
+        if (string.IsNullOrWhiteSpace(address))
+            return "Unknown Road";
+
+        string[] suffixes =
+        {
+            "Lane", "Boulevard", "Drive", "Road",
+            "Street", "Avenue", "Court", "Way",
+            "Blvd", "Ln", "Dr", "Rd", "St", "Ave"
+        };
+
+        string[] words = address.Split(' ');
+
+        for (int i = words.Length - 1; i >= 0; i--)
+        {
+            string word = words[i].TrimEnd('.', ',');
+
+            foreach (string suffix in suffixes)
+            {
+                if (!string.Equals(
+                    word, suffix,
+                    System.StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                string punctuation = words[i].Substring(word.Length);
+
+                bool isDrive = string.Equals(
+                    word, "Drive",
+                    System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(
+                    word, "Dr",
+                    System.StringComparison.OrdinalIgnoreCase);
+
+                words[i] = (isDrive ? "Lane" : "Drive") + punctuation;
+                return string.Join(" ", words);
+            }
+        }
+
+        return address + " Drive";
     }
+
+    public void ChooseA() { ChooseLabel(0); }
+    public void ChooseB() { ChooseLabel(1); }
+    public void ChooseC() { ChooseLabel(2); }
 
     private string FormatLabel(int index)
     {
         return $"{recipients[index]}\n{addresses[index]}";
     }
 
-    private void ShowDestination(OrderSession session)
-    {
-        destinationText.text =
-            $"Customer requested:\n{session.Recipient}, {session.Address}";
-    }
-
     private void ChooseLabel(int index)
     {
         OrderSession session = OrderSession.Instance;
 
-        if (session == null ||
+        if (PauseMenu.IsPaused ||
+            session == null ||
+            !session.HasActiveOrder ||
             !session.IsSealed ||
+            session.ShipmentSent ||
             HasPrintedLabel ||
             !labelChoicePanel.activeSelf ||
             addresses == null ||
-            recipients == null)
+            recipients == null ||
+            index < 0 || index >= recipients.Length)
         {
             return;
         }
 
-        bool correct =
-            recipients[index] == session.Recipient &&
-            addresses[index] == session.Address;
-
-        if (!correct)
-        {
-            destinationText.text =
-                "That address doesn't match. Try again.\n" +
-                $"Requested: {session.Recipient}, {session.Address}";
-
-            return;
-        }
-
+        PrintedRecipient = recipients[index];
+        PrintedAddress = addresses[index];
         HasPrintedLabel = true;
 
         printedLabelText.text =
-            $"TO: {session.Recipient}\n" +
-            $"{session.Address}";
+            $"TO: {PrintedRecipient}\n{PrintedAddress}";
 
         labelChoicePanel.SetActive(false);
         printedLabel.SetActive(true);
-
         RefreshButton();
     }
 
@@ -181,9 +241,7 @@ public class ParcelLabelPrinter : MonoBehaviour
             printedLabelText == null)
         {
             Debug.LogError(
-                "ParcelLabelPrinter: assign every field in the Inspector."
-            );
-
+                "ParcelLabelPrinter: assign every Inspector field.");
             return false;
         }
 
