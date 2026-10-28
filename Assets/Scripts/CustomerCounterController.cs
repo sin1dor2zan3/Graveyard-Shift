@@ -53,6 +53,9 @@ public class CustomerCounterController : MonoBehaviour
     [SerializeField] private GameObject scarfAccessory;
     [SerializeField] private GameObject flowerAccessory;
     [SerializeField] private GameObject glassesAccessory;
+    [SerializeField] private GameObject bakerHatAccessory;
+    [SerializeField] private GameObject stargazerShawlAccessory;
+    [SerializeField] private GameObject locksmithCoatAccessory;
 
     private OrderSession session;
     private Coroutine introduction;
@@ -153,6 +156,15 @@ public class CustomerCounterController : MonoBehaviour
 
         if (glassesAccessory != null)
             glassesAccessory.SetActive(customer == "A Forgetful Ghost");
+
+        if (bakerHatAccessory != null)
+            bakerHatAccessory.SetActive(customer == "A Flustered Baker");
+
+        if (stargazerShawlAccessory != null)
+            stargazerShawlAccessory.SetActive(customer == "A Gentle Stargazer");
+
+        if (locksmithCoatAccessory != null)
+            locksmithCoatAccessory.SetActive(customer == "A Retired Locksmith");
     }
     private void RefreshGiftPreviews()
     {

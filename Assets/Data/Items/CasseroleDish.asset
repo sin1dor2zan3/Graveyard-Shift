@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1335269be10430cb2285870eccaac2, type: 3}
+  m_Name: CasseroleDish
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemName: Ceramic Casserole Dish
+  intactSprite: {fileID: -810915529172438621, guid: a170ea98a8402417f904521733910281, type: 3}
+  damagedSprite: {fileID: 7764717696254609748, guid: f8b76b73766b54f61a30b50666910602, type: 3}
+  width: 3
+  height: 2
+  isLShaped: 0
+  weightGrams: 600
+  isFragile: 1

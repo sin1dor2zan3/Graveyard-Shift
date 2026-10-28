@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b640ad708b745af934c7edd516804c, type: 3}
+  m_Name: Order_UnquietDoor
+  m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
+  customerName: A Retired Locksmith
+  request: "Please send this miniature door, the ornate key, and its velvet-lined
+    case to Miss Wren. She\u2019ll know where they belong. The door is harmless until
+    the key gets near it. After that, it sometimes opens somewhere it shouldn\u2019t.
+    Add magical protection for the journey, please. And if you hear knocking, leave
+    it shut."
+  recipient: Miss Wren
+  address: 6 Hollow Lane
+  budget: 24
+  items:
+  - {fileID: 11400000, guid: 91699cd32d98146a798394a5ef07d201, type: 2}
+  - {fileID: 11400000, guid: ddfbe74fe276343b6abc6051b8f2d5e3, type: 2}
+  - {fileID: 11400000, guid: 6d81bada1639e49de8452461a68fc430, type: 2}
+  mustTouchFirst: {fileID: 0}
+  mustTouchSecond: {fileID: 0}

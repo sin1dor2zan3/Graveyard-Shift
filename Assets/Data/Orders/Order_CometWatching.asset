@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b640ad708b745af934c7edd516804c, type: 3}
+  m_Name: Order_CometWatching
+  m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
+  customerName: A Gentle Stargazer
+  request: "My grandchild and I used to watch the sky from the roof. Robin always
+    fell asleep before anything exciting happened. There\u2019s a comet coming tomorrow
+    night, the one I promised we\u2019d see together. Please send my telescope, star
+    chart, and mittens by Express. It gets cold up there."
+  recipient: Robin Vale
+  address: 17 Crescent Hill
+  budget: 24
+  items:
+  - {fileID: 11400000, guid: c09a251cd1bcd4530bb6621b8032109c, type: 2}
+  - {fileID: 11400000, guid: db45d3b3b243142138c8be3012ad60b9, type: 2}
+  - {fileID: 11400000, guid: c9b259ccb4a0241839c2d1614942b4ed, type: 2}
+  mustTouchFirst: {fileID: 0}
+  mustTouchSecond: {fileID: 0}

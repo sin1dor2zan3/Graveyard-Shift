@@ -591,6 +591,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73eca6aa081e741d0ac0e9525a9263d0, type: 2}
   - {fileID: 11400000, guid: 7acce9d9153e24a1db9a24af0f5ddbed, type: 2}
   - {fileID: 11400000, guid: daa0078f02a104dc8a92a4e028869cdc, type: 2}
+  secondShiftOrders:
+  - {fileID: 11400000, guid: 30675c529f8654102b65dfce2d28af95, type: 2}
+  - {fileID: 11400000, guid: 3a2718ac1a20b424eb628e0dce1288b2, type: 2}
+  - {fileID: 11400000, guid: 9e00f7f50a34e4795a927a40a41c0025, type: 2}
+  testNewCustomers: 1
 --- !u!4 &907263822
 Transform:
   m_ObjectHideFlags: 0

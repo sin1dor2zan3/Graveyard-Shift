@@ -86,14 +86,14 @@ public class PackingPeanuts : MonoBehaviour
             peanut.transform.SetParent(cluster.transform, false);
 
             Vector2 offset = position + new Vector2(
-                Random.Range(-0.025f, 0.025f),
-                Random.Range(-0.025f, 0.025f)
+                Random.Range(-0.10f, 0.10f),
+                Random.Range(-0.10f, 0.10f)
             );
 
             peanut.transform.localRotation =
                 Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
 
-            float size = Random.Range(0.38f, 0.46f);
+            float size = Random.Range(0.46f, 0.54f);
             Vector3 boundsSize = sprite.bounds.size;
             float scale = size /
                 Mathf.Max(boundsSize.x, boundsSize.y);

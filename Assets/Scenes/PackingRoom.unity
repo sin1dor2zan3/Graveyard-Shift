@@ -3009,6 +3009,7 @@ GameObject:
   - component: {fileID: 1009093084}
   - component: {fileID: 1009093086}
   - component: {fileID: 1009093087}
+  - component: {fileID: 1009093088}
   m_Layer: 0
   m_Name: PackingArea
   m_TagString: Untagged
@@ -3117,6 +3118,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b409589dca5ae427f9a2ebf91b91a3c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PackingPeanuts
+  peanutSprites:
+  - {fileID: 4723320012697483119, guid: 10430ab2e9d0b4b06aa0aab7bf158901, type: 3}
+  - {fileID: -1482393526325020739, guid: 6bc1099b1d72047828cd8bf242f057da, type: 3}
+  - {fileID: -2916708819769525826, guid: a917d6156c4ec487ab709deabc726f47, type: 3}
+  boxArtwork: {fileID: 305541915}
+  sortingOrder: 2
+--- !u!114 &1009093088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009093083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8319069b98fe48998ebaa4931613321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PeanutGapFiller
   peanutSprites:
   - {fileID: 4723320012697483119, guid: 10430ab2e9d0b4b06aa0aab7bf158901, type: 3}
   - {fileID: -1482393526325020739, guid: 6bc1099b1d72047828cd8bf242f057da, type: 3}
@@ -4662,6 +4681,15 @@ MonoBehaviour:
   - {fileID: 7571073466989802648, guid: 591a85b5dcd8e475bbd1428c4484a568, type: 3}
   - {fileID: 5431525777310759998, guid: b7bfa32ec6bac4ee2963afe4a263794d, type: 3}
   - {fileID: 9010811558474218341, guid: 8d9be47c67b704b2689323d8e7d1267d, type: 3}
+  - {fileID: 4538631317245320188, guid: 0960bdc4d680445269ea326bc74681a7, type: 3}
+  - {fileID: 426254136283081932, guid: 1d92ec2d9570b4decbaa17b7e80f1ff6, type: 3}
+  - {fileID: 426254136283081932, guid: ad6dbf9ce1afc4cfe9cd4b18ef82336f, type: 3}
+  - {fileID: 3780607139731405975, guid: f6ddd4b500462470ea3ba7f3fcbbcc01, type: 3}
+  - {fileID: 3780607139731405975, guid: dc4825308a6d9441082dd5228891d820, type: 3}
+  - {fileID: 3780607139731405975, guid: ad5fb3a21208d4cbfa9071914c363c9a, type: 3}
+  - {fileID: 3780607139731405975, guid: bdfa78a06afb0439784c0bce4475d313, type: 3}
+  - {fileID: 3780607139731405975, guid: 5670a9a395aaf47b28079cc9a8bb056c, type: 3}
+  - {fileID: 3780607139731405975, guid: cdfd34cdc57e74978872d49254f08987, type: 3}
   spawnPoints:
   - {fileID: 773636266}
   - {fileID: 683252442}

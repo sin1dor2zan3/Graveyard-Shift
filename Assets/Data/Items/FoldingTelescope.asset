@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1335269be10430cb2285870eccaac2, type: 3}
+  m_Name: FoldingTelescope
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemName: Folding Telescope
+  intactSprite: {fileID: 5299361383501797831, guid: 379fab58b89114ded9d2451dd7353fbe, type: 3}
+  damagedSprite: {fileID: 0}
+  width: 3
+  height: 1
+  isLShaped: 0
+  weightGrams: 400
+  isFragile: 0

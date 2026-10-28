@@ -6,11 +6,16 @@ public class ShiftController : MonoBehaviour
 
     private OrderDefinition[] shiftOrders;
 
+    [Header("Original Customers")]
     [SerializeField] private OrderDefinition[] orders;
 
+    [Header("New Customers")]
+    [SerializeField] private OrderDefinition[] secondShiftOrders;
+
+    [Header("Testing")]
+    [SerializeField] private bool testNewCustomers;
     public int CurrentOrderNumber => currentIndex + 1;
-    public int OrderCount => orders != null ? orders.Length : 0;
-    public bool HasNextOrder => currentIndex + 1 < OrderCount;
+    public int OrderCount => shiftOrders != null ? shiftOrders.Length : 0; public bool HasNextOrder => currentIndex + 1 < OrderCount;
 
     private int currentIndex = -1;
     public int SuccessfulOrders { get; private set; }
@@ -66,13 +71,20 @@ public class ShiftController : MonoBehaviour
 
     public bool BeginShift()
     {
-        if (orders == null || orders.Length != 3)
+        int upcomingNight = PlayerProgress.CurrentNight;
+
+        OrderDefinition[] selectedOrders =
+            testNewCustomers || upcomingNight % 2 == 0
+                ? secondShiftOrders
+                : orders;
+
+        if (selectedOrders == null || selectedOrders.Length != 3)
         {
             Debug.LogError("Assign three orders to ShiftController.");
             return false;
         }
 
-        foreach (OrderDefinition order in orders)
+        foreach (OrderDefinition order in selectedOrders)
         {
             if (order == null ||
                 order.items == null ||
@@ -102,14 +114,13 @@ public class ShiftController : MonoBehaviour
             }
         }
 
-        shiftOrders = new OrderDefinition[orders.Length];
+        shiftOrders = new OrderDefinition[selectedOrders.Length];
 
-        for (int i = 0; i < orders.Length; i++)
+        for (int i = 0; i < selectedOrders.Length; i++)
         {
-            shiftOrders[i] = Instantiate(orders[i]);
-
-            // Keep the tested base budget, with up to 2 extra glimmer.
-            shiftOrders[i].budget = orders[i].budget + Random.Range(0, 3);
+            shiftOrders[i] = Instantiate(selectedOrders[i]);
+            shiftOrders[i].budget =
+                selectedOrders[i].budget + Random.Range(0, 3);
         }
 
         // Shuffle without repeating or omitting customers.
