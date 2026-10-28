@@ -38,7 +38,7 @@ public class BoxSelection : MonoBehaviour
 
     public void SelectSmall() { SelectBox(3); }
     public void SelectMedium() { SelectBox(4); }
-    public void SelectLarge() { SelectBox(5); }
+    public void SelectLarge() { SelectBox(6); }
 
     private void SelectBox(int size)
     {

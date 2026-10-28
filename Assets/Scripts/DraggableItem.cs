@@ -28,6 +28,8 @@ public class DraggableItem : MonoBehaviour
     private Color invalidColor =
         new Color(1f, 0.45f, 0.45f, 1f);
 
+    private float appliedCellSize = 1f;
+
     public int Width => width;
     public int Height => height;
     public bool CanRotate =>
@@ -91,6 +93,7 @@ public class DraggableItem : MonoBehaviour
     public void AssignGrid(PackingGrid grid)
     {
         packingGrid = grid;
+        SetOrientation(quarterTurns);
     }
     private void Awake()
     {
@@ -133,6 +136,10 @@ public class DraggableItem : MonoBehaviour
 
     private void Update()
     {
+        if (packingGrid != null && !Mathf.Approximately(appliedCellSize, packingGrid.CellSize))
+        {
+            SetOrientation(quarterTurns);
+        }
         if (OrderPopupController.IsOpen)
         {
             if (isDragging)
@@ -265,8 +272,12 @@ public class DraggableItem : MonoBehaviour
         // Ignore the empty part of an L-shaped footprint.
         if (definition != null && definition.isLShaped)
         {
-            Vector3 relative = worldPosition - transform.position;
+            float cellSize = packingGrid != null
+                ? packingGrid.CellSize
+                : 1f;
 
+            Vector3 relative =
+                (worldPosition - transform.position) / cellSize;
             int cellX = Mathf.FloorToInt(relative.x + width / 2f);
             int cellY = Mathf.FloorToInt(relative.y + height / 2f);
 
@@ -323,6 +334,9 @@ public class DraggableItem : MonoBehaviour
 
     private void SetOrientation(int turns)
     {
+        float cellSize = packingGrid != null ? packingGrid.CellSize : 1f;
+
+        appliedCellSize = cellSize;
         quarterTurns = (turns % 4 + 4) % 4;
         bool sideways = quarterTurns % 2 == 1;
         width = sideways ? startingHeight : startingWidth;
@@ -333,13 +347,23 @@ public class DraggableItem : MonoBehaviour
 
         if (artwork == null)
         {
-            transform.localScale = new Vector3(width, height, 1f);
+            transform.localScale = new Vector3(
+                width * cellSize,
+                height * cellSize,
+                1f
+            );
+
             itemCollider.size = Vector2.one;
             return;
         }
 
+        // Artwork and collider already receive the cell-size adjustment.
         transform.localScale = Vector3.one;
-        itemCollider.size = new Vector2(width, height);
+
+        itemCollider.size = new Vector2(
+            width * cellSize,
+            height * cellSize
+        );
 
         Bounds bounds = artwork.sprite.bounds;
         if (bounds.size.x <= 0f || bounds.size.y <= 0f)
@@ -348,8 +372,7 @@ public class DraggableItem : MonoBehaviour
         float fit = Mathf.Min(
             startingWidth / bounds.size.x,
             startingHeight / bounds.size.y
-        ) * artworkFill;
-
+        ) * artworkFill * cellSize;
         Quaternion rotation = Quaternion.Euler(0f, 0f, quarterTurns * 90f);
         artwork.transform.localRotation = rotation;
         artwork.transform.localScale = new Vector3(fit, fit, 1f);

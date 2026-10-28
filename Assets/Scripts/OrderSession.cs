@@ -17,7 +17,7 @@ public class OrderSession : MonoBehaviour
     public int BoxSize { get; private set; }
     public int BoxPrice { get; private set; }
     public int BoxWeightGrams { get; private set; }
-    public bool HasSelectedBox => BoxSize >= 3 && BoxSize <= 5;
+    public bool HasSelectedBox => BoxSize == 3 || BoxSize == 4 || BoxSize == 6;
     public bool PackingApproved { get; private set; }
 
     public bool IsWeighed { get; private set; }
@@ -34,12 +34,12 @@ public class OrderSession : MonoBehaviour
 
     public int CushioningPrice =>
     PackingApproved && HasSelectedBox
-        ? PlayerProgress.GetCushioningPrice(BoxSize - 2)
+        ? PlayerProgress.GetCushioningPrice(BoxSize == 6 ? 3 : BoxSize - 2)
         : 0;
 
     public int EstimatedCushioningPrice =>
         HasSelectedBox
-            ? PlayerProgress.GetCushioningPrice(BoxSize - 2)
+            ? PlayerProgress.GetCushioningPrice(BoxSize == 6 ? 3 : BoxSize - 2)
             : 0;
 
     public int EstimatedPostagePrice =>
@@ -224,9 +224,9 @@ public class OrderSession : MonoBehaviour
                 BoxPrice = 5;
                 BoxWeightGrams = 200;
                 break;
-            case 5:
+            case 6:
                 BoxName = "Large";
-                BoxSize = 5;
+                BoxSize = 6;
                 BoxPrice = 7;
                 BoxWeightGrams = 300;
                 break;

@@ -72,8 +72,8 @@ public class PackingPeanuts : MonoBehaviour
 
         Vector3 parentScale = transform.lossyScale;
         cluster.transform.localScale = new Vector3(
-            1f / parentScale.x,
-            1f / parentScale.y,
+            grid.CellSize / parentScale.x,
+            grid.CellSize / parentScale.y,
             1f
         );
 

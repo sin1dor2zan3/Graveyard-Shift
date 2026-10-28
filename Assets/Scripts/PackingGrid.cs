@@ -6,13 +6,15 @@ public class PackingGrid : MonoBehaviour
     private DraggableItem[,] occupiedCells =
         new DraggableItem[5, 5];
 
+    public float CellSize => gridSize == 6 ? 5f / 6f : 1f;
+    private float WorldSize => gridSize * CellSize;
+
     public void SetBoxSize(int newSize)
     {
-        gridSize = Mathf.Clamp(newSize, 3, 5);
+        gridSize = Mathf.Clamp(newSize, 3, 6);
         occupiedCells = new DraggableItem[gridSize, gridSize];
 
-        transform.localScale = new Vector3(gridSize, gridSize, 1f);
-
+        transform.localScale = new Vector3(WorldSize, WorldSize, 1f);
         RebuildGridLines();
     }
     public DraggableItem GetItemAt(Vector2Int cell)
@@ -90,16 +92,16 @@ public class PackingGrid : MonoBehaviour
             : boxRenderer.sortingOrder + 1;
     }
 
-    private Vector2Int GetOrigin(
-        DraggableItem item,
-        Vector3 position)
+    private Vector2Int GetOrigin(DraggableItem item, Vector3 position)
     {
-        float left = transform.position.x - gridSize / 2f;
-        float bottom = transform.position.y - gridSize / 2f;
+        float left = transform.position.x - WorldSize / 2f;
+        float bottom = transform.position.y - WorldSize / 2f;
 
         return new Vector2Int(
-            Mathf.RoundToInt(position.x - left - item.Width / 2f),
-            Mathf.RoundToInt(position.y - bottom - item.Height / 2f)
+            Mathf.RoundToInt(
+                (position.x - left) / CellSize - item.Width / 2f),
+            Mathf.RoundToInt(
+                (position.y - bottom) / CellSize - item.Height / 2f)
         );
     }
 
@@ -155,12 +157,12 @@ public class PackingGrid : MonoBehaviour
             }
         }
 
-        float left = transform.position.x - gridSize / 2f;
-        float bottom = transform.position.y - gridSize / 2f;
+        float left = transform.position.x - WorldSize / 2f;
+        float bottom = transform.position.y - WorldSize / 2f;
 
         snappedPosition = new Vector3(
-            left + origin.x + item.Width / 2f,
-            bottom + origin.y + item.Height / 2f,
+            left + (origin.x + item.Width / 2f) * CellSize,
+            bottom + (origin.y + item.Height / 2f) * CellSize,
             0f
         );
 
@@ -233,14 +235,16 @@ public class PackingGrid : MonoBehaviour
 
     public int GridSize => gridSize;
 
-    public bool TryGetEmptyCell(Vector3 worldPosition, out Vector2Int cell)
+    public bool TryGetEmptyCell(
+    Vector3 worldPosition,
+    out Vector2Int cell)
     {
-        float left = transform.position.x - gridSize / 2f;
-        float bottom = transform.position.y - gridSize / 2f;
+        float left = transform.position.x - WorldSize / 2f;
+        float bottom = transform.position.y - WorldSize / 2f;
 
         cell = new Vector2Int(
-            Mathf.FloorToInt(worldPosition.x - left),
-            Mathf.FloorToInt(worldPosition.y - bottom)
+            Mathf.FloorToInt((worldPosition.x - left) / CellSize),
+            Mathf.FloorToInt((worldPosition.y - bottom) / CellSize)
         );
 
         if (!isActiveAndEnabled ||
@@ -256,8 +260,10 @@ public class PackingGrid : MonoBehaviour
     public Vector3 GetCellCenter(Vector2Int cell)
     {
         return new Vector3(
-            transform.position.x - gridSize / 2f + cell.x + 0.5f,
-            transform.position.y - gridSize / 2f + cell.y + 0.5f,
+            transform.position.x - WorldSize / 2f
+                + (cell.x + 0.5f) * CellSize,
+            transform.position.y - WorldSize / 2f
+                + (cell.y + 0.5f) * CellSize,
             0f
         );
     }
