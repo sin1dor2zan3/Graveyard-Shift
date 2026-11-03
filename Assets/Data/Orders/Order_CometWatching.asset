@@ -26,3 +26,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c9b259ccb4a0241839c2d1614942b4ed, type: 2}
   mustTouchFirst: {fileID: 0}
   mustTouchSecond: {fileID: 0}
+  requiresExpress: 1
+  requiresWard: 0

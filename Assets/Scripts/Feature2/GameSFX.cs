@@ -10,6 +10,12 @@ public class GameSFX : MonoBehaviour
     [SerializeField] private AudioClip orderSuccess;
     [SerializeField] private AudioClip orderFailure;
 
+    [Header("Shipping Sounds")]
+    [SerializeField] private AudioClip computerOpen;
+    [SerializeField] private AudioClip magicalProtection;
+    [SerializeField] private AudioClip scaleBeep;
+    [SerializeField] private AudioClip labelPrint;
+
     private AudioSource source;
 
     private void Awake()
@@ -38,6 +44,10 @@ public class GameSFX : MonoBehaviour
 
     public void Click() { Play(buttonClick); }
     public void Purchase() { Play(upgradePurchase); }
+    public void ComputerOpen() { Play(computerOpen); }
+    public void MagicalProtection() { Play(magicalProtection); }
+    public void ScaleBeep() { Play(scaleBeep); }
+    public void LabelPrint() { Play(labelPrint); }
 
     public void Result(bool success)
     {

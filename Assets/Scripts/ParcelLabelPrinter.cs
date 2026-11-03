@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ParcelLabelPrinter : MonoBehaviour
 {
@@ -17,12 +18,23 @@ public class ParcelLabelPrinter : MonoBehaviour
     [SerializeField] private GameObject printedLabel;
     [SerializeField] private TMP_Text printedLabelText;
 
+    [Header("Printing Animation")]
+    [SerializeField] private Vector2 printStartOffset = new Vector2(0f, 90f);
+    [SerializeField, Min(0.1f)] private float printDuration = 0.7f;
+
+    public bool IsPrinting { get; private set; }
+
+    [Header("Label Confirmation")]
+    [SerializeField] private Button confirmPrintButton;
+    [SerializeField] private TMP_Text selectedLabelText;
+
     public bool HasPrintedLabel { get; private set; }
     public string PrintedRecipient { get; private set; }
     public string PrintedAddress { get; private set; }
 
     private string[] recipients;
     private string[] addresses;
+    private int selectedLabelIndex = -1;
 
     private void Start()
     {
@@ -34,53 +46,55 @@ public class ParcelLabelPrinter : MonoBehaviour
 
         labelChoicePanel.SetActive(false);
         printedLabel.SetActive(false);
+
         HasPrintedLabel = false;
         PrintedRecipient = "";
         PrintedAddress = "";
+        selectedLabelIndex = -1;
 
         RefreshButton();
+        RefreshSelection();
     }
 
     private void Update()
     {
         RefreshButton();
+        RefreshSelection();
     }
 
-    private void RefreshButton()
+    private bool ParcelReady()
     {
         OrderSession session = OrderSession.Instance;
 
-        bool ready = session != null &&
+        return session != null &&
             session.HasActiveOrder &&
             session.PackingApproved &&
             session.IsWeighed &&
             session.IsSealed &&
-            !session.ShipmentSent;
+            !session.ShipmentSent &&
+            !HasPrintedLabel;
+    }
 
-        openLabelsButton.interactable = ready && !HasPrintedLabel;
+    private void RefreshButton()
+    {
+        bool ready = ParcelReady();
+
+        openLabelsButton.interactable =
+            ready && !PauseMenu.IsPaused;
 
         openLabelsButtonText.text = HasPrintedLabel
             ? "Label Printed"
-            : ready ? "Print Label" : "Seal Box First";
+            : ready ? "Open Computer" : "Weigh & Seal First";
     }
 
     public void OpenLabels()
     {
+        if (PauseMenu.IsPaused || !ParcelReady())
+            return;
+
         OrderSession session = OrderSession.Instance;
 
-        if (PauseMenu.IsPaused ||
-            session == null ||
-            !session.HasActiveOrder ||
-            !session.PackingApproved ||
-            !session.IsWeighed ||
-            !session.IsSealed ||
-            session.ShipmentSent ||
-            HasPrintedLabel)
-        {
-            return;
-        }
-
-        // Generate once per scene/order, so reopening preserves positions.
+        // Preserve choices and selection when reopening the page.
         if (recipients == null)
             CreateChoices(session);
 
@@ -92,6 +106,7 @@ public class ParcelLabelPrinter : MonoBehaviour
             $"Customer requested:\n{session.Recipient}\n{session.Address}";
 
         labelChoicePanel.SetActive(true);
+        RefreshSelection();
     }
 
     private void CreateChoices(OrderSession session)
@@ -130,7 +145,6 @@ public class ParcelLabelPrinter : MonoBehaviour
         if (string.IsNullOrEmpty(name))
             return "Unknown Recipient";
 
-        // Duplicate the final letter: Eleanor becomes Eleanorr.
         for (int i = name.Length - 1; i >= 0; i--)
         {
             if (char.IsLetter(name[i]))
@@ -161,22 +175,27 @@ public class ParcelLabelPrinter : MonoBehaviour
             foreach (string suffix in suffixes)
             {
                 if (!string.Equals(
-                    word, suffix,
+                    word,
+                    suffix,
                     System.StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
 
-                string punctuation = words[i].Substring(word.Length);
+                string punctuation =
+                    words[i].Substring(word.Length);
 
-                bool isDrive = string.Equals(
-                    word, "Drive",
-                    System.StringComparison.OrdinalIgnoreCase) ||
+                bool isDrive =
                     string.Equals(
-                    word, "Dr",
-                    System.StringComparison.OrdinalIgnoreCase);
+                        word, "Drive",
+                        System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(
+                        word, "Dr",
+                        System.StringComparison.OrdinalIgnoreCase);
 
-                words[i] = (isDrive ? "Lane" : "Drive") + punctuation;
+                words[i] =
+                    (isDrive ? "Lane" : "Drive") + punctuation;
+
                 return string.Join(" ", words);
             }
         }
@@ -193,36 +212,138 @@ public class ParcelLabelPrinter : MonoBehaviour
         return $"{recipients[index]}\n{addresses[index]}";
     }
 
+    private bool HasSelection()
+    {
+        return recipients != null &&
+            addresses != null &&
+            selectedLabelIndex >= 0 &&
+            selectedLabelIndex < recipients.Length &&
+            selectedLabelIndex < addresses.Length;
+    }
+
     private void ChooseLabel(int index)
     {
-        OrderSession session = OrderSession.Instance;
-
         if (PauseMenu.IsPaused ||
-            session == null ||
-            !session.HasActiveOrder ||
-            !session.IsSealed ||
-            session.ShipmentSent ||
-            HasPrintedLabel ||
-            !labelChoicePanel.activeSelf ||
-            addresses == null ||
+            !ParcelReady() ||
+            !labelChoicePanel.activeInHierarchy ||
             recipients == null ||
-            index < 0 || index >= recipients.Length)
+            addresses == null ||
+            index < 0 ||
+            index >= recipients.Length ||
+            index >= addresses.Length)
         {
             return;
         }
 
-        PrintedRecipient = recipients[index];
-        PrintedAddress = addresses[index];
+        selectedLabelIndex = index;
+        RefreshSelection();
+    }
+
+    private void RefreshSelection()
+    {
+        bool hasSelection = HasSelection();
+
+        confirmPrintButton.interactable =
+            hasSelection &&
+            ParcelReady() &&
+            !PauseMenu.IsPaused;
+
+        string message = hasSelection
+            ? $"Selected: {recipients[selectedLabelIndex]}\n" +
+              $"{addresses[selectedLabelIndex]}"
+            : "Select a shipping label";
+
+        OrderSession session = OrderSession.Instance;
+
+        if (session != null && session.HasActiveOrder)
+        {
+            message +=
+                $"\n{session.ServiceDescription}" +
+                $" · Total: {session.TotalPrice} / " +
+                $"{session.Budget} glimmer";
+        }
+
+        if (selectedLabelText.text != message)
+            selectedLabelText.text = message;
+    }
+
+    public void PrintSelectedLabel()
+    {
+        if (PauseMenu.IsPaused ||
+            !ParcelReady() ||
+            !labelChoicePanel.activeInHierarchy ||
+            !HasSelection())
+        {
+            return;
+        }
+
+        PrintedRecipient = recipients[selectedLabelIndex];
+        PrintedAddress = addresses[selectedLabelIndex];
         HasPrintedLabel = true;
+        GameSFX.Instance?.LabelPrint();
 
         printedLabelText.text =
             $"TO: {PrintedRecipient}\n{PrintedAddress}";
 
         labelChoicePanel.SetActive(false);
-        printedLabel.SetActive(true);
-        RefreshButton();
-    }
+        StartCoroutine(AnimatePrinting());
 
+        RefreshButton();
+        RefreshSelection();
+    }
+    private IEnumerator AnimatePrinting()
+    {
+        IsPrinting = true;
+
+        RectTransform rect = printedLabel.GetComponent<RectTransform>();
+        Vector2 endPosition = rect.anchoredPosition;
+        Vector2 startPosition = endPosition + printStartOffset;
+
+        CanvasGroup group = printedLabel.GetComponent<CanvasGroup>();
+
+        if (group == null)
+            group = printedLabel.AddComponent<CanvasGroup>();
+
+        float originalAlpha = group.alpha;
+        bool originalInteractable = group.interactable;
+        bool originalBlocksRaycasts = group.blocksRaycasts;
+
+        group.interactable = false;
+        group.blocksRaycasts = false;
+        group.alpha = 0f;
+
+        rect.anchoredPosition = startPosition;
+        printedLabel.SetActive(true);
+
+        // Let the computer overlay close before revealing the label.
+        yield return null;
+
+        float elapsed = 0f;
+
+        while (elapsed < printDuration)
+        {
+            if (!PauseMenu.IsPaused)
+                elapsed += Time.deltaTime;
+
+            float progress = Mathf.Clamp01(elapsed / printDuration);
+            float smooth = Mathf.SmoothStep(0f, 1f, progress);
+
+            rect.anchoredPosition =
+                Vector2.Lerp(startPosition, endPosition, smooth);
+
+            group.alpha = originalAlpha *
+                Mathf.Clamp01(progress * 4f);
+
+            yield return null;
+        }
+
+        rect.anchoredPosition = endPosition;
+        group.alpha = originalAlpha;
+        group.interactable = originalInteractable;
+        group.blocksRaycasts = originalBlocksRaycasts;
+
+        IsPrinting = false;
+    }
     public void CloseLabels()
     {
         labelChoicePanel.SetActive(false);
@@ -238,10 +359,14 @@ public class ParcelLabelPrinter : MonoBehaviour
             openLabelsButton == null ||
             openLabelsButtonText == null ||
             printedLabel == null ||
-            printedLabelText == null)
+            printedLabelText == null ||
+            confirmPrintButton == null ||
+            selectedLabelText == null)
         {
             Debug.LogError(
-                "ParcelLabelPrinter: assign every Inspector field.");
+                "ParcelLabelPrinter: assign every Inspector field.",
+                this);
+
             return false;
         }
 

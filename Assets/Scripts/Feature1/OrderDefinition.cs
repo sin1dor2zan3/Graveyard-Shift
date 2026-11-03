@@ -24,4 +24,8 @@ public class OrderDefinition : ScriptableObject
     [Header("Optional Adjacency Rule")]
     public ItemDefinition mustTouchFirst;
     public ItemDefinition mustTouchSecond;
+
+    [Header("Delivery Requirements")]
+    public bool requiresExpress;
+    public bool requiresWard;
 }

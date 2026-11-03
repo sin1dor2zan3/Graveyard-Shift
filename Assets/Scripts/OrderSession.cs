@@ -49,11 +49,57 @@ public class OrderSession : MonoBehaviour
             : 0;
 
     public int EstimatedTotalPrice =>
-        BoxPrice + EstimatedCushioningPrice + EstimatedPostagePrice;
-
+        BoxPrice + EstimatedCushioningPrice +
+        EstimatedPostagePrice + ServicePrice;
     public int TotalPrice =>
-        BoxPrice + CushioningPrice + PostagePrice; public int RemainingBudget => Budget - TotalPrice;
+        BoxPrice + CushioningPrice +
+        PostagePrice + ServicePrice;
 
+    public int RemainingBudget => Budget - TotalPrice;
+    public bool UseExpress { get; private set; }
+    public bool UseWard { get; private set; }
+
+    public int ServicePrice =>
+        (UseExpress ? 3 : 0) + (UseWard ? 2 : 0);
+
+    public bool DeliveryRequirementsMet =>
+        CurrentOrder == null ||
+        ((!CurrentOrder.requiresExpress || UseExpress) &&
+         (!CurrentOrder.requiresWard || UseWard));
+
+    public string ServiceDescription =>
+        (UseExpress ? "Express" : "Standard") +
+        (UseWard ? " + magical protection" : "");
+
+    public void SelectStandard()
+    {
+        if (!HasActiveOrder || ShipmentSent || LabelAttached)
+            return;
+
+        UseExpress = false;
+    }
+
+    public void SelectExpress()
+    {
+        if (!HasActiveOrder || ShipmentSent || LabelAttached)
+            return;
+
+        UseExpress = true;
+    }
+
+    public void ToggleWard()
+    {
+        if (!HasActiveOrder || ShipmentSent || LabelAttached)
+            return;
+
+        UseWard = !UseWard;
+    }
+
+    private void ResetServices()
+    {
+        UseExpress = false;
+        UseWard = false;
+    }
     public bool CanSend =>
         HasActiveOrder &&
         HasSelectedBox &&
@@ -70,18 +116,35 @@ public class OrderSession : MonoBehaviour
         new List<ItemDefinition>();
 
     public bool OrderSucceeded =>
-    ShipmentSent &&
-    LabelAttached &&
-    LabelRecipient == Recipient &&
-    LabelAddress == Address &&
-    string.IsNullOrEmpty(PackingIssues) &&
-    RemainingBudget >= 0;
+        ShipmentSent &&
+        LabelAttached &&
+        LabelRecipient == Recipient &&
+        LabelAddress == Address &&
+     string.IsNullOrEmpty(PackingIssues) &&
+        DeliveryRequirementsMet &&
+        RemainingBudget >= 0;
 
     public string ResultDescription
     {
         get
         {
             string result = PackingIssues;
+
+            if (CurrentOrder != null)
+            {
+                if (CurrentOrder.requiresExpress && !UseExpress)
+                {
+                    result +=
+                        "Parcel arrived too late. Express delivery was required.\n";
+                }
+
+                if (CurrentOrder.requiresWard && !UseWard)
+                {
+                    result +=
+                        "Supernatural interference disrupted the delivery. " +
+                        "Magical protection was required.\n";
+                }
+            }
 
             if (LabelAttached && LabelRecipient != Recipient)
                 result += "Incorrect recipient name on shipping label.\n";
@@ -201,6 +264,7 @@ public class OrderSession : MonoBehaviour
 
     public void ClearBoxSelection()
     {
+        ResetServices();
         BoxName = "";
         BoxSize = 0;
         BoxPrice = 0;
@@ -324,6 +388,7 @@ public class OrderSession : MonoBehaviour
 
     public void ClearOrder()
     {
+        ResetServices();
         HasActiveOrder = false;
         CustomerName = "";
         Request = "";

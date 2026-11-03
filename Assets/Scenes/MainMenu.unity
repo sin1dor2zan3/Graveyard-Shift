@@ -257,6 +257,10 @@ MonoBehaviour:
   upgradePurchase: {fileID: 8300000, guid: 053d030368d784697998d1e79ebdcf98, type: 3}
   orderSuccess: {fileID: 8300000, guid: 8ca7b17271f494041a2f833bc176944f, type: 3}
   orderFailure: {fileID: 8300000, guid: 5f79c8a693f434fe3984e415fda03214, type: 3}
+  computerOpen: {fileID: 8300000, guid: 6c3281a4d8def4ca59ddd3f68aafd16e, type: 3}
+  magicalProtection: {fileID: 8300000, guid: dad5380bb541341d5bd1be216f2d101c, type: 3}
+  scaleBeep: {fileID: 8300000, guid: 9af2cc0d13be14226a44b399d9ed554d, type: 3}
+  labelPrint: {fileID: 8300000, guid: af612ec0e53174b5c826473ce80737a9, type: 3}
 --- !u!82 &540251059
 AudioSource:
   m_ObjectHideFlags: 0
@@ -595,7 +599,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30675c529f8654102b65dfce2d28af95, type: 2}
   - {fileID: 11400000, guid: 3a2718ac1a20b424eb628e0dce1288b2, type: 2}
   - {fileID: 11400000, guid: 9e00f7f50a34e4795a927a40a41c0025, type: 2}
-  testNewCustomers: 1
+  testNewCustomers: 0
 --- !u!4 &907263822
 Transform:
   m_ObjectHideFlags: 0

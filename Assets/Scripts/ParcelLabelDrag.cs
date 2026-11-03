@@ -37,6 +37,7 @@ public class ParcelLabelDrag : MonoBehaviour,
         if (attached || dragging ||
             labelPrinter == null ||
             !labelPrinter.HasPrintedLabel ||
+            labelPrinter.IsPrinting ||
             parcelRenderer == null ||
             attachTarget == null ||
             parentRect == null ||

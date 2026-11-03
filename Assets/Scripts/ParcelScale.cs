@@ -53,6 +53,7 @@ public class ParcelScale : MonoBehaviour
             return;
         }
 
+        GameSFX.Instance?.ScaleBeep();
         DisplayResults(session);
     }
 
@@ -68,6 +69,7 @@ public class ParcelScale : MonoBehaviour
             $"Box: {session.BoxPrice} glimmer\n" +
             $"Peanuts: {session.CushioningPrice} glimmer\n" +
             $"Postage: {session.PostagePrice} glimmer\n" +
+            $"Service extras: {session.ServicePrice} glimmer\n" +
             $"Total: {session.TotalPrice} glimmer\n" +
             budgetMessage;
     }
@@ -86,5 +88,18 @@ public class ParcelScale : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void RefreshCosts()
+    {
+        OrderSession session = OrderSession.Instance;
+
+        if (ReferencesAssigned() &&
+            session != null &&
+            session.HasActiveOrder &&
+            session.IsWeighed)
+        {
+            DisplayResults(session);
+        }
     }
 }

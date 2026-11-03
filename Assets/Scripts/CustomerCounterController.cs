@@ -13,6 +13,8 @@ public class CustomerCounterController : MonoBehaviour
     [SerializeField] private Sprite successIcon;
     [SerializeField] private Sprite incompleteIcon;
     [SerializeField] private Sprite damagedIcon;
+    [SerializeField] private Sprite lateDeliveryIcon;
+    [SerializeField] private Sprite supernaturalInterferenceIcon;
     [SerializeField] private Sprite sadFace;
     [Header("Text")]
     [SerializeField] private TMP_Text dialogueText;
@@ -85,6 +87,13 @@ public class CustomerCounterController : MonoBehaviour
     {
         bool success = session.OrderSucceeded;
         bool damaged = session.DamagedItems.Count > 0;
+        OrderDefinition order = session.CurrentOrder;
+
+        bool late = order != null &&
+            order.requiresExpress && !session.UseExpress;
+
+        bool interference = order != null &&
+            order.requiresWard && !session.UseWard;
 
         dialogueText.text = success
             ? "Thank you! Everything arrived safely.\n\nORDER COMPLETE"
@@ -101,9 +110,22 @@ public class CustomerCounterController : MonoBehaviour
 
         if (resultIcon != null)
         {
-            resultIcon.sprite = success
-                ? successIcon
-                : damaged ? damagedIcon : incompleteIcon;
+            Sprite selectedIcon;
+
+            if (success)
+                selectedIcon = successIcon;
+            else if (damaged)
+                selectedIcon = damagedIcon;
+            else if (interference)
+                selectedIcon = supernaturalInterferenceIcon;
+            else if (late)
+                selectedIcon = lateDeliveryIcon;
+            else
+                selectedIcon = incompleteIcon;
+
+            resultIcon.sprite = selectedIcon != null
+                ? selectedIcon
+                : incompleteIcon;
 
             resultIcon.preserveAspect = true;
             resultIcon.gameObject.SetActive(true);
@@ -283,13 +305,15 @@ public class CustomerCounterController : MonoBehaviour
 
         receiptText.text =
             "REST IN POST\n\n" +
-            $"To: {session.Recipient}\n" +
-            $"{session.Address}\n" +
+            $"To: {session.LabelRecipient}\n" +
+            $"{session.LabelAddress}\n" +
             $"Box: {session.BoxName}\n" +
-            $"Peanuts: {session.CushioningPrice} glimmer\n" +
-            $"Weight: {session.TotalWeightGrams} g\n\n" +
+            $"Weight: {session.TotalWeightGrams} g\n" +
+            $"Service: {session.ServiceDescription}\n\n" +
             $"Box: {session.BoxPrice} glimmer\n" +
+            $"Peanuts: {session.CushioningPrice} glimmer\n" +
             $"Postage: {session.PostagePrice} glimmer\n" +
+            $"Service extras: {session.ServicePrice} glimmer\n" +
             $"Total: {session.TotalPrice} glimmer";
 
         if (!receiptGiven)
