@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Order_FamilyPortrait
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Sentimental Spirit
-  request: My sister took this photograph of me. She always preferred being behind
-    the camera. I kept a flower from that day, too. Please send both with my letter,
-    and cushion all four sides of the frame.
+  request: Pack Framed Picture, Pressed Flower, and Keepsake Letter. Cushion every
+    edge of the picture; diagonal corners do not need padding.
+  storyId: sentimental-spirit-photograph
+  firstVisitStory: "My sister thinks we never had a photograph together.\n\nShe\u2019s
+    there at the edge. We\u2019d argued, and she refused to stand any closer.\n\nI
+    saved the flower she wore that day.\n\nPlease include my letter. Even if I ask
+    you to take it out."
   recipient: The Bair Family
   address: 331 Willow Drive
   budget: 15
@@ -25,3 +29,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73301d066acc643da9143065a8398bcf, type: 2}
   mustTouchFirst: {fileID: 0}
   mustTouchSecond: {fileID: 0}
+  requiresExpress: 0
+  requiresWard: 0

@@ -21,6 +21,12 @@ public class UpgradeShopUI : MonoBehaviour
 
     public void OpenShop()
     {
+        MysteryParcelStory story =
+            FindFirstObjectByType<MysteryParcelStory>();
+
+        if (story != null && story.TryShow(OpenShop))
+            return;
+
         GameSFX.Instance?.Click();
         if (shopPanel == null)
         {

@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Order_MidnightPotion
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Forgetful Ghost
-  request: "A potion, a candle, and our anniversary ribbon\u2026 yes, that\u2019s
-    everything. He keeps the ribbon every year. Please send all three, and cushion
-    all four sides of the bottle. I\u2019ve misplaced the recipe, so it\u2019s the
-    last of the batch."
+  request: Pack Potion Bottle, Haunted Candle, and Anniversary Ribbon. Cushion every
+    edge of the potion bottle; diagonal corners do not need padding.
+  storyId: forgetful-ghost-anniversary
+  firstVisitStory: "A potion, a candle, and an anniversary ribbon. Yes. Everything\u2019s
+    here.\n\nThe candle goes in the window. Two drops of potion in his tea. The ribbon
+    goes around the parcel.\n\nHe always says we don\u2019t need presents.\n\nHe
+    always keeps the ribbons."
   recipient: Madame Moss
   address: 22 Nightshade Court
   budget: 12
@@ -26,3 +29,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c0044693e80d497cba75fc6edd9de12, type: 2}
   mustTouchFirst: {fileID: 0}
   mustTouchSecond: {fileID: 0}
+  requiresExpress: 0
+  requiresWard: 0

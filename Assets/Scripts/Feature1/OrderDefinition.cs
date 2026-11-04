@@ -10,6 +10,12 @@ public class OrderDefinition : ScriptableObject
 
     [TextArea(3, 6)]
     public string request;
+    
+    [Header("First Visit Story")]
+    public string storyId;
+
+    [TextArea(3, 8)]
+    public string firstVisitStory;
 
     [Header("Destination")]
     public string recipient;

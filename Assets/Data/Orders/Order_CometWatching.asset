@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Order_CometWatching
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Gentle Stargazer
-  request: "My grandchild and I used to watch the sky from the roof. Robin always
-    fell asleep before anything exciting happened. There\u2019s a comet coming tomorrow
-    night, the one I promised we\u2019d see together. Please send my telescope, star
-    chart, and mittens by Express. It gets cold up there."
+  request: Pack Folding Telescope, Star Chart, and Knitted Mittens. Choose Express
+    delivery so they arrive before the comet.
+  storyId: gentle-stargazer-comet
+  firstVisitStory: "My grandchild and I watched the last comet together.\n\nThey
+    fell asleep before it appeared. I told them it was magnificent.\n\nTruthfully,
+    I fell asleep too.\n\nIt\u2019s coming back tomorrow. Send the telescope, chart,
+    and mittens by Express. We should give them another chance."
   recipient: Robin Vale
   address: 17 Crescent Hill
   budget: 24

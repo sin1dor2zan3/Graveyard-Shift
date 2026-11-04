@@ -544,7 +544,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1490773930539283345, guid: fac5f4da755604c02a35121014490a02, type: 3}
+  m_Sprite: {fileID: -8575612177632841694, guid: 85a5524cf392f409299807939df914a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -753,8 +753,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Begin Shift
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2676fe7856443408ab874d95c39ac7fe, type: 2}
-  m_sharedMaterial: {fileID: 1742059278606524736, guid: 2676fe7856443408ab874d95c39ac7fe, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 753167df8f899415ea2fc4a1224c0c36, type: 2}
+  m_sharedMaterial: {fileID: -2469084456055300753, guid: 753167df8f899415ea2fc4a1224c0c36, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -890,15 +890,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Graveyard Shift
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2676fe7856443408ab874d95c39ac7fe, type: 2}
-  m_sharedMaterial: {fileID: 1742059278606524736, guid: 2676fe7856443408ab874d95c39ac7fe, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 753167df8f899415ea2fc4a1224c0c36, type: 2}
+  m_sharedMaterial: {fileID: -2469084456055300753, guid: 753167df8f899415ea2fc4a1224c0c36, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292407551
-  m_fontColor: {r: 1, g: 0.9411765, b: 0.84705883, a: 1}
+    rgba: 4292935679
+  m_fontColor: {r: 1, g: 1, b: 0.8784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1300,8 +1300,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293445848
-  m_fontColor: {r: 0.84705883, g: 0.78431374, b: 0.9098039, a: 1}
+    rgba: 4292935679
+  m_fontColor: {r: 1, g: 1, b: 0.8784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

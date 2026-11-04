@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Order_UnquietDoor
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Retired Locksmith
-  request: "Please send this miniature door, the ornate key, and its velvet-lined
-    case to Miss Wren. She\u2019ll know where they belong. The door is harmless until
-    the key gets near it. After that, it sometimes opens somewhere it shouldn\u2019t.
-    Add magical protection for the journey, please. And if you hear knocking, leave
-    it shut."
+  request: Pack Miniature Door, Ornate Key, and Velvet-lined Key Case. Add Magical
+    Protection to prevent supernatural interference.
+  storyId: retired-locksmith-little-door
+  firstVisitStory: "Miss Wren asked me to return this little door.\n\nThe key belongs
+    in its velvet case. Please send both.\n\nChoose Magical Protection. Sometimes
+    the door opens somewhere it shouldn\u2019t.\n\nIf you hear knocking from inside
+    the parcel, you needn\u2019t answer. That would only encourage it."
   recipient: Miss Wren
   address: 6 Hollow Lane
   budget: 24

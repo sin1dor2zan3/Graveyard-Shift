@@ -267,6 +267,12 @@ public class CustomerCounterController : MonoBehaviour
     {
         yield return new WaitForSeconds(dialogueDelay);
 
+        CustomerStoryUI storyUI =
+            FindFirstObjectByType<CustomerStoryUI>();
+
+        if (storyUI != null)
+            yield return storyUI.ShowForOrder(session.CurrentOrder);
+
         dialogueText.text =
                 $"{session.CustomerName}\n\n{session.Request}";
         dialoguePanel.SetActive(true);

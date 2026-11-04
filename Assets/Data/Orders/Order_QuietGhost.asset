@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Order_QuietGhost
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Quiet Ghost
-  request: Please pack Theodore Graham, his ghost charm, and the keepsake letter.
-    Keep the charm beside Theodore. Neither likes traveing alone.
+  request: Pack Theodore Graham, Ghost Charm, and Keepsake Letter. Place the charm
+    directly beside Theodore so their packing footprints share an edge.
+  storyId: quiet-ghost-theodore
+  firstVisitStory: "Theodore belonged to my daughter. She always tucked his charm
+    under his arm before bed.\n\nShe\u2019s eighty-three now. Tomorrow she\u2019s
+    leaving the house she grew up in.\n\nI thought a familiar face might help."
   recipient: An Old Friend
   address: 13 Moonbeam Lane
   budget: 12
@@ -24,3 +28,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0e751fd9f87a408888d0e8e89f61c54, type: 2}
   mustTouchFirst: {fileID: 11400000, guid: a2469aaa9a7fe4397bd4db3cc2910869, type: 2}
   mustTouchSecond: {fileID: 11400000, guid: 6fe658cc384bc4fb5b28c3fb76b69982, type: 2}
+  requiresExpress: 0
+  requiresWard: 0
