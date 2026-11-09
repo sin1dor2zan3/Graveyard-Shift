@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: OldRouteMap
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Old Route Map
-  intactSprite: {fileID: 0}
+  intactSprite: {fileID: 9016871099275541977, guid: 0654372a8dd80493f984b74906f3f418, type: 3}
   damagedSprite: {fileID: 0}
-  width: 2
+  width: 3
   height: 1
   isLShaped: 0
   weightGrams: 50

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StoppedPocketWatch
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Stopped Pocket Watch
-  intactSprite: {fileID: 0}
+  intactSprite: {fileID: -203439957256334960, guid: f1904149a72d841bcba2038550cb1987, type: 3}
   damagedSprite: {fileID: 0}
   width: 1
   height: 1

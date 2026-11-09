@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LetterBundle
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Ribbon-bound Letters
-  intactSprite: {fileID: 0}
+  intactSprite: {fileID: 1127219491489197005, guid: 674dc7729c9924e95a105a3421348241, type: 3}
   damagedSprite: {fileID: 0}
   width: 2
   height: 2

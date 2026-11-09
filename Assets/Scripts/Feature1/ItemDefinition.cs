@@ -18,6 +18,8 @@ public class ItemDefinition : ScriptableObject
     [Tooltip("Enable for a left-and-bottom-edge L footprint.")]
     public bool isLShaped;
     [Min(0)] public int weightGrams = 100;
+    [Tooltip("Use top and right edges for this L-shaped item.")]
+    public bool lShapeTopRight;
 
     [Header("Protection")]
     public bool isFragile;

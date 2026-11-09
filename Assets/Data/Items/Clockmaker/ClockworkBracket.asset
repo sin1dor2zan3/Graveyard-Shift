@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ClockworkBracket
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Clockwork Bracket
-  intactSprite: {fileID: 0}
+  intactSprite: {fileID: 4601519426747723417, guid: f1904149a72d841bcba2038550cb1987, type: 3}
   damagedSprite: {fileID: 0}
   width: 2
   height: 2

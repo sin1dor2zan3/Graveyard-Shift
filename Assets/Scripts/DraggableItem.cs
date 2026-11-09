@@ -68,6 +68,12 @@ public class DraggableItem : MonoBehaviour
                 break;
         }
 
+        if (definition.lShapeTopRight)
+        {
+            return originalX == startingWidth - 1 ||
+                   originalY == startingHeight - 1;
+        }
+
         return originalX == 0 || originalY == 0;
     }
     public static DraggableItem SelectedItem { get; private set; }

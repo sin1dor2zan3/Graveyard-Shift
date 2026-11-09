@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MemoryEmber
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Memory Ember
-  intactSprite: {fileID: 0}
+  intactSprite: {fileID: -662852086663482059, guid: bc8ecdd80e0264562a1ddcb51c364652, type: 3}
   damagedSprite: {fileID: 0}
   width: 1
   height: 1

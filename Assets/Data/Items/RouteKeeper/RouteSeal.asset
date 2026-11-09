@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RouteSeal
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Route Seal
-  intactSprite: {fileID: 0}
+  intactSprite: {fileID: 9200118405442519813, guid: 0654372a8dd80493f984b74906f3f418, type: 3}
   damagedSprite: {fileID: 0}
   width: 1
   height: 1

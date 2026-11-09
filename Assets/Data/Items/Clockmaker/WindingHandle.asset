@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WindingHandle
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Winding Handle
-  intactSprite: {fileID: 0}
+  intactSprite: {fileID: -8178285859107902509, guid: f1904149a72d841bcba2038550cb1987, type: 3}
   damagedSprite: {fileID: 0}
   width: 1
   height: 2
