@@ -1597,7 +1597,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7085b94d7a1ec459ba47a5852f226ec8, type: 2}
   - {fileID: 11400000, guid: d8c85a80d53814aed8aecc018c08f81c, type: 2}
   testNewCustomers: 0
-  testThirdShift: 0
+  testThirdShift: 1
 --- !u!4 &907263822
 Transform:
   m_ObjectHideFlags: 0
