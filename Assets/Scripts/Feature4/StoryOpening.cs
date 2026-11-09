@@ -3,9 +3,10 @@ using UnityEngine;
 public class StoryOpening : MonoBehaviour
 {
     [SerializeField] private GameObject storyOverlay;
+    [SerializeField] private StoryTypewriter typewriter;
 
-    private const string SeenKey =
-        "GraveyardShift.Story.OpeningSeen.v1";
+    private static string SeenKey => SaveSlots.StoryKey(
+    "GraveyardShift.Story.OpeningSeen.v1");
 
     private void Awake()
     {
@@ -18,6 +19,15 @@ public class StoryOpening : MonoBehaviour
 
     public void CompleteOpening()
     {
+        if (PauseMenu.IsPaused)
+            return;
+
+        if (typewriter != null && typewriter.IsTyping)
+        {
+            GameSFX.Instance?.Click();
+            typewriter.Reveal();
+            return;
+        }
         GameSFX.Instance?.Click();
         PlayerPrefs.SetInt(SeenKey, 1);
         PlayerPrefs.Save();

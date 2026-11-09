@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b640ad708b745af934c7edd516804c, type: 3}
+  m_Name: Order_ClosedRoute
+  m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
+  customerName: A Former Route Keeper
+  request: Pack the lantern, map, and seal. Keep the seal beside the lantern. Add
+    Magical Protection, it remembers a route we closed...
+  storyId: former-route-keeper
+  firstVisitStory: "That parcel beneath your counter. May I see the tag?\n\n\u201CNot
+    yet.\u201D We used that instead of a date on the cemetery route. It meant the
+    recipient wasn\u2019t ready to receive it.\n\nI carried that route until they
+    closed it. This lantern still lights itself every night.\n\nSend it to the last
+    postmaster. Perhaps he knows who\u2019s making deliveries."
+  recipient: The Last Postmaster
+  address: 202 Cemetery Road
+  budget: 13
+  items:
+  - {fileID: 11400000, guid: c4bc4afff57514adbb32116ef625a839, type: 2}
+  - {fileID: 11400000, guid: ee30f67e024724899ace6c16a90790a1, type: 2}
+  - {fileID: 11400000, guid: 5a4504e3c812d462fa13fa68bbaf1909, type: 2}
+  mustTouchFirst: {fileID: 11400000, guid: c4bc4afff57514adbb32116ef625a839, type: 2}
+  mustTouchSecond: {fileID: 11400000, guid: 5a4504e3c812d462fa13fa68bbaf1909, type: 2}
+  separationRules: []
+  requiresExpress: 0
+  requiresWard: 1

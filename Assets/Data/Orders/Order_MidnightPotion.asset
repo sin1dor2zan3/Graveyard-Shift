@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Order_MidnightPotion
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Forgetful Ghost
-  request: Pack Potion Bottle, Haunted Candle, and Anniversary Ribbon. Cushion every
-    edge of the potion bottle; diagonal corners do not need padding.
+  request: Pack the potion, candle, and ribbon. Cushion every edge of the potion
+    bottle. Keep the candle and ribbon from sharing an edge.
   storyId: forgetful-ghost-anniversary
   firstVisitStory: "A potion, a candle, and an anniversary ribbon. Yes. Everything\u2019s
     here.\n\nThe candle goes in the window. Two drops of potion in his tea. The ribbon
@@ -29,5 +29,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c0044693e80d497cba75fc6edd9de12, type: 2}
   mustTouchFirst: {fileID: 0}
   mustTouchSecond: {fileID: 0}
+  separationRules:
+  - first: {fileID: 11400000, guid: 2c0044693e80d497cba75fc6edd9de12, type: 2}
+    second: {fileID: 11400000, guid: 2a9bf1f134b0941b1b9e7c71733be691, type: 2}
   requiresExpress: 0
   requiresWard: 0

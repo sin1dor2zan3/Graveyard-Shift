@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Order_UnquietDoor
   m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
   customerName: A Retired Locksmith
-  request: Pack Miniature Door, Ornate Key, and Velvet-lined Key Case. Add Magical
-    Protection to prevent supernatural interference.
+  request: "Pack the door, key, and case. Keep the key away from the door. Add Magical
+    Protection, we don\u2019t want it opening in transit..."
   storyId: retired-locksmith-little-door
   firstVisitStory: "Miss Wren asked me to return this little door.\n\nThe key belongs
     in its velvet case. Please send both.\n\nChoose Magical Protection. Sometimes
@@ -29,5 +29,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d81bada1639e49de8452461a68fc430, type: 2}
   mustTouchFirst: {fileID: 0}
   mustTouchSecond: {fileID: 0}
+  separationRules:
+  - first: {fileID: 11400000, guid: 91699cd32d98146a798394a5ef07d201, type: 2}
+    second: {fileID: 11400000, guid: ddfbe74fe276343b6abc6051b8f2d5e3, type: 2}
   requiresExpress: 0
   requiresWard: 1

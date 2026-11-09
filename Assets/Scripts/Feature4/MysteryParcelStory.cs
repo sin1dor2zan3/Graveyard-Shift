@@ -4,9 +4,9 @@ using UnityEngine;
 public class MysteryParcelStory : MonoBehaviour
 {
     [SerializeField] private GameObject parcelOverlay;
+    [SerializeField] private StoryTypewriter typewriter;
 
-    private const string SeenKey =
-        "GraveyardShift.Story.ParcelSeen.v1";
+    private static string SeenKey => SaveSlots.StoryKey("GraveyardShift.Story.ParcelSeen.v1");
 
     private Action afterReveal;
     private bool showing;
@@ -38,8 +38,15 @@ public class MysteryParcelStory : MonoBehaviour
 
     public void ContinueToShop()
     {
-        if (!showing)
+        if (!showing || PauseMenu.IsPaused)
             return;
+
+        if (typewriter != null && typewriter.IsTyping)
+        {
+            GameSFX.Instance?.Click();
+            typewriter.Reveal();
+            return;
+        }
 
         PlayerPrefs.SetInt(SeenKey, 1);
         PlayerPrefs.Save();

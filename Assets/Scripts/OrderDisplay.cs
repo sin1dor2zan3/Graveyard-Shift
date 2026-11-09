@@ -14,7 +14,12 @@ public class OrderDisplay : MonoBehaviour
             session.StartFirstOrder();
 
         if (requestText != null)
-            requestText.text = session.Request;
+        {
+            requestText.text =
+                $"{session.Request}\n\n" +
+                $"To: {session.Recipient}\n" +
+                $"{session.Address}";
+        }
 
         if (budgetText != null)
             budgetText.text = $"Budget: {session.Budget}";

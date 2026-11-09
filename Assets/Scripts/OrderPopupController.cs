@@ -33,7 +33,12 @@ public class OrderPopupController : MonoBehaviour
             $"Budget: {session.Budget}";
         }
         if (orderRequestText != null)
-            orderRequestText.text = session.Request;
+        {
+            orderRequestText.text =
+            $"{session.Request}\n\n" +
+            $"To: {session.Recipient}\n" +
+            $"{session.Address}";
+        }
         IsOpen = true;
         orderPopup.SetActive(true);
     }

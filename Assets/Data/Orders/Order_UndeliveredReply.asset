@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b640ad708b745af934c7edd516804c, type: 3}
+  m_Name: Order_UndeliveredReply
+  m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
+  customerName: An Undelivered Letter Writer
+  request: Pack the letters and ember. Keep the ember away from both paper items.
+    Send Express, the upstairs window disappears at dawn.
+  storyId: undelivered-letter-writer
+  firstVisitStory: "Lucinda kept every letter I sent. When she died, her family returned
+    them.\n\nYesterday, a new reply arrived inside the bundle.\n\nShe says she can
+    see the post office from her upstairs window. Her house was demolished in 1963.\n\nThe
+    envelope was marked \u201CNot yet.\u201D\n\nPlease send these back before dawn.
+    I\u2019d like her to know I\u2019m still writing."
+  recipient: My Love
+  address: 48 Pottsfield Road
+  budget: 14
+  items:
+  - {fileID: 11400000, guid: 241dfb6832c374d7c9576590f171615e, type: 2}
+  - {fileID: 11400000, guid: 01075b3f2477b4f68a18ae6463c5e130, type: 2}
+  - {fileID: 11400000, guid: a0e751fd9f87a408888d0e8e89f61c54, type: 2}
+  mustTouchFirst: {fileID: 0}
+  mustTouchSecond: {fileID: 0}
+  separationRules:
+  - first: {fileID: 11400000, guid: 01075b3f2477b4f68a18ae6463c5e130, type: 2}
+    second: {fileID: 11400000, guid: 241dfb6832c374d7c9576590f171615e, type: 2}
+  - first: {fileID: 11400000, guid: 01075b3f2477b4f68a18ae6463c5e130, type: 2}
+    second: {fileID: 11400000, guid: a0e751fd9f87a408888d0e8e89f61c54, type: 2}
+  requiresExpress: 1
+  requiresWard: 0

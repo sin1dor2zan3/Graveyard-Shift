@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b640ad708b745af934c7edd516804c, type: 3}
+  m_Name: Order_StoppedClock
+  m_EditorClassIdentifier: Assembly-CSharp::OrderDefinition
+  customerName: A Patient Clockmaker
+  request: Pack the bracket, handle, and watch. Keep the watch beside the bracket
+    and the handle apart from it. Express and Magical Protection, no ticking before
+    delivery...
+  storyId: patient-clockmaker
+  firstVisitStory: "The bellkeeper sent this watch for repair. There\u2019s nothing
+    wrong with it.\n\nIt\u2019s waiting for the door beneath his tower to open. Then
+    it starts counting.\n\nThat marking on your parcel\u2019s tag... I\u2019ve seen
+    it before. The locksmith brought it in with a door mechanism.\n\nIf he comes
+    back, ask what the door was built to keep out."
+  recipient: The Bellkeeper
+  address: 2106 Gallows Road
+  budget: 16
+  items:
+  - {fileID: 11400000, guid: 00773d9150ab8435d818b90be0b78180, type: 2}
+  - {fileID: 11400000, guid: 89467d708582748c194d5a6e3783e946, type: 2}
+  - {fileID: 11400000, guid: 9d258edecff964200b2a22ba5420c6b0, type: 2}
+  mustTouchFirst: {fileID: 11400000, guid: 00773d9150ab8435d818b90be0b78180, type: 2}
+  mustTouchSecond: {fileID: 11400000, guid: 9d258edecff964200b2a22ba5420c6b0, type: 2}
+  separationRules:
+  - first: {fileID: 11400000, guid: 89467d708582748c194d5a6e3783e946, type: 2}
+    second: {fileID: 11400000, guid: 00773d9150ab8435d818b90be0b78180, type: 2}
+  requiresExpress: 1
+  requiresWard: 1

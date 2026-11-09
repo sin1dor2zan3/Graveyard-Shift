@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class CustomerCounterController : MonoBehaviour
 {
+    [Header("Expanded Results")]
+    [SerializeField] private GameObject resultsPanel;
+    [SerializeField] private TMP_Text resultsHeading;
+    [SerializeField] private TMP_Text resultsDetails;
+    [SerializeField] private TMP_Text resultsCosts;
+    [SerializeField] private TMP_Text resultsContinueText;
+    [SerializeField] private ScrollRect resultsDetailsScroll;
     [SerializeField] private UpgradeShopUI upgradeShop;
 
     [Header("Order Results")]
@@ -58,6 +65,16 @@ public class CustomerCounterController : MonoBehaviour
     [SerializeField] private GameObject bakerHatAccessory;
     [SerializeField] private GameObject stargazerShawlAccessory;
     [SerializeField] private GameObject locksmithCoatAccessory;
+    [SerializeField] private GameObject routeKeeperCapAccessory;
+    [SerializeField] private GameObject letterWriterVeilAccessory;
+    [SerializeField] private GameObject clockmakerEyepieceAccessory;
+
+    [Header("Returning Locksmith")]
+    [SerializeField, TextArea(2, 5)]
+    private string[] locksmithPages;
+    private bool showingLocksmith;
+    private bool locksmithFinished;
+    private static string LocksmithSeenKey => SaveSlots.StoryKey("GraveyardShift.Story.LocksmithReturnSeen.v1");
 
     private OrderSession session;
     private Coroutine introduction;
@@ -65,6 +82,9 @@ public class CustomerCounterController : MonoBehaviour
 
     private void Awake()
     {
+        if (resultsPanel != null)
+            resultsPanel.SetActive(false);
+
         if (resultIcon != null)
             resultIcon.gameObject.SetActive(false);
 
@@ -83,6 +103,33 @@ public class CustomerCounterController : MonoBehaviour
         if (finishShiftButton != null)
             finishShiftButton.SetActive(false);
     }
+    private void ShowExpandedResults(
+    string heading,
+    string details,
+    string costs,
+    string buttonLabel)
+    {
+        dialoguePanel.SetActive(false);
+        finishShiftButton.SetActive(false);
+        acceptButton.SetActive(false);
+        receiptPanel.SetActive(false);
+        budgetText.text = "";
+
+        resultsHeading.text = heading;
+        resultsDetails.text = details;
+        resultsCosts.text = costs;
+        resultsContinueText.text = buttonLabel;
+
+        resultsPanel.SetActive(true);
+
+        Canvas.ForceUpdateCanvases();
+
+        if (resultsDetailsScroll != null)
+        {
+            resultsDetailsScroll.StopMovement();
+            resultsDetailsScroll.verticalNormalizedPosition = 1f;
+        }
+    }
     private void ShowOrderResult()
     {
         bool success = session.OrderSucceeded;
@@ -95,13 +142,22 @@ public class CustomerCounterController : MonoBehaviour
         bool interference = order != null &&
             order.requiresWard && !session.UseWard;
 
-        dialogueText.text = success
-            ? "Thank you! Everything arrived safely.\n\nORDER COMPLETE"
-            : "Something went wrong with my delivery.\n\n" +
-              session.ResultDescription;
+        bool hasNext = ShiftController.Instance != null &&
+     ShiftController.Instance.HasNextOrder;
 
-        budgetText.text =
-            $"Order total: {session.TotalPrice} / {session.Budget} glimmer";
+        ShowExpandedResults(
+            success ? "Delivery Complete" : "Delivery Failed",
+
+            success
+                ? "Thank you!\n\nEverything arrived safely."
+                : session.ResultDescription,
+
+            $"Box + padding: {session.BoxPrice + session.CushioningPrice}\n" +
+            $"Postage + services: {session.PostagePrice + session.ServicePrice}\n" +
+            $"<b>Total: {session.TotalPrice} / {session.Budget} glimmer</b>",
+
+            hasNext ? "Next Customer" : "Finish Shift"
+        );
 
         SetExpression(
             success ? happyFace :
@@ -187,6 +243,24 @@ public class CustomerCounterController : MonoBehaviour
 
         if (locksmithCoatAccessory != null)
             locksmithCoatAccessory.SetActive(customer == "A Retired Locksmith");
+
+        if (routeKeeperCapAccessory != null)
+        {
+            routeKeeperCapAccessory.SetActive(
+                customer == "A Former Route Keeper");
+        }
+
+        if (letterWriterVeilAccessory != null)
+        {
+            letterWriterVeilAccessory.SetActive(
+                customer == "An Undelivered Letter Writer");
+        }
+
+        if (clockmakerEyepieceAccessory != null)
+        {
+            clockmakerEyepieceAccessory.SetActive(
+                customer == "A Patient Clockmaker");
+        }
     }
     private void RefreshGiftPreviews()
     {
@@ -233,6 +307,11 @@ public class CustomerCounterController : MonoBehaviour
         }
 
         session = OrderSession.GetOrCreate();
+        if (ShiftController.Instance != null && ShiftController.Instance.IsClosingResume)
+        {
+            FinishShift();
+            return;
+        }
 
         // Allow direct testing of this scene.
         if (!session.HasActiveOrder)
@@ -271,7 +350,12 @@ public class CustomerCounterController : MonoBehaviour
             FindFirstObjectByType<CustomerStoryUI>();
 
         if (storyUI != null)
+        {
+            dialoguePanel.SetActive(false);
+            acceptButton.SetActive(false);
+
             yield return storyUI.ShowForOrder(session.CurrentOrder);
+        }
 
         dialogueText.text =
                 $"{session.CustomerName}\n\n{session.Request}";
@@ -355,10 +439,84 @@ public class CustomerCounterController : MonoBehaviour
         RefreshCounter();
     }
 
+    private IEnumerator ShowLocksmithStory()
+    {
+        CustomerStoryUI storyUI =
+            FindFirstObjectByType<CustomerStoryUI>();
+
+        if (storyUI == null || !storyUI.HasPageReferences)
+        {
+            showingLocksmith = false;
+
+            Debug.LogError(
+                "Assign CustomerStoryUI and its paper/text references.");
+
+            yield break;
+        }
+
+        displayItems.SetActive(false);
+        receiptPanel.SetActive(false);
+        acceptButton.SetActive(false);
+        dialoguePanel.SetActive(false);
+        finishShiftButton.SetActive(false);
+
+        if (giveReceiptButton != null)
+            giveReceiptButton.SetActive(false);
+
+        if (resultIcon != null)
+            resultIcon.gameObject.SetActive(false);
+
+        GameObject[] accessories =
+        {
+        scarfAccessory,
+        flowerAccessory,
+        glassesAccessory,
+        bakerHatAccessory,
+        stargazerShawlAccessory,
+        locksmithCoatAccessory,
+        routeKeeperCapAccessory,
+        letterWriterVeilAccessory,
+        clockmakerEyepieceAccessory
+    };
+
+        foreach (GameObject accessory in accessories)
+        {
+            if (accessory != null)
+                accessory.SetActive(false);
+        }
+
+        if (locksmithCoatAccessory != null)
+            locksmithCoatAccessory.SetActive(true);
+
+        SetExpression(nervousFace);
+        budgetText.text = "";
+
+        yield return storyUI.ShowPages(locksmithPages);
+
+        HideLocksmith();
+        FinishShift();
+    }
+
+    private void HideLocksmith()
+    {
+        showingLocksmith = false;
+        locksmithFinished = true;
+
+        PlayerPrefs.SetInt(LocksmithSeenKey, 1);
+        PlayerPrefs.Save();
+
+        if (locksmithCoatAccessory != null)
+            locksmithCoatAccessory.SetActive(false);
+    }
     public void FinishShift()
     {
-        if (PauseMenu.IsPaused || session == null ||
-            !session.ReceiptGiven)
+        bool resumingClosing =
+        ShiftController.Instance != null &&
+        ShiftController.Instance.IsClosingResume;
+
+        if (PauseMenu.IsPaused ||
+            session == null ||
+            (!session.ReceiptGiven && !resumingClosing))
         {
             return;
         }
@@ -367,6 +525,11 @@ public class CustomerCounterController : MonoBehaviour
 
         if (shift == null)
             return;
+
+        if (showingLocksmith)
+            return;
+
+        resultsPanel.SetActive(false);
 
         if (showingShiftSummary)
         {
@@ -391,37 +554,41 @@ public class CustomerCounterController : MonoBehaviour
             return;
         }
 
+        if (shift.IsThirdShiftSet &&
+            !locksmithFinished &&
+            PlayerPrefs.GetInt(LocksmithSeenKey, 0) == 0 &&
+            locksmithPages != null &&
+            locksmithPages.Length > 0)
+        {
+            showingLocksmith = true;
+            StartCoroutine(ShowLocksmithStory());
+            return;
+        }
+
         showingShiftSummary = true;
 
         displayItems.SetActive(false);
-        receiptPanel.SetActive(false);
-        acceptButton.SetActive(false);
 
         if (resultIcon != null)
             resultIcon.gameObject.SetActive(false);
 
-        dialoguePanel.SetActive(true);
-        finishShiftButton.SetActive(true);
+        ShowExpandedResults(
+            $"Night {shift.NightNumber} Complete",
 
-        dialogueText.text =
-            "SHIFT COMPLETE\n\n" +
-            $"Orders completed: {shift.SuccessfulOrders + shift.FailedOrders}" +
+            $"Orders: {shift.SuccessfulOrders + shift.FailedOrders}" +
             $" / {shift.OrderCount}\n" +
             $"Successful: {shift.SuccessfulOrders}\n" +
-            $"Failed: {shift.FailedOrders}\n" +
-            $"Customer postage spending: {shift.TotalSpent} glimmer\n" +
-            $"Your earnings: {shift.ShiftEarnings} glimmer\n" +
-            $"Your wallet: {PlayerProgress.Wallet} glimmer";
+            $"Failed: {shift.FailedOrders}",
 
-        budgetText.text = "";
+            $"Postage spending: {shift.TotalSpent}\n" +
+            $"Earned: {shift.ShiftEarnings}\n" +
+            $"<b>Wallet: {PlayerProgress.Wallet} glimmer</b>",
 
-        TMP_Text buttonText =
-            finishShiftButton.GetComponentInChildren<TMP_Text>(true);
+            "Upgrade Shop"
+        );
 
-        if (buttonText != null)
-            buttonText.text = "Upgrade Shop";
-
-        SetExpression(shift.FailedOrders == 0 ? happyFace : sadFace);
+        SetExpression(
+            shift.FailedOrders == 0 ? happyFace : sadFace);
     }
 
     private void OnDestroy()
@@ -450,5 +617,14 @@ public class CustomerCounterController : MonoBehaviour
         }
 
         return true;
+    }
+
+    [ContextMenu("Reset Locksmith Return For Testing")]
+    private void ResetLocksmithReturnForTesting()
+    {
+        PlayerPrefs.DeleteKey(LocksmithSeenKey);
+        PlayerPrefs.Save();
+
+        Debug.Log("Locksmith return reset for the next playthrough.");
     }
 }

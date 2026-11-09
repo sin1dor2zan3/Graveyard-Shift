@@ -10,7 +10,7 @@ public class OrderDefinition : ScriptableObject
 
     [TextArea(3, 6)]
     public string request;
-    
+
     [Header("First Visit Story")]
     public string storyId;
 
@@ -30,6 +30,16 @@ public class OrderDefinition : ScriptableObject
     [Header("Optional Adjacency Rule")]
     public ItemDefinition mustTouchFirst;
     public ItemDefinition mustTouchSecond;
+
+    [System.Serializable]
+    public class SeparationRule
+    {
+        public ItemDefinition first;
+        public ItemDefinition second;
+    }
+
+    [Header("Items That Must Stay Apart")]
+    public SeparationRule[] separationRules;
 
     [Header("Delivery Requirements")]
     public bool requiresExpress;

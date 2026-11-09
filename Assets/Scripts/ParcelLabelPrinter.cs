@@ -21,6 +21,7 @@ public class ParcelLabelPrinter : MonoBehaviour
     [Header("Printing Animation")]
     [SerializeField] private Vector2 printStartOffset = new Vector2(0f, 90f);
     [SerializeField, Min(0.1f)] private float printDuration = 0.7f;
+    [SerializeField] private RectMask2D labelPrintMask;
 
     public bool IsPrinting { get; private set; }
 
@@ -43,6 +44,9 @@ public class ParcelLabelPrinter : MonoBehaviour
             enabled = false;
             return;
         }
+
+        if (labelPrintMask != null)
+            labelPrintMask.enabled = false;
 
         labelChoicePanel.SetActive(false);
         printedLabel.SetActive(false);
@@ -312,10 +316,12 @@ public class ParcelLabelPrinter : MonoBehaviour
         group.blocksRaycasts = false;
         group.alpha = 0f;
 
+        if (labelPrintMask != null)
+            labelPrintMask.enabled = true;
+
         rect.anchoredPosition = startPosition;
         printedLabel.SetActive(true);
 
-        // Let the computer overlay close before revealing the label.
         yield return null;
 
         float elapsed = 0f;
@@ -338,6 +344,10 @@ public class ParcelLabelPrinter : MonoBehaviour
         }
 
         rect.anchoredPosition = endPosition;
+
+        if (labelPrintMask != null)
+            labelPrintMask.enabled = false;
+
         group.alpha = originalAlpha;
         group.interactable = originalInteractable;
         group.blocksRaycasts = originalBlocksRaycasts;

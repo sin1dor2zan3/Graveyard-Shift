@@ -7,6 +7,11 @@ public class ReceiptDrag : MonoBehaviour,
 {
     [SerializeField] private CustomerCounterController counter;
     [SerializeField] private RectTransform customerTarget;
+    [SerializeField, Range(0.2f, 1f)]
+    private float handoffScale = 0.65f;
+
+    private Vector3 originalScale;
+    private float startingDistance;
 
     private RectTransform rect;
     private RectTransform parent;
@@ -19,6 +24,7 @@ public class ReceiptDrag : MonoBehaviour,
     {
         rect = GetComponent<RectTransform>();
         parent = transform.parent as RectTransform;
+        originalScale = rect.localScale;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -42,6 +48,15 @@ public class ReceiptDrag : MonoBehaviour,
         }
 
         home = rect.anchoredPosition;
+        rect.localScale = originalScale;
+
+        Vector2 targetPosition =
+            parent.InverseTransformPoint(
+                customerTarget.TransformPoint(customerTarget.rect.center));
+
+        startingDistance = Mathf.Max(
+            1f,
+            Vector2.Distance(rect.localPosition, targetPosition));
         offset = (Vector2)rect.localPosition - pointer;
         pointerId = eventData.pointerId;
         dragging = true;
@@ -66,6 +81,18 @@ public class ReceiptDrag : MonoBehaviour,
 
             rect.localPosition = new Vector3(
                 position.x, position.y, rect.localPosition.z);
+
+            Vector2 targetPosition = parent.InverseTransformPoint(
+        customerTarget.TransformPoint(customerTarget.rect.center));
+
+            float distance =
+                Vector2.Distance(rect.localPosition, targetPosition);
+
+            float progress =
+                Mathf.Clamp01(1f - distance / startingDistance);
+
+            rect.localScale = originalScale *
+                Mathf.Lerp(1f, handoffScale, progress);
         }
     }
 
@@ -87,12 +114,14 @@ public class ReceiptDrag : MonoBehaviour,
                 customerTarget, center, eventData.pressEventCamera))
             {
                 rect.anchoredPosition = home;
+                rect.localScale = originalScale;
                 counter.HandOverReceipt();
                 return;
             }
         }
 
         rect.anchoredPosition = home;
+        rect.localScale = originalScale;
     }
 
     private void OnDisable()
@@ -101,6 +130,7 @@ public class ReceiptDrag : MonoBehaviour,
         {
             dragging = false;
             rect.anchoredPosition = home;
+            rect.localScale = originalScale;
         }
     }
 }

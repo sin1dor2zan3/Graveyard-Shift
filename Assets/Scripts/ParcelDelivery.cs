@@ -120,7 +120,31 @@ public class ParcelDelivery : MonoBehaviour
                     $"{order.mustTouchSecond.itemName}.\n";
             }
         }
+        if (order.separationRules != null)
+        {
+            foreach (OrderDefinition.SeparationRule rule in order.separationRules)
+            {
+                if (rule == null || rule.first == null || rule.second == null)
+                    continue;
 
+                DraggableItem first = itemSpawner.SpawnedItems.Find(
+                    item => item != null && item.Definition == rule.first);
+
+                DraggableItem second = itemSpawner.SpawnedItems.Find(
+                    item => item != null && item.Definition == rule.second);
+
+                // Missing items are already recorded above.
+                if (!packingGrid.IsPacked(first) || !packingGrid.IsPacked(second))
+                    continue;
+
+                if (packingGrid.AreNeighbors(first, second))
+                {
+                    issues +=
+                        $"{rule.first.itemName} was beside " +
+                        $"{rule.second.itemName}; they must stay apart.\n";
+                }
+            }
+        }
         session.RecordPacking(packedWeight, issues, damaged);
 
         preparingShipment = true;

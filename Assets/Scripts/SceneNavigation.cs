@@ -17,7 +17,7 @@ public class SceneNavigation : MonoBehaviour
             return;
         }
 
-        if (!ShiftController.Instance.BeginShift())
+        if (!ShiftController.Instance.ResumeOrBeginShift())
             return;
 
         SceneManager.LoadScene("CustomerCounter");
