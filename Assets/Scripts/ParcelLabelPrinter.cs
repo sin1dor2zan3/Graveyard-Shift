@@ -22,6 +22,7 @@ public class ParcelLabelPrinter : MonoBehaviour
     [SerializeField] private Vector2 printStartOffset = new Vector2(0f, 90f);
     [SerializeField, Min(0.1f)] private float printDuration = 0.7f;
     [SerializeField] private RectMask2D labelPrintMask;
+    [SerializeField] private GameObject printerLight;
 
     public bool IsPrinting { get; private set; }
 
@@ -39,6 +40,9 @@ public class ParcelLabelPrinter : MonoBehaviour
 
     private void Start()
     {
+        if (printerLight != null)
+            printerLight.SetActive(false);
+
         if (!ReferencesAssigned())
         {
             enabled = false;
@@ -299,6 +303,9 @@ public class ParcelLabelPrinter : MonoBehaviour
     {
         IsPrinting = true;
 
+        if (printerLight != null)
+            printerLight.SetActive(true);
+
         RectTransform rect = printedLabel.GetComponent<RectTransform>();
         Vector2 endPosition = rect.anchoredPosition;
         Vector2 startPosition = endPosition + printStartOffset;
@@ -351,6 +358,9 @@ public class ParcelLabelPrinter : MonoBehaviour
         group.alpha = originalAlpha;
         group.interactable = originalInteractable;
         group.blocksRaycasts = originalBlocksRaycasts;
+
+        if (printerLight != null)
+            printerLight.SetActive(false);
 
         IsPrinting = false;
     }

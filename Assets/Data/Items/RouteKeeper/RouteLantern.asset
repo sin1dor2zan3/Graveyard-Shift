@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RouteLantern
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemName: Route Lantern
-  intactSprite: {fileID: 8279564839197770547, guid: 0654372a8dd80493f984b74906f3f418, type: 3}
+  intactSprite: {fileID: -972016820748378073, guid: d9c7960beabf44ccfaa457f5696feb50, type: 3}
   damagedSprite: {fileID: 0}
   width: 2
   height: 2

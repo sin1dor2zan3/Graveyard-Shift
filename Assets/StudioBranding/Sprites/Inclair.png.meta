@@ -1,0 +1,1742 @@
+fileFormatVersion: 2
+guid: 076019a975ccb4a0f87f724ad059d466
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6810618412205735425
+    second: Inclair_0
+  - first:
+      213: 7343085201255311332
+    second: Inclair_1
+  - first:
+      213: -8180068801570136842
+    second: Inclair_2
+  - first:
+      213: 3411797621163119546
+    second: Inclair_3
+  - first:
+      213: -3097893407923388150
+    second: Inclair_4
+  - first:
+      213: 3259554686534397923
+    second: Inclair_5
+  - first:
+      213: -645209514737917762
+    second: Inclair_6
+  - first:
+      213: -4799834300904273374
+    second: Inclair_7
+  - first:
+      213: 1216133194249069028
+    second: Inclair_8
+  - first:
+      213: 2557787190651524076
+    second: Inclair_9
+  - first:
+      213: 73380416054971929
+    second: Inclair_10
+  - first:
+      213: -852788633689691997
+    second: Inclair_11
+  - first:
+      213: 7927529435734319636
+    second: Inclair_12
+  - first:
+      213: -8817668895209045766
+    second: Inclair_13
+  - first:
+      213: -3915808683039924791
+    second: Inclair_14
+  - first:
+      213: 9103277672040646948
+    second: Inclair_15
+  - first:
+      213: -7160298826756943066
+    second: Inclair_16
+  - first:
+      213: -8529262289100837528
+    second: Inclair_17
+  - first:
+      213: 8683321744429415617
+    second: Inclair_18
+  - first:
+      213: -821740723838360335
+    second: Inclair_19
+  - first:
+      213: 3751281793265488438
+    second: Inclair_20
+  - first:
+      213: 2509022774923780612
+    second: Inclair_21
+  - first:
+      213: 2463769838801890114
+    second: Inclair_22
+  - first:
+      213: 7178851071258961373
+    second: Inclair_23
+  - first:
+      213: 1509700732931170337
+    second: Inclair_24
+  - first:
+      213: 4744112368259437510
+    second: Inclair_25
+  - first:
+      213: 430571801789428757
+    second: Inclair_26
+  - first:
+      213: -4324772686452290016
+    second: Inclair_27
+  - first:
+      213: 6080560163999897911
+    second: Inclair_28
+  - first:
+      213: 8220882921875515413
+    second: Inclair_29
+  - first:
+      213: 1782807046059719871
+    second: Inclair_30
+  - first:
+      213: 7770942300780173959
+    second: Inclair_31
+  - first:
+      213: -2734063939085509861
+    second: Inclair_32
+  - first:
+      213: 171814420982600660
+    second: Inclair_33
+  - first:
+      213: -7563959660473274679
+    second: Inclair_34
+  - first:
+      213: 5894544983397367135
+    second: Inclair_35
+  - first:
+      213: 840141408527880832
+    second: Inclair_36
+  - first:
+      213: 6828262434595592840
+    second: Inclair_37
+  - first:
+      213: -2421546380049281380
+    second: Inclair_38
+  - first:
+      213: -5940628479845397707
+    second: Inclair_39
+  - first:
+      213: -2849874118820481090
+    second: Inclair_40
+  - first:
+      213: 5129443371807753296
+    second: Inclair_41
+  - first:
+      213: 7855978108914162761
+    second: Inclair_42
+  - first:
+      213: -3330162701457231254
+    second: Inclair_43
+  - first:
+      213: 2770444338023794079
+    second: Inclair_44
+  - first:
+      213: 2047054598800999480
+    second: Inclair_45
+  - first:
+      213: -2920897766943732642
+    second: Inclair_46
+  - first:
+      213: -4651526239911253303
+    second: Inclair_47
+  - first:
+      213: 4851350707133692166
+    second: Inclair_48
+  - first:
+      213: -3155613326559263133
+    second: Inclair_49
+  - first:
+      213: -5276207053821972759
+    second: Inclair_50
+  - first:
+      213: -2604288938901755609
+    second: Inclair_51
+  - first:
+      213: -4552305814916204480
+    second: Inclair_52
+  - first:
+      213: -1303259165529979250
+    second: Inclair_53
+  - first:
+      213: -860286508564550693
+    second: Inclair_54
+  - first:
+      213: -5304700683261131773
+    second: Inclair_55
+  - first:
+      213: -8106902513757776048
+    second: Inclair_56
+  - first:
+      213: 4247729113635324218
+    second: Inclair_57
+  - first:
+      213: -5668281434905490762
+    second: Inclair_58
+  - first:
+      213: 2560861992370367970
+    second: Inclair_59
+  - first:
+      213: -4130761356772400343
+    second: Inclair_60
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Inclair_0
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 455
+        width: 277
+        height: 335
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff10eb763a2db71a0800000000000000
+      internalID: -6810618412205735425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_1
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 762
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e72040d511e7e560800000000000000
+      internalID: 7343085201255311332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_2
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 752
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fc182cc3ce8a7e80800000000000000
+      internalID: -8180068801570136842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_3
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 755
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab353f62cd3295f20800000000000000
+      internalID: 3411797621163119546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_4
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 744
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a01c3bcdb521205d0800000000000000
+      internalID: -3097893407923388150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_5
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 744
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3efa7d0b7b34c3d20800000000000000
+      internalID: 3259554686534397923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_6
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 746
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb028546d51cb07f0800000000000000
+      internalID: -645209514737917762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_7
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 747
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22a8dd94220936db0800000000000000
+      internalID: -4799834300904273374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_8
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 675
+        width: 28
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e1e6c262b290e010800000000000000
+      internalID: 1216133194249069028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_9
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 660
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce314dde5e51f7320800000000000000
+      internalID: 2557787190651524076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_10
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 677
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91e4d608913b40100800000000000000
+      internalID: 73380416054971929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_11
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 720
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a86f6481494a24f0800000000000000
+      internalID: -852788633689691997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_12
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 650
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 412a56b150e340e60800000000000000
+      internalID: 7927529435734319636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_13
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 651
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af0cd0a9bd851a580800000000000000
+      internalID: -8817668895209045766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_14
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 652
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cdd307efb048a9c0800000000000000
+      internalID: -3915808683039924791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_15
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 479
+        width: 59
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4294abdbfc6555e70800000000000000
+      internalID: 9103277672040646948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_16
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 429
+        width: 221
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6239189672281ac90800000000000000
+      internalID: -7160298826756943066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_17
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 475
+        width: 155
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86d62065329f1a980800000000000000
+      internalID: -8529262289100837528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_18
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 479
+        width: 118
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ccf32fce1b518870800000000000000
+      internalID: 8683321744429415617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_19
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 479
+        width: 227
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f4642a5a279894f0800000000000000
+      internalID: -821740723838360335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_20
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 440
+        width: 238
+        height: 215
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 632daf37aea3f0430800000000000000
+      internalID: 3751281793265488438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_21
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 642
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40262b0abe6d1d220800000000000000
+      internalID: 2509022774923780612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_22
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 643
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24bab126d91113220800000000000000
+      internalID: 2463769838801890114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_23
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 636
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5a2dd930760a360800000000000000
+      internalID: 7178851071258961373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_24
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 642
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 120628f51d883f410800000000000000
+      internalID: 1509700732931170337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_25
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 631
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c314a4401976d140800000000000000
+      internalID: 4744112368259437510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_26
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 625
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51475ffb5c2b9f500800000000000000
+      internalID: 430571801789428757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_27
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 629
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02e03b1c7225bf3c0800000000000000
+      internalID: -4324772686452290016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_28
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 584
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 739da92c04d726450800000000000000
+      internalID: 6080560163999897911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_29
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 576
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 518277a1671761270800000000000000
+      internalID: 8220882921875515413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_30
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 581
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbcf37b009dcdb810800000000000000
+      internalID: 1782807046059719871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_31
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 575
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78a1f00b9dee7db60800000000000000
+      internalID: 7770942300780173959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_32
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 573
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1b5a954557ae0ad0800000000000000
+      internalID: -2734063939085509861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_33
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 571
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d315f93e48626200800000000000000
+      internalID: 171814420982600660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_34
+      rect:
+        serializedVersion: 2
+        x: 645
+        y: 566
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ce2b1ea3ca670790800000000000000
+      internalID: -7563959660473274679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_35
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 569
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5df5f78e61adc150800000000000000
+      internalID: 5894544983397367135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_36
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 550
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0829668e828c8ab00800000000000000
+      internalID: 840141408527880832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_37
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 554
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88ad63fa18cd2ce50800000000000000
+      internalID: 6828262434595592840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_38
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 545
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9e8702b560f46ed0800000000000000
+      internalID: -2421546380049281380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_39
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 532
+        width: 37
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b0f345fd5ae8da0800000000000000
+      internalID: -5940628479845397707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_40
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 555
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb7302596963378d0800000000000000
+      internalID: -2849874118820481090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_41
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 462
+        width: 29
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0544518d1917f2740800000000000000
+      internalID: 5129443371807753296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_42
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 538
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94cd211a77a060d60800000000000000
+      internalID: 7855978108914162761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_43
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 525
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a62f26fbaa2e8c1d0800000000000000
+      internalID: -3330162701457231254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_44
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 538
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9586ed6278927620800000000000000
+      internalID: 2770444338023794079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_45
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 531
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8340d55df49986c10800000000000000
+      internalID: 2047054598800999480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_46
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 443
+        width: 8
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5c4610e4f2e677d0800000000000000
+      internalID: -2920897766943732642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_47
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 434
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ca6ea69785727fb0800000000000000
+      internalID: -4651526239911253303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_48
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 419
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6093b8bb3c5735340800000000000000
+      internalID: 4851350707133692166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_49
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 433
+        width: 19
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36642fd06620534d0800000000000000
+      internalID: -3155613326559263133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_50
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 425
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eee78b93a527c6b0800000000000000
+      internalID: -5276207053821972759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_51
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 375
+        width: 83
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72928481205bbdbd0800000000000000
+      internalID: -2604288938901755609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_52
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 477
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04879f00bf5f2d0c0800000000000000
+      internalID: -4552305814916204480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_53
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 436
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e864054a1b4e9ede0800000000000000
+      internalID: -1303259165529979250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_54
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 442
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdbe2fb7af5af04f0800000000000000
+      internalID: -860286508564550693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_55
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 417
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 304c27685dae166b0800000000000000
+      internalID: -5304700683261131773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_56
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 444
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0571fbead1f7e7f80800000000000000
+      internalID: -8106902513757776048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_57
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 389
+        width: 44
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3181589f17f2fa30800000000000000
+      internalID: 4247729113635324218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_58
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 415
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ba448911183651b0800000000000000
+      internalID: -5668281434905490762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_59
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 375
+        width: 62
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ede80ef9620a8320800000000000000
+      internalID: 2560861992370367970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inclair_60
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 404
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 923aba58e669ca6c0800000000000000
+      internalID: -4130761356772400343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Inclair_0: -6810618412205735425
+      Inclair_1: 7343085201255311332
+      Inclair_10: 73380416054971929
+      Inclair_11: -852788633689691997
+      Inclair_12: 7927529435734319636
+      Inclair_13: -8817668895209045766
+      Inclair_14: -3915808683039924791
+      Inclair_15: 9103277672040646948
+      Inclair_16: -7160298826756943066
+      Inclair_17: -8529262289100837528
+      Inclair_18: 8683321744429415617
+      Inclair_19: -821740723838360335
+      Inclair_2: -8180068801570136842
+      Inclair_20: 3751281793265488438
+      Inclair_21: 2509022774923780612
+      Inclair_22: 2463769838801890114
+      Inclair_23: 7178851071258961373
+      Inclair_24: 1509700732931170337
+      Inclair_25: 4744112368259437510
+      Inclair_26: 430571801789428757
+      Inclair_27: -4324772686452290016
+      Inclair_28: 6080560163999897911
+      Inclair_29: 8220882921875515413
+      Inclair_3: 3411797621163119546
+      Inclair_30: 1782807046059719871
+      Inclair_31: 7770942300780173959
+      Inclair_32: -2734063939085509861
+      Inclair_33: 171814420982600660
+      Inclair_34: -7563959660473274679
+      Inclair_35: 5894544983397367135
+      Inclair_36: 840141408527880832
+      Inclair_37: 6828262434595592840
+      Inclair_38: -2421546380049281380
+      Inclair_39: -5940628479845397707
+      Inclair_4: -3097893407923388150
+      Inclair_40: -2849874118820481090
+      Inclair_41: 5129443371807753296
+      Inclair_42: 7855978108914162761
+      Inclair_43: -3330162701457231254
+      Inclair_44: 2770444338023794079
+      Inclair_45: 2047054598800999480
+      Inclair_46: -2920897766943732642
+      Inclair_47: -4651526239911253303
+      Inclair_48: 4851350707133692166
+      Inclair_49: -3155613326559263133
+      Inclair_5: 3259554686534397923
+      Inclair_50: -5276207053821972759
+      Inclair_51: -2604288938901755609
+      Inclair_52: -4552305814916204480
+      Inclair_53: -1303259165529979250
+      Inclair_54: -860286508564550693
+      Inclair_55: -5304700683261131773
+      Inclair_56: -8106902513757776048
+      Inclair_57: 4247729113635324218
+      Inclair_58: -5668281434905490762
+      Inclair_59: 2560861992370367970
+      Inclair_6: -645209514737917762
+      Inclair_60: -4130761356772400343
+      Inclair_7: -4799834300904273374
+      Inclair_8: 1216133194249069028
+      Inclair_9: 2557787190651524076
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

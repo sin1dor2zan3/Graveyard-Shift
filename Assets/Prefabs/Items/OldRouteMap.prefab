@@ -160,6 +160,8 @@ MonoBehaviour:
   artworkFill: 0.92
   validColor: {r: 0.45, g: 0.9, b: 0.65, a: 1}
   invalidColor: {r: 1, g: 0.45, b: 0.45, a: 1}
+  outlineMaterial: {fileID: 2100000, guid: 67e4d8f265e8346a8a39db049e7a3adb, type: 2}
+  outlineWidth: 0.035
 --- !u!1 &6954405095946024839
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +243,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7211092252831451009, guid: 32f1e7720c8ec4aa7a6c7f2572fb6d28, type: 3}
+  m_Sprite: {fileID: -5900887361670549985, guid: d9c7960beabf44ccfaa457f5696feb50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

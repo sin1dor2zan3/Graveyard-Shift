@@ -344,6 +344,8 @@ MonoBehaviour:
   artworkFill: 0.92
   validColor: {r: 0.45, g: 0.9, b: 0.65, a: 1}
   invalidColor: {r: 1, g: 0.45, b: 0.45, a: 1}
+  outlineMaterial: {fileID: 2100000, guid: 67e4d8f265e8346a8a39db049e7a3adb, type: 2}
+  outlineWidth: 0.035
 --- !u!114 &5083490535655762766
 MonoBehaviour:
   m_ObjectHideFlags: 0

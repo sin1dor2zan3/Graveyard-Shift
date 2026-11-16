@@ -13,6 +13,9 @@ public class StoryTypewriter : MonoBehaviour
 
     public bool IsTyping { get; private set; }
 
+    private bool InstantText =>
+        PlayerPrefs.GetInt("Settings.InstantText", 0) == 1;
+
     private void OnEnable()
     {
         text = GetComponent<TMP_Text>();
@@ -21,13 +24,16 @@ public class StoryTypewriter : MonoBehaviour
         text.ForceMeshUpdate(true);
 
         int characterCount = text.textInfo.characterCount;
-        text.maxVisibleCharacters = 0;
 
-        if (characterCount > 0)
+        if (InstantText || characterCount == 0)
         {
-            IsTyping = true;
-            typingRoutine = StartCoroutine(TypeText(characterCount));
+            IsTyping = false;
+            return;
         }
+
+        text.maxVisibleCharacters = 0;
+        IsTyping = true;
+        typingRoutine = StartCoroutine(TypeText(characterCount));
     }
 
     private IEnumerator TypeText(int characterCount)
@@ -41,14 +47,23 @@ public class StoryTypewriter : MonoBehaviour
             if (PauseMenu.IsPaused)
                 continue;
 
-            visibleCharacters +=
-                charactersPerSecond * Time.unscaledDeltaTime;
+            if (InstantText)
+                break;
+
+            float speed = Mathf.Clamp(
+                PlayerPrefs.GetFloat(
+                    "Settings.TextSpeed", charactersPerSecond),
+                10f, 100f
+            );
+
+            visibleCharacters += speed * Time.unscaledDeltaTime;
 
             text.maxVisibleCharacters = Mathf.Min(
                 characterCount,
                 Mathf.FloorToInt(visibleCharacters));
         }
 
+        text.maxVisibleCharacters = int.MaxValue;
         IsTyping = false;
         typingRoutine = null;
     }

@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject controlsCard;
     [SerializeField] private GameObject helpCard;
     [SerializeField] private GameObject quitConfirmCard;
+    [SerializeField] private GameObject settingsCard;
 
     private float previousTimeScale = 1f;
     private bool leavingScene;
@@ -40,6 +41,7 @@ public class PauseMenu : MonoBehaviour
             else if (
                 (controlsCard != null && controlsCard.activeSelf) ||
                 (helpCard != null && helpCard.activeSelf) ||
+                (settingsCard != null && settingsCard.activeSelf) ||
                 (quitConfirmCard != null && quitConfirmCard.activeSelf))
             {
                 ShowPauseCard();
@@ -83,6 +85,14 @@ public class PauseMenu : MonoBehaviour
 
         HideCards();
         controlsCard.SetActive(true);
+    }
+    public void ShowSettings()
+    {
+        if (!IsPaused || settingsCard == null)
+            return;
+
+        HideCards();
+        settingsCard.SetActive(true);
     }
     public void ShowHelp()
     {
@@ -152,6 +162,9 @@ public class PauseMenu : MonoBehaviour
 
         if (quitConfirmCard != null)
             quitConfirmCard.SetActive(false);
+
+        if (settingsCard != null)
+            settingsCard.SetActive(false);
     }
 
     private void OnDisable()

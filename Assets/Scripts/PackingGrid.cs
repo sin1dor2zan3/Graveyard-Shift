@@ -287,16 +287,21 @@ public class PackingGrid : MonoBehaviour
         showGridLines = PlayerPrefs.GetInt("ShowPackingGrid", 0) == 1;
     }
 
-    public void ToggleGridLines()
+    public void SetGridLines(bool visible)
     {
-        showGridLines = !showGridLines;
+        showGridLines = visible;
 
-        PlayerPrefs.SetInt("ShowPackingGrid", showGridLines ? 1 : 0);
+        PlayerPrefs.SetInt("ShowPackingGrid", visible ? 1 : 0);
         PlayerPrefs.Save();
 
         Transform lines = transform.Find("GridLines");
 
         if (lines != null)
-            lines.gameObject.SetActive(showGridLines);
+            lines.gameObject.SetActive(visible);
+    }
+
+    public void ToggleGridLines()
+    {
+        SetGridLines(!showGridLines);
     }
 }

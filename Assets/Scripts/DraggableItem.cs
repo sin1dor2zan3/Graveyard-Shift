@@ -28,7 +28,16 @@ public class DraggableItem : MonoBehaviour
     private Color invalidColor =
         new Color(1f, 0.45f, 0.45f, 1f);
 
+    [Header("Drag Outline")]
+    [SerializeField] private Material outlineMaterial;
+    [SerializeField, Min(0.001f)] private float outlineWidth = 0.035f;
+
+    private MaterialPropertyBlock outlineProperties;
+
+    private SpriteRenderer[] outlineCopies;
+
     private float appliedCellSize = 1f;
+    private bool lockedForShipment;
 
     public int Width => width;
     public int Height => height;
@@ -142,6 +151,8 @@ public class DraggableItem : MonoBehaviour
 
     private void Update()
     {
+        if (lockedForShipment)
+            return;
         if (packingGrid != null && !Mathf.Approximately(appliedCellSize, packingGrid.CellSize))
         {
             SetOrientation(quarterTurns);
@@ -230,7 +241,8 @@ public class DraggableItem : MonoBehaviour
             bool fits = packingGrid != null &&
                 packingGrid.CanPlace(this, transform.position);
 
-            spriteRenderer.color = fits ? validColor : invalidColor;
+            spriteRenderer.color = originalColor;
+            ShowOutline(fits ? validColor : invalidColor);
         }
 
         if (!pressed)
@@ -309,6 +321,9 @@ public class DraggableItem : MonoBehaviour
 
     public void RotateSelected()
     {
+        if (lockedForShipment)
+            return;
+
         if (OrderPopupController.IsOpen)
             return;
 
@@ -411,8 +426,99 @@ public class DraggableItem : MonoBehaviour
         transform.position = positionBeforeDrag;
     }
 
+    public void LockForShipment()
+    {
+        if (isDragging)
+            CancelDrag();
+
+        lockedForShipment = true;
+        RestoreColor();
+    }
+
+    public void ShowDamagedArtwork()
+    {
+        if (definition == null || definition.damagedSprite == null)
+            return;
+
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = definition.damagedSprite;
+
+        SetOrientation(quarterTurns);
+        RestoreColor();
+    }
+
+    private void ShowOutline(Color color)
+    {
+        if (spriteRenderer == null || outlineMaterial == null)
+            return;
+
+        if (outlineProperties == null)
+            outlineProperties = new MaterialPropertyBlock();
+
+        outlineProperties.SetColor("_Color", color);
+
+
+        if (outlineCopies == null)
+        {
+            outlineCopies = new SpriteRenderer[8];
+
+            for (int i = 0; i < outlineCopies.Length; i++)
+            {
+                GameObject copy = new GameObject("DragOutline");
+                copy.transform.SetParent(spriteRenderer.transform, false);
+
+                SpriteRenderer renderer =
+                    copy.AddComponent<SpriteRenderer>();
+
+                renderer.sharedMaterial = outlineMaterial;
+                outlineCopies[i] = renderer;
+            }
+        }
+
+        for (int i = 0; i < outlineCopies.Length; i++)
+        {
+            SpriteRenderer copy = outlineCopies[i];
+
+            float angle = i * Mathf.PI / 4f;
+
+            Vector3 worldOffset = new Vector3(
+                Mathf.Cos(angle),
+                Mathf.Sin(angle),
+                0f
+            ) * outlineWidth;
+
+            // Convert the offset so outline thickness stays consistent
+            // when the artwork is scaled or rotated.
+            copy.transform.localPosition =
+                spriteRenderer.transform.InverseTransformVector(worldOffset);
+
+            copy.sprite = spriteRenderer.sprite;
+            copy.flipX = spriteRenderer.flipX;
+            copy.flipY = spriteRenderer.flipY;
+            copy.color = Color.white;
+            copy.SetPropertyBlock(outlineProperties);
+            copy.sortingLayerID = spriteRenderer.sortingLayerID;
+            copy.sortingOrder = spriteRenderer.sortingOrder - 1;
+            copy.maskInteraction = spriteRenderer.maskInteraction;
+            copy.enabled = true;
+        }
+    }
+
+    private void HideOutline()
+    {
+        if (outlineCopies == null)
+            return;
+
+        foreach (SpriteRenderer copy in outlineCopies)
+        {
+            if (copy != null)
+                copy.enabled = false;
+        }
+    }
     private void RestoreColor()
     {
+        HideOutline();
+
         if (spriteRenderer != null)
             spriteRenderer.color = originalColor;
     }

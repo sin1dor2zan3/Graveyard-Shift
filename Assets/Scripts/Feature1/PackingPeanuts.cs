@@ -18,19 +18,27 @@ public class PackingPeanuts : MonoBehaviour
         new List<Vector2Int>();
 
     private static readonly Vector2[] positions =
-{
-    new Vector2(-0.28f, -0.28f),
-    new Vector2( 0f,    -0.28f),
-    new Vector2( 0.28f, -0.28f),
+    {
+        new Vector2(-0.36f, -0.36f),
+        new Vector2(-0.12f, -0.36f),
+        new Vector2( 0.12f, -0.36f),
+        new Vector2( 0.36f, -0.36f),
 
-    new Vector2(-0.28f,  0f),
-    new Vector2( 0f,     0f),
-    new Vector2( 0.28f,  0f),
+        new Vector2(-0.36f, -0.12f),
+        new Vector2(-0.12f, -0.12f),
+        new Vector2( 0.12f, -0.12f),
+        new Vector2( 0.36f, -0.12f),
 
-    new Vector2(-0.28f,  0.28f),
-    new Vector2( 0f,     0.28f),
-    new Vector2( 0.28f,  0.28f)
-};
+        new Vector2(-0.36f,  0.12f),
+        new Vector2(-0.12f,  0.12f),
+        new Vector2( 0.12f,  0.12f),
+        new Vector2( 0.36f,  0.12f),
+
+        new Vector2(-0.36f,  0.36f),
+        new Vector2(-0.12f,  0.36f),
+        new Vector2( 0.12f,  0.36f),
+        new Vector2( 0.36f,  0.36f)
+    };
 
     private void Awake()
     {
@@ -40,6 +48,11 @@ public class PackingPeanuts : MonoBehaviour
 
     private bool TryDepositCell(Vector3 worldPosition)
     {
+        ParcelDelivery delivery = FindFirstObjectByType<ParcelDelivery>();
+
+        if (delivery != null && delivery.IsPreparingShipment)
+            return false;
+
         if (PauseMenu.IsPaused || OrderPopupController.IsOpen ||
             peanutSprites == null || peanutSprites.Length == 0)
         {
@@ -86,8 +99,8 @@ public class PackingPeanuts : MonoBehaviour
             peanut.transform.SetParent(cluster.transform, false);
 
             Vector2 offset = position + new Vector2(
-                Random.Range(-0.10f, 0.10f),
-                Random.Range(-0.10f, 0.10f)
+                Random.Range(-0.025f, 0.025f),
+                Random.Range(-0.025f, 0.025f)
             );
 
             peanut.transform.localRotation =
@@ -103,6 +116,31 @@ public class PackingPeanuts : MonoBehaviour
             Vector3 centerOffset =
                 peanut.transform.localRotation *
                 (sprite.bounds.center * scale);
+
+            // Calculate the rotated peanut's half-width and half-height.
+            float angle = peanut.transform.localEulerAngles.z * Mathf.Deg2Rad;
+            float cos = Mathf.Abs(Mathf.Cos(angle));
+            float sin = Mathf.Abs(Mathf.Sin(angle));
+
+            float halfWidth =
+                (boundsSize.x * cos + boundsSize.y * sin) * scale * 0.5f;
+
+            float halfHeight =
+                (boundsSize.x * sin + boundsSize.y * cos) * scale * 0.5f;
+
+            // Keep peanuts inside the box at its outer edges.
+            // Interior cells can still visually overlap each other.
+            if (cell.x == 0)
+                offset.x = Mathf.Max(offset.x, -0.5f + halfWidth);
+
+            if (cell.x == grid.GridSize - 1)
+                offset.x = Mathf.Min(offset.x, 0.5f - halfWidth);
+
+            if (cell.y == 0)
+                offset.y = Mathf.Max(offset.y, -0.5f + halfHeight);
+
+            if (cell.y == grid.GridSize - 1)
+                offset.y = Mathf.Min(offset.y, 0.5f - halfHeight);
 
             peanut.transform.localPosition =
                 new Vector3(offset.x, offset.y, 0f) - centerOffset;
@@ -180,6 +218,11 @@ public class PackingPeanuts : MonoBehaviour
     }
     public bool TryDeposit(Vector3 worldPosition)
     {
+        ParcelDelivery delivery = FindFirstObjectByType<ParcelDelivery>();
+
+        if (delivery != null && delivery.IsPreparingShipment)
+            return false;
+
         if (PauseMenu.IsPaused || OrderPopupController.IsOpen ||
             !grid.TryGetEmptyCell(worldPosition, out Vector2Int target))
         {

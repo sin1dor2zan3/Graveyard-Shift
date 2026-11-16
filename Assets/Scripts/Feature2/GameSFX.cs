@@ -33,9 +33,19 @@ public class GameSFX : MonoBehaviour
         source.playOnAwake = false;
         source.loop = false;
         source.spatialBlend = 0f;
-        source.volume = 0.2f;
+        source.volume = Mathf.Clamp01(
+            PlayerPrefs.GetFloat("Settings.SFXVolume", 0.2f)
+        );
     }
 
+    public void SetVolume(float value)
+    {
+        value = Mathf.Clamp01(value);
+        source.volume = value;
+
+        PlayerPrefs.SetFloat("Settings.SFXVolume", value);
+        PlayerPrefs.Save();
+    }
     private void Play(AudioClip clip)
     {
         if (clip != null)

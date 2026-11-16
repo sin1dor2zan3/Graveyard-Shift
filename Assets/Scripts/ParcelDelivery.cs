@@ -13,6 +13,11 @@ public class ParcelDelivery : MonoBehaviour
     [SerializeField] private Button shipButton;
     [SerializeField] private float feedbackDuration = 4f;
 
+    [Header("Damage Reveal")]
+    [SerializeField] private GameObject packingInputBlocker;
+    [SerializeField] private float beforeDamageDelay = 0.35f;
+    [SerializeField] private float damagedArtworkHold = 1.2f;
+
     public bool IsPreparingShipment => preparingShipment;
     private bool preparingShipment;
     private Coroutine clearFeedbackRoutine;
@@ -24,6 +29,9 @@ public class ParcelDelivery : MonoBehaviour
 
         feedbackText.text = "";
         shipButton.interactable = false;
+
+        if (packingInputBlocker != null)
+            packingInputBlocker.SetActive(false);
     }
 
     public void SetBoxAvailable(bool available)
@@ -145,15 +153,64 @@ public class ParcelDelivery : MonoBehaviour
                 }
             }
         }
-        session.RecordPacking(packedWeight, issues, damaged);
-
         preparingShipment = true;
         shipButton.interactable = false;
         StopFeedbackTimer();
 
+        foreach (DraggableItem item in itemSpawner.SpawnedItems)
+            item.LockForShipment();
+
+        session.RecordPacking(packedWeight, issues, damaged);
+
+        if (damaged.Count > 0)
+        {
+            if (packingInputBlocker != null)
+                packingInputBlocker.SetActive(true);
+
+            StartCoroutine(RevealDamageAndShip(damaged));
+        }
+        else
+        {
+            SceneManager.LoadScene("ShippingStation");
+        }
+    }
+
+    private IEnumerator RevealDamageAndShip(
+        List<ItemDefinition> damaged)
+    {
+        feedbackText.text = "Some fragile gifts are unprotected…";
+
+        yield return WaitForReveal(beforeDamageDelay);
+
+        foreach (DraggableItem item in itemSpawner.SpawnedItems)
+        {
+            if (item != null &&
+                damaged.Contains(item.Definition) &&
+                packingGrid.IsPacked(item))
+            {
+                item.ShowDamagedArtwork();
+            }
+        }
+
+        feedbackText.text = "Unprotected gifts were damaged.";
+
+        yield return WaitForReveal(damagedArtworkHold);
+
         SceneManager.LoadScene("ShippingStation");
     }
 
+    private IEnumerator WaitForReveal(float duration)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration || PauseMenu.IsPaused)
+        {
+            yield return null;
+
+            if (!PauseMenu.IsPaused)
+                elapsed += Time.unscaledDeltaTime;
+        }
+    }
     public void ResetParcel()
     {
         if (PauseMenu.IsPaused || OrderPopupController.IsOpen ||
