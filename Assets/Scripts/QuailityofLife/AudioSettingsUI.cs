@@ -28,7 +28,13 @@ public class AudioSettingsUI : MonoBehaviour
 
     private void ChangeMusic(float value)
     {
+        value = Mathf.Clamp01(value);
+
+        PlayerPrefs.SetFloat("Settings.MusicVolume", value);
+        PlayerPrefs.Save();
+
         MusicPlayer.Instance?.SetVolume(value);
+        MenuMusicVolume.Instance?.SetVolume(value);
     }
 
     private void ChangeSFX(float value)

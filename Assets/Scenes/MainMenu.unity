@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2293234520776164247, guid: 43c5957e6c5ee4f4d9ddf4ad15b892ef, type: 3}
+  m_Sprite: {fileID: -2729936536967726917, guid: ba926cc29f6474969b0ca82441408726, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5368,6 +5368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1709955681}
   - component: {fileID: 1709955680}
+  - component: {fileID: 1709955682}
   m_Layer: 0
   m_Name: MenuMusic
   m_TagString: Untagged
@@ -5487,6 +5488,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1709955682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709955679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5254ecc2deb145f8b5f49997551b37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuMusicVolume
 --- !u!1 &1731196903
 GameObject:
   m_ObjectHideFlags: 0
